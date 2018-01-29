@@ -1,0 +1,21 @@
+<ul class="pagination">
+  <li [ngClass]="{'disabled': activePage === 1}" *ngIf="prev">
+    <a>
+      上一页
+    </a>
+  </li>
+
+  <li
+    *ngFor="let button of pageButtons"
+    [ngClass]="{'disabled': button.disabled, 'active': button.active, 'ellipsis': button.ellipsis}">
+    <a>
+      {{button.page}}
+    </a>
+  </li>
+
+  <li [ngClass]="{'disabled': activePage >= _items}" *ngIf="next">
+    <a>
+      下一页
+    </a>
+  </li>
+</ul>

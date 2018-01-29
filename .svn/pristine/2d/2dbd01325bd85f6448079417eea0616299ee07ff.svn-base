@@ -1,0 +1,28 @@
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-basics-supplier',
+  template: `
+    <app-supplier-actions></app-supplier-actions>
+    <div class="content">
+      <app-category></app-category>
+      <app-supplier-list></app-supplier-list>
+    </div>
+  `,
+  styles: [`
+    :host {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .content {
+      flex: 1;
+      display: flex;
+    }
+  `]
+})
+
+export class SupplierComponent {
+  title = 'app';
+}

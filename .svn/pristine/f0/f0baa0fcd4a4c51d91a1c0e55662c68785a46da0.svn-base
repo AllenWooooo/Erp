@@ -1,0 +1,4 @@
+<label>
+  <input type="checkbox" />
+  <i class="iconfont icon-selected"></i>
+</label>

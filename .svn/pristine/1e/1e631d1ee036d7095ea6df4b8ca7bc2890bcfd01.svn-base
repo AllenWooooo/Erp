@@ -1,0 +1,143 @@
+/* You can add global styles to this file, and also import other style files */
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  font-family: -apple-system , BlinkMacSystemFont , "Segoe UI" , Roboto , "Segoe UI" , "Helvetica Neue", "PingFang SC", "Noto Sans" , "Noto Sans CJK SC" , "Microsoft YaHei" , "微软雅黑" , sans-serif;
+  font-size: 12px;
+  line-height: normal;
+  margin: 0;
+  padding: 0;
+  color: @text-color;
+  height: 100%;
+}
+
+a {
+  color: @text-color;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+button {
+  outline: none;
+}
+
+input {
+  outline: none;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+.text-danger {
+  color: @danger-color;
+}
+
+.text-success {
+  color: @success-color;
+}
+
+.actions {
+  padding: 10px 16px;
+  background-color: #f1f5f9;
+  border-bottom: 1px solid @border-color;
+  display: flex;
+
+  .btn {
+    margin-left: 10px;
+  }
+
+  .more {
+    flex: 1;
+    text-align: right;
+  }
+}
+
+.form {
+  width: 100%;
+  border-collapse: collapse;
+
+  th, td {
+    padding: 5px 10px;
+  }
+}
+
+.form-control-group {
+  position: relative;
+
+  &.error {
+
+    .form-control {
+      border-color: @danger-color;
+    }
+  }
+}
+
+.validate-message {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  color: @danger-color;
+  font-size: 12px;
+  margin-top: 5px;
+  background-color: #fcedeb;
+  border: 1px solid #edbab5;
+  border-radius: 2px;
+  padding: 5px;
+  color: @form-control-color;
+
+  .iconfont {
+    color: @danger-color;
+  }
+}
+
+.form-label {
+  font-size: 12px;
+  color: #999;
+  padding: 5px 0;
+  display: block;
+}
+
+.form-control {
+  display: block;
+  width: 100%;
+  border-style: solid;
+  border-width: 0 0 1px 0;
+  border-color: @border-color;
+  background: #fff;
+  outline: none;
+  padding: 5px 10px;
+  line-height: normal;
+  font-size: 12px;
+  color: @form-control-color;
+  transition: all .3s ease;
+
+  &:focus {
+    border-color: @primary-color;
+  }
+}
+
+.form-static-control {
+  font-size: 12px;
+  color: @form-control-color;
+  display: inline-block;
+  padding: 5px 10px;
+}
+
+.required {
+  color: @danger-color;
+  font-size: 12px;
+}

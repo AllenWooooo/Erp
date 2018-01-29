@@ -1,0 +1,10 @@
+@text-color: #545d67;
+@form-control-color: #2a3541;
+@border-color: #e1e5ea;
+@hover-color: #f1f5f9;
+
+@primary-color: #338dff;
+@danger-color: #e54d3e;
+
+@left-side-background-color: #2a3541;
+@left-side-background-dark-color: #202a35;

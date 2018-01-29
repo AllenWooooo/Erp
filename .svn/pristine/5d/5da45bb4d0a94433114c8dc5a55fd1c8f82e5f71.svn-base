@@ -1,0 +1,62 @@
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { SupplierService } from '../../supplier.service';
+
+@Component({
+  selector: 'app-supplier-list',
+  templateUrl: './list.component.html',
+  styleUrls: ['./list.component.less']
+})
+
+export class SupplierListComponent implements OnInit {
+  private suppliers = <any>[];
+  private pagination = {};
+  private _showContact = false;
+  private contactList = <any>[];
+  private allSelected = false;
+
+  @Output() selectItems: EventEmitter<any> = new EventEmitter();
+
+  constructor(private supplierService: SupplierService) {}
+
+  ngOnInit() {
+    this.supplierService.get().subscribe(data => {
+      this.suppliers = data.CustomerList;
+      this.pagination = data.Pagination;
+    });
+    this.supplierService.list({});
+  }
+
+  showContact(customerId) {
+    this._showContact = true;
+    this.supplierService.contactList(customerId).subscribe(data => {
+      this.contactList = data;
+    });
+  }
+
+  closeContact() {
+    this._showContact = false;
+  }
+
+  selectAll(evt) {
+    this.allSelected = evt.target.checked;
+    this.suppliers = this.suppliers.map(item => ({
+      ...item,
+      selected: this.allSelected
+    }));
+    this.selectItems.emit(this.allSelected ? this.suppliers : []);
+
+  }
+
+  select(evt, selectedItem) {
+    this.suppliers = this.suppliers.map(item => ({
+      ...item,
+      selected: item.Id === selectedItem.Id ? evt.target.checked : item.selected
+    }));
+    this.allSelected = this.suppliers.every(item => item.selected);
+    this.selectItems.emit(this.suppliers.filter(item => item.selected));
+  }
+
+  pageChanged({ current, pageSize }) {
+    this.supplierService.list({ PageIndex: current, PageSize: pageSize });
+  }
+}

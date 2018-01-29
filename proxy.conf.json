@@ -1,0 +1,30 @@
+{
+  "/SystemConfig/GetForModify": {
+    "target": "http://139.196.96.129:8899",
+    "secure": false
+  },
+  "/Category/**": {
+    "target": "http://139.196.96.129:8899",
+    "secure": false
+  },
+  "/Customer/**": {
+    "target": "http://139.196.96.129:8899",
+    "secure": false
+  },
+  "/CustomerContractor/**": {
+    "target": "http://139.196.96.129:8899",
+    "secure": false
+  },
+  "/employee/**": {
+    "target": "http://139.196.96.129:8899",
+    "secure": false
+  },
+  "/Area/**": {
+    "target": "http://139.196.96.129:8899",
+    "secure": false
+  },
+  "/SalePriceLevel/**": {
+    "target": "http://139.196.96.129:8899",
+    "secure": false
+  }
+}

@@ -1,0 +1,65 @@
+@import "~less/variables.less";
+
+.card {
+  position: fixed;
+  right: -100%;
+  top: 0;
+  bottom: 0;
+  min-width: 600px;
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  border-radius: 4px 0 0 4px;
+  z-index: -1;
+  transition: all .3s ease;
+
+  &.show {
+    right: 0;
+    z-index: 999;
+  }
+
+  .card-header {
+    border-bottom: 1px solid @border-color;
+    display: flex;
+    align-items: center;
+    padding: 15px 10px;
+
+    .title {
+      font-size: 14px;
+      flex: 1;
+    }
+  }
+
+  .card-footer {
+    border-top: 1px solid @border-color;
+    text-align: right;
+    font-size: 0;
+    background-color: #f1f5f9;
+    padding: 10px;
+
+    .btn {
+      margin-left: 10px;
+    }
+  }
+
+  .card-body {
+    flex: 1;
+    overflow: scroll;
+  }
+}
+
+.card-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 1);
+  transition: all .3s ease;
+  z-index: -1;
+
+  &.show {
+    background-color: rgba(0, 0, 0, .5);
+    z-index: 998;
+  }
+}

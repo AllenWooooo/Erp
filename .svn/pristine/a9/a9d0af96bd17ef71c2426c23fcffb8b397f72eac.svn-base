@@ -1,0 +1,32 @@
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-basics-supplier',
+  template: `
+    <app-supplier-actions [selectedItems]="selectedItems"></app-supplier-actions>
+    <div class="content">
+      <app-category></app-category>
+      <app-supplier-list (selectItems)="selectItems($event)"></app-supplier-list>
+    </div>
+  `,
+  styles: [`
+    :host {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .content {
+      flex: 1;
+      display: flex;
+    }
+  `]
+})
+
+export class SupplierComponent {
+  selectedItems = <any>[];
+
+  selectItems(selected) {
+    this.selectedItems = selected;
+  }
+}

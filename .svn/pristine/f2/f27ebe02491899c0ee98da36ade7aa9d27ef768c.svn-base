@@ -1,0 +1,24 @@
+/* You can add global styles to this file, and also import other style files */
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  font-family:-apple-system , BlinkMacSystemFont , "Segoe UI" , Roboto , "Segoe UI" , "Helvetica Neue", "PingFang SC", "Noto Sans" , "Noto Sans CJK SC" , "Microsoft YaHei" , "微软雅黑" , sans-serif;
+  font-size: 12px;
+  line-height: normal;
+  margin: 0;
+  padding: 0;
+  background-color: #F1F5F9;
+  color: #2A3541;
+  height: 100%;
+}
+
+a {
+  text-decoration: none;
+}

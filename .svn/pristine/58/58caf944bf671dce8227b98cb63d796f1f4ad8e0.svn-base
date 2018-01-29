@@ -1,0 +1,21 @@
+<div class="card" [ngClass]="{'show': show}">
+  <div class="card-header">
+    <div class="title">{{header}}</div>
+    <a (click)="handleCancel()" class="close">
+      <i class="iconfont icon-close"></i>
+    </a>
+  </div>
+  <div class="card-body">
+    <ng-content></ng-content>
+  </div>
+  <div class="card-footer">
+    <app-ui-button [style]="'primary'">
+      保存
+    </app-ui-button>
+    <app-ui-button>
+      取消
+    </app-ui-button>
+  </div>
+</div>
+<div class="card-background" [ngClass]="{'show': show}">
+</div>

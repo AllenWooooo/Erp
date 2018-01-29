@@ -1,0 +1,10 @@
+<div class="header">
+  <app-ui-dropdown>
+    <app-ui-dropdown-toggle>
+      <button type="button" class="user-profile">
+        用户名
+        <i class="iconfont icon-moreunfold"></i>
+      </button>
+    </app-ui-dropdown-toggle>
+  </app-ui-dropdown>
+</div>

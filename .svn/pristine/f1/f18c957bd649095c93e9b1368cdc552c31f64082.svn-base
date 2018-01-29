@@ -1,0 +1,26 @@
+@import '../ui.variables.less';
+
+.btn {
+  display: inline-flex;
+  background-color: #fff;
+  color: @button-default-color;
+  outline: none;
+  border: 1px solid @button-default-border-color;
+  border-radius: 4px;
+  height: 30px;
+  padding: 0 16px;
+  align-items: center;
+  cursor: pointer;
+
+  &:hover {
+    color: @button-default-hover-color;
+  }
+}
+
+.btn-default {
+  box-shadow: 0 1px 1.5px 0 rgba(42, 53, 65, 0.06), 0 0 1px 0 rgba(42, 53, 65, 0.06);
+
+  &:hover {
+    box-shadow: 0 1px 1.5px 0 rgba(42, 53, 65, 0.06), 0 0 1px 0 rgba(42, 53, 65, 0.12);
+  }
+}

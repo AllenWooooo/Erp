@@ -1,0 +1,39 @@
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Routes, RouterModule } from '@angular/router';
+
+import { UIModule } from '../UI/ui.module';
+import { AppComponent } from './app.component';
+import { MenuComponent } from './components/menu/menu.component';
+import { HeaderComponent } from './components/header/header.component';
+import { ContentComponent } from './components/content/content.component';
+import { TabsComponent } from './components/tabs/tabs.component';
+
+
+export const ROUTES: Routes = [
+  {
+    path: 'basics',
+    loadChildren: './modules/basics/basics.module#BasicsModule'
+  }
+];
+
+@NgModule({
+  declarations: [
+    AppComponent,
+    MenuComponent,
+    HeaderComponent,
+    ContentComponent,
+    TabsComponent
+  ],
+  imports: [
+    BrowserModule,
+    CommonModule,
+    UIModule,
+    RouterModule.forRoot(ROUTES)
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+
+export class AppModule { }

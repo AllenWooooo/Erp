@@ -1,0 +1,4 @@
+<div class="quick-search">
+  <input type="text" placeholder="{{placeholder}}" />
+  <i class="iconfont icon-search"></i>
+</div>

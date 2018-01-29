@@ -1,0 +1,30 @@
+import { NgModule } from '@angular/core';
+import { Routes, RouterModule } from '@angular/router';
+
+import { BasicsComponent } from './basics.component';
+import { SupplierModule } from './path/supplier/supplier.modules';
+import { SupplierComponent } from './path/supplier/supplier.component';
+
+export const ROUTES: Routes = [
+  {
+    path: '',
+    component: BasicsComponent,
+    children: [
+      { path: 'supplier', component: SupplierComponent },
+      { path: 'customer', component: SupplierComponent }
+    ]
+  }
+];
+
+
+@NgModule({
+  declarations: [
+    BasicsComponent
+  ],
+  imports: [
+    SupplierModule,
+    RouterModule.forChild(ROUTES)
+  ]
+})
+
+export class BasicsModule { }

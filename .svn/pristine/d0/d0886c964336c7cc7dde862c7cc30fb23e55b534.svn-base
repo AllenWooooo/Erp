@@ -1,0 +1,51 @@
+import { Injectable } from '@angular/core';
+import { HttpService } from '../../../../services/http.service';
+import { Observable } from 'rxjs/Observable';
+import { Subject } from 'rxjs/Subject';
+
+
+@Injectable()
+export class SupplierService {
+  private supplier$ = new Subject<any>();
+
+  constructor(private http: HttpService) {}
+
+  get() {
+    return this.supplier$.asObservable();
+  }
+
+  list({ CustomerCategoryId = null, CustomerType = 'Supplier', PageIndex = 1, PageSize = 25 }) {
+    return this.http.post('/Customer/GetListPaged', {
+      CustomerCategoryId,
+      CustomerType,
+      PageIndex,
+      PageSize
+    }).subscribe(data => {
+      this.supplier$.next(data);
+    });
+  }
+
+  contactList(customerId) {
+    return this.http.get('/CustomerContractor/GetList', {
+      customerId
+    });
+  }
+
+  newOne(customerType = 'Supplier') {
+    return this.http.get('/Customer/GetForNew', {
+      customerType
+    });
+  }
+
+  detail(customerId) {
+    return this.http.get('/Customer/GetForModify', {
+      customerId
+    });
+  }
+
+  create(customer) {
+    return this.http.post('/Customer/New', {
+      customer
+    });
+  }
+}

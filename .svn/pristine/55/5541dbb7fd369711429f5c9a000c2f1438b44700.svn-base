@@ -1,0 +1,11 @@
+<div class="container">
+  <div class="left-side">
+    <a href="/" class="logo">
+      大麦
+    </a>
+    <app-menu></app-menu>
+  </div>
+  <div class="right-side">
+    asd
+  </div>
+</div>

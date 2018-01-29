@@ -1,0 +1,143 @@
+<app-ui-button [style]="'primary'" (click)="show()">
+  <i class="iconfont icon-add"></i>
+  新增供应商
+</app-ui-button>
+<form #createSupplier="ngForm" (ngSubmit)="onSubmit(createSupplier)" novalidate>
+  <app-card [header]="'添加供应商'" [show]="_show" (onCancel)="close()">
+    <div class="card-content">
+      <div class="heading">
+        基本信息
+      </div>
+      <table class="form">
+        <tr>
+          <td>
+            <label class="form-label">所属分类</label>
+            <div class="form-static-control">
+              {{supplier.CustomerCategoryName}}
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label class="form-label">
+              <span class="required">*</span>
+              供应商编号
+            </label>
+            <div>
+              <input type="text" name="Code" class="form-control" [(ngModel)]="supplier.Code">
+            </div>
+          </td>
+          <td>
+            <label class="form-label">
+              <span class="required">*</span>
+              供应商名称
+            </label>
+            <div class="form-control-group error">
+              <input type="text" name="Name" class="form-control" [(ngModel)]="supplier.Name">
+              <div class="validate-message">
+                <i class="iconfont icon-information"></i>
+                请填写供应商名称！
+              </div>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label class="form-label">
+              所属地区
+            </label>
+            <div>
+              <input type="text" name="AreaId" class="form-control" [(ngModel)]="supplier.AreaId">
+            </div>
+          </td>
+          <td>
+            <label class="form-label">
+              所属采购人员
+            </label>
+            <div>
+              <input type="text" name="EmployeeId" class="form-control" [(ngModel)]="supplier.EmployeeId">
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label class="form-label">银行账户</label>
+            <div>
+              <input type="text" name="BankInfo" class="form-control" [(ngModel)]="supplier.BankInfo">
+            </div>
+          </td>
+        </tr>
+      </table>
+      <div class="heading">
+        期初信息
+      </div>
+      <table class="form">
+        <tr>
+          <td>
+            <label class="form-label">
+              期初应付款
+            </label>
+            <div>
+              <input type="text" name="InitShouldPayAmount" class="form-control" [(ngModel)]="supplier.InitShouldPayAmount">
+            </div>
+          </td>
+          <td>
+            <label class="form-label">
+              售价等级
+            </label>
+            <div>
+              <input type="text" name="SalePriceLevelId" class="form-control" [(ngModel)]="supplier.SalePriceLevelId">
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label class="form-label">
+              应收款额度
+            </label>
+            <div>
+              <input type="text" name="ShouldPayAmountLimit" class="form-control" [(ngModel)]="supplier.ShouldPayAmountLimit">
+            </div>
+          </td>
+          <td>
+            <label class="form-label">
+              应收款账期
+            </label>
+            <div>
+              <input type="text" name="ShoulePayAmountPeriod" class="form-control" [(ngModel)]="supplier.ShoulePayAmountPeriod">
+            </div>
+          </td>
+        </tr>
+      </table>
+      <div class="heading">联系人信息</div>
+      <app-ui-table>
+        <thead>
+          <th>操作</th>
+          <th>联系人</th>
+          <th>手机</th>
+          <th>座机</th>
+          <th>传真</th>
+          <th>邮箱</th>
+          <th>单位地址</th>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of supplier.CustomerContractorList; let idx = index">
+            <td>
+              <a class="text-success"><i class="iconfont icon-add"></i></a>
+              <a class="text-danger"><i class="iconfont icon-close"></i></a>
+            </td>
+            <td><input type="text" name="Name" class="form-control" [(ngModel)]="item.Name"></td>
+            <td><input type="text" name="Mobile" class="form-control" [(ngModel)]="item.Mobile"></td>
+            <td><input type="text" name="Tel"  class="form-control" [(ngModel)]="item.Tel"></td>
+            <td><input type="text" name="Fax"  class="form-control" [(ngModel)]="item.Fax"></td>
+            <td><input type="text" name="Email" class="form-control" [(ngModel)]="item.Email"></td>
+            <td><input type="text" name="Address" class="form-control" [(ngModel)]="item.Address"></td>
+          </tr>
+        </tbody>
+      </app-ui-table>
+      <div class="heading">备注</div>
+      <input type="text" name="Remark" class="form-control" ngModel>
+    </div>
+    <button>保存</button>
+  </app-card>
+</form>

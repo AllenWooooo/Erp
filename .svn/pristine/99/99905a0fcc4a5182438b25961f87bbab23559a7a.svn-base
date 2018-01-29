@@ -1,0 +1,31 @@
+@import "../ui.variables.less";
+
+.table {
+
+  table {
+    min-width: 100%;
+    white-space: nowrap;
+    text-align: left;
+
+    thead {
+
+      th {
+        line-height: 40px;
+        color: @table-thead-color;
+        font-weight: normal;
+        border-bottom: 1px solid @border-color;
+        padding: 0 4px;
+      }
+    }
+
+    tbody {
+
+      td {
+        line-height: 40px;
+        color: @table-tbody-color;
+        border-bottom: 1px solid @border-color;
+        padding: 0 4px;
+      }
+    }
+  }
+}

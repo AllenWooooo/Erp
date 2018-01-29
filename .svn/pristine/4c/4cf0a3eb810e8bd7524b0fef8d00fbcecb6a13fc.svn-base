@@ -1,0 +1,4 @@
+<label>
+  <input type="checkbox" [ngChecked]="checked">
+  <i class="iconfont icon-selected"></i>
+</label>

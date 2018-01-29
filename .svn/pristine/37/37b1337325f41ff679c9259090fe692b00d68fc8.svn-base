@@ -1,0 +1,53 @@
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Routes, RouterModule } from '@angular/router';
+import { HttpClientModule } from '@angular/common/http';
+
+import { UIModule } from '../UI/ui.module';
+import { AppComponent } from './app.component';
+import { MenuComponent } from './components/menu/menu.component';
+import { HeaderComponent } from './components/header/header.component';
+import { ContentComponent } from './components/content/content.component';
+import { TabsComponent } from './components/tabs/tabs.component';
+import { TabOutletDirective } from './directives/outlet.directive';
+import { TabsService } from './components/tabs/tabs.service';
+import { HttpService } from './services/http.service';
+import { AlertService } from './services/alert.service';
+
+import { HomeComponent } from './modules/home/home.component';
+
+
+export const ROUTES: Routes = [
+  {
+    path: 'home',
+    component: HomeComponent
+  },
+  {
+    path: 'basics/supplier',
+    loadChildren: './modules/basics/path/supplier/supplier.module#SupplierModule'
+  }
+];
+
+@NgModule({
+  declarations: [
+    AppComponent,
+    MenuComponent,
+    HeaderComponent,
+    ContentComponent,
+    TabsComponent,
+    TabOutletDirective,
+    HomeComponent
+  ],
+  imports: [
+    BrowserModule,
+    CommonModule,
+    HttpClientModule,
+    UIModule,
+    RouterModule.forRoot(ROUTES)
+  ],
+  providers: [HttpService, TabsService, AlertService],
+  bootstrap: [AppComponent]
+})
+
+export class AppModule { }

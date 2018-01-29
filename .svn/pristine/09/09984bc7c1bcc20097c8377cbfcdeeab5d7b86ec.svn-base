@@ -1,0 +1,6 @@
+@primary-color: #338dff;
+@primary-dark-color: #2E7FE6;
+
+@button-default-color: #545d67;
+@button-default-hover-color: #2A3541;
+@button-default-border-color: #e1e5ea;

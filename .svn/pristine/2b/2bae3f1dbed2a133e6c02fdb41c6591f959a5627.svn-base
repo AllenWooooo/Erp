@@ -1,0 +1,71 @@
+import { Component, Input, Output, OnInit, ViewEncapsulation, EventEmitter } from '@angular/core';
+import { CategoryService } from '../../services/category.service';
+
+@Component({
+  selector: 'app-category',
+  encapsulation: ViewEncapsulation.None,
+  templateUrl: './category.component.html',
+  styleUrls: ['./category.component.less'],
+  providers: [CategoryService]
+})
+
+export class CategoryComponent implements OnInit {
+  @Output() onChange: EventEmitter<any> = new EventEmitter();
+  private categories = <any>[];
+
+  constructor(private categoryService: CategoryService) {
+    // this.categories = this.parseCategory([
+    //   {Id: 1, ParentId: 0, Name: '分类'},
+    //   {Id: 2, ParentId: 0, Name: '分类'},
+    //   {Id: 3, ParentId: 0, Name: '分类'},
+    //   {Id: 4, ParentId: 0, Name: '分类'},
+    //   {Id: 5, ParentId: 0, Name: '分类'},
+    //   {Id: 6, ParentId: 2, Name: '分类'},
+    //   {Id: 7, ParentId: 1, Name: '分类'},
+    //   {Id: 8, ParentId: 1, Name: '分类'},
+    //   {Id: 9, ParentId: 4, Name: '分类'},
+    //   {Id: 10, ParentId: 9, Name: '分类'},
+    //   {Id: 11, ParentId: 9, Name: '分类'},
+    //   {Id: 12, ParentId: 13, Name: '分类'},
+    //   {Id: 13, ParentId: 10, Name: '分类'}
+    // ]);
+  }
+
+  ngOnInit() {
+    this.categoryService
+      .get('Customer', 'Supplier')
+      .subscribe(data => {
+        this.categories = this.parseCategory(data);
+      });
+  }
+
+  private loop(target, source) {
+    return target.map(item => {
+      if (source[item.Id]) {
+        item.subCategories = source[item.Id];
+
+        this.loop(item.subCategories, source);
+      }
+
+      return item;
+    });
+  }
+
+  private parseCategory(services) {
+    const groupedList = services.reduce((value, currentValue) => {
+      if (!value[currentValue.ParentId]) {
+        value[currentValue.ParentId] = [];
+      }
+
+      value[currentValue.ParentId].push(currentValue);
+
+      return value;
+    }, {});
+
+    return this.loop(groupedList['0'], groupedList);
+  }
+
+  private handleChange(selected) {
+    this.onChange.emit(selected);
+  }
+}

@@ -1,0 +1,20 @@
+import { Component, Input } from '@angular/core';
+
+@Component({
+  selector: 'app-category-node',
+  template: `
+    <li *ngFor="let item of categories">
+      <span class="iconfont icon-more"></span>
+      <span class="iconfont icon-form"></span>
+      <a href="">{{item.Name}}</a>
+      <ul *ngIf="item.subCategories">
+        <app-category-node [categories]="item.subCategories">
+        </app-category-node>
+      </ul>
+    </li>
+  `
+})
+
+export class CategoryNodeComponent {
+  @Input() categories = [];
+}

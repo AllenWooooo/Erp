@@ -1,0 +1,35 @@
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+
+import { ButtonComponent  } from './button/button.component';
+import { DropdownComponent  } from './dropdown/dropdown.component';
+import { DropdownToggleComponent} from './dropdown/dropdown-toggle.component';
+import { TableComponent } from './table/table.component';
+import { PaginationComponent } from './pagination/pagination.component';
+import { CheckboxComponent } from './checkbox/checkbox.component';
+
+@NgModule({
+  declarations: [
+    ButtonComponent,
+    DropdownComponent,
+    DropdownToggleComponent,
+    TableComponent,
+    PaginationComponent,
+    CheckboxComponent
+  ],
+  imports: [
+    CommonModule,
+    FormsModule
+  ],
+  exports: [
+    ButtonComponent,
+    DropdownComponent,
+    DropdownToggleComponent,
+    TableComponent,
+    PaginationComponent,
+    CheckboxComponent
+  ]
+})
+
+export class UIModule { }

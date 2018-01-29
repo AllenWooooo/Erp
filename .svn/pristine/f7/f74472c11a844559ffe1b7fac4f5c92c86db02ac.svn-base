@@ -1,0 +1,50 @@
+import { NgModule } from '@angular/core';
+import { Routes, RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+
+import { UIModule } from '../../../../..//UI/ui.module';
+import { SupplierComponent } from './supplier.component';
+import { SupplierListComponent } from './components/list/list.component';
+import { SupplierActionsComponent } from './components/actions/actions.component';
+import { SupplierCreateComponent } from './components/create/create.component';
+import { QuickSearchComponent } from '../../../../components/quick-search/quick-search.component';
+import { CategoryComponent } from '../../../../components/category/category.component';
+import { CategoryNodeComponent } from '../../../../components/category/category-node.component';
+import { CardComponent } from '../../../../components/card/card.component';
+import { PaginationBarComponent } from '../../../../components/pagination-bar/pagination-bar.component';
+import { SupplierService } from './supplier.service';
+import { StringAddonPipe } from '../../../../pipes/string-addon.pipe';
+
+import { EmployeeModule } from '../employee/employee.modules';
+
+export const ROUTES: Routes = [
+  {
+    path: '', component: SupplierComponent, outlet: 'basics-supplier'
+  }
+];
+
+@NgModule({
+  declarations: [
+    SupplierComponent,
+    SupplierListComponent,
+    SupplierActionsComponent,
+    SupplierCreateComponent,
+    QuickSearchComponent,
+    CategoryComponent,
+    CategoryNodeComponent,
+    CardComponent,
+    PaginationBarComponent,
+    StringAddonPipe
+  ],
+  imports: [
+    UIModule,
+    CommonModule,
+    FormsModule,
+    EmployeeModule,
+    RouterModule.forChild(ROUTES)
+  ],
+  providers: [SupplierService]
+})
+
+export class SupplierModule {}

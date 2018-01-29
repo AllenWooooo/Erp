@@ -1,0 +1,36 @@
+import { Component } from '@angular/core';
+import { SupplierService } from '../../supplier.service';
+
+@Component({
+  selector: 'app-supplier-create',
+  templateUrl: './create.component.html',
+  styleUrls: ['./create.component.less']
+})
+
+export class SupplierCreateComponent {
+  private _show = false;
+  private contactList = [{}, {}, {}];
+  private supplier = {};
+
+  constructor(private supplierService: SupplierService) {}
+
+  show() {
+    this._show = true;
+    this.supplierService.newOne().subscribe(data => {
+      debugger;
+      this.supplier = data;
+    });
+  }
+
+  close() {
+    this._show = false;
+  }
+
+  onSubmit({ value }) {
+    debugger;
+    console.log(this.supplier);
+    this.supplierService.create(this.supplier).subscribe(data => {
+      this._show = false;
+    });
+  }
+}

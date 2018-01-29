@@ -1,0 +1,3 @@
+<div class="dropdown" [ngClass]="{'open': _visiable}">
+  <ng-content></ng-content>
+</div>

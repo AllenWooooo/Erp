@@ -1,0 +1,13 @@
+import { Component, Input } from '@angular/core';
+
+@Component({
+  selector: 'app-quick-search',
+  templateUrl: './quick-search.component.html',
+  styleUrls: [
+    './quick-search.component.less'
+  ]
+})
+
+export class QuickSearchComponent {
+  @Input() placeholder: String = '请输入关键字搜索';
+}

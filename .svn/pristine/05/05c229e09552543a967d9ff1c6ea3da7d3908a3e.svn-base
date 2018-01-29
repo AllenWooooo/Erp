@@ -1,0 +1,19 @@
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-basics',
+  template: `
+    <router-outlet></router-outlet>
+  `,
+  styles: [`
+    :host {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+  `]
+})
+
+export class BasicsComponent {
+  title = 'app';
+}

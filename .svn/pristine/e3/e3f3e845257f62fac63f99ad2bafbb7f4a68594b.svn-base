@@ -1,0 +1,20 @@
+import { Injectable,  } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
+import { Subject } from 'rxjs/Subject';
+
+@Injectable()
+export class AlertService {
+  private alert$ = new Subject<any>();
+  private alerts = [];
+
+  constructor() {}
+
+  open(alert) {
+    this.alerts.push(alert);
+    this.alert$.next(this.alerts);
+  }
+
+  get() {
+    return this.alert$.asObservable();
+  }
+}

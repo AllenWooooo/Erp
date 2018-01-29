@@ -1,0 +1,16 @@
+import { Component, Input, HostListener } from '@angular/core';
+import { DropdownComponent } from './dropdown.component';
+
+@Component({
+  selector: 'app-ui-dropdown-toggle',
+  template: '<div><ng-content></ng-content></div>'
+})
+
+export class DropdownToggleComponent extends DropdownComponent {
+  @Input() type = 'button';
+  @Input() style = 'default';
+
+  @HostListener('click') visiableChange() {
+    this._visiable = !this._visiable;
+  }
+}

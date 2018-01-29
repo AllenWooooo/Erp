@@ -1,0 +1,21 @@
+<ul class="pagination">
+  <li [ngClass]="{'disabled': activePage === 1}" *ngIf="prev">
+    <a>
+      <i class="iconfont icon-back"></i>
+    </a>
+  </li>
+
+  <li
+    *ngFor="let button of pageButtons"
+    [ngClass]="{'disabled': button.disabled, 'active': button.active, 'ellipsis': button.ellipsis}">
+    <a>
+      {{button.page}}
+    </a>
+  </li>
+
+  <li [ngClass]="{'disabled': activePage >= _items}" *ngIf="next">
+    <a>
+      <i class="iconfont icon-more"></i>
+    </a>
+  </li>
+</ul>

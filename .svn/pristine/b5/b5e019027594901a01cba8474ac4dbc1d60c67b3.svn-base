@@ -1,0 +1,22 @@
+<div class="modal">
+  <div class="modal-header">
+    <div class="modal-title">
+      <ng-content select="app-ui-modal-header"></ng-content>
+    </div>
+    <a class="close">
+      <i class="iconfont icon-close"></i>
+    </a>
+  </div>
+  <div class="modal-body">
+    <ng-content></ng-content>
+  </div>
+  <div class="modal-footer">
+    <app-ui-button [style]="'primary'">
+      确定
+    </app-ui-button>
+    <app-ui-button>
+      取消
+    </app-ui-button>
+  </div>
+</div>
+<div class="backdrop-background"></div>

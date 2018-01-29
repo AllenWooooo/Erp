@@ -1,0 +1,21 @@
+import { Component, Input } from '@angular/core';
+
+@Component({
+  selector: 'app-supplier-actions',
+  templateUrl: './actions.component.html',
+  styleUrls: ['./actions.component.less']
+})
+
+export class SupplierActionsComponent {
+  private _show = false;
+
+  @Input() selectedItems = <any>[];
+
+  show() {
+    this._show = true;
+  }
+
+  close() {
+    this._show = false;
+  }
+}

@@ -1,0 +1,13 @@
+<div class="category">
+  <ul>
+    <li>
+      <span class="iconfont icon-more"></span>
+      <span class="iconfont icon-form"></span>
+      <a href="">全部分类</a>
+      <ul>
+        <app-category-node [categories]="categories">
+        </app-category-node>
+      </ul>
+    </li>
+  </ul>
+</div>

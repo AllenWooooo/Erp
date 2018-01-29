@@ -1,0 +1,53 @@
+import { Component, AfterViewInit, OnInit, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs/Subscription';
+import { TabsService, Tab } from './components/tabs/tabs.service';
+import { AppService } from './services/app.service';
+import { Router } from '@angular/router';
+import { AlertService } from './services/alert.service';
+
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.less'],
+  providers: [AppService]
+})
+
+export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
+  tabs: Tab[];
+  subscription: Subscription;
+  alertSubscription: Subscription;
+  alerts = [];
+
+  constructor(
+    private router: Router,
+    private tabsService: TabsService,
+    private appService: AppService,
+    private alertService: AlertService
+  ) {
+    this.tabs = this.tabsService.all();
+  }
+
+  ngOnInit() {
+    this.router.navigate(['/home']);
+  }
+
+  ngAfterViewInit() {
+    this.subscription = this.tabsService.get().subscribe((tabs) => {
+      this.tabs = tabs;
+    });
+
+    this.alertSubscription = this.alertService.get().subscribe((alerts) => {
+      this.alerts = alerts;
+    });
+
+    this.appService.getSystemConfig().subscribe((data) => {
+      console.log(data);
+    });
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+    this.alertSubscription.unsubscribe();
+  }
+}

@@ -1,0 +1,35 @@
+<div>
+  <app-ui-table>
+    <thead>
+      <tr>
+        <th>
+          <app-ui-checkbox></app-ui-checkbox>
+        </th>
+        <th>供应商名称</th>
+        <th>供应商名称</th>
+        <th>供应商名称</th>
+        <th>供应商名称</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <app-ui-checkbox checked="true"></app-ui-checkbox>
+        </td>
+        <td>asd</td>
+        <td>asd</td>
+        <td>asd</td>
+        <td>asd</td>
+      </tr>
+    </tbody>
+  </app-ui-table>
+  <app-ui-pagination
+    [boundaryLinks]="true"
+    [prev]="true"
+    [next]="true"
+    [ellipsis]="true"
+    [items]="10"
+    [maxButtons]="5"
+    [activePage]="7"
+  ></app-ui-pagination>
+</div>
