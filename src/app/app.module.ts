@@ -54,11 +54,13 @@ export const ROUTES: Routes = [
     UIModule,
     RouterModule.forRoot(ROUTES)
   ],
-  providers: [{
-    provide: HTTP_INTERCEPTORS,
-    useClass: LoadingInterceptor,
-    multi: true
-  }, {
+  providers: [
+  //   {
+  //   provide: HTTP_INTERCEPTORS,
+  //   useClass: LoadingInterceptor,
+  //   multi: true
+  // },
+  {
     provide: HTTP_INTERCEPTORS,
     useClass: ErrorInterceptor,
     multi: true
