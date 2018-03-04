@@ -33,6 +33,10 @@ export const ROUTES: Routes = [
   {
     path: 'basics/supplier',
     loadChildren: './modules/basics/path/supplier/supplier.module#SupplierModule'
+  },
+  {
+    path: 'basics/employee',
+    loadChildren: './modules/basics/path/employee/employee.module#EmployeeModule'
   }
 ];
 

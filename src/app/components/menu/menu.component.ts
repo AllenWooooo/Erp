@@ -102,11 +102,9 @@ export class MenuComponent {
           ]
         },
         {
-          name: '商品管理',
+          name: '公司内部组织',
           subMenu: [
-            { name: '商品信息', link: '/product' },
-            { name: '价格管理表', link: '/product' },
-            { name: '商品套餐', link: '/product' }
+            { name: '内部职员', link: '/basics/employee', outlet: 'basics-employee' }
           ]
         }
       ]

@@ -14,7 +14,7 @@ import { EmployeeSelectorComponent } from './components/employee-selector/employ
   ],
   imports: [
     UIModule,
-    CommonModule
+    // CommonModule
   ],
   exports: [EmployeeSelectorComponent],
   providers: [EmployeeService]
