@@ -47,6 +47,10 @@ export const ROUTES: Routes = [
     loadChildren: './modules/basics/path/employee/employee.module#EmployeeModule'
   },
   {
+    path: 'basics/department',
+    loadChildren: './modules/basics/path/department/department.module#DepartmentModule'
+  },
+  {
     path: 'purchase/order/new',
     loadChildren: './modules/purchase/path/order/path/new/new.module#PurchaseOrderNewModule'
   }
@@ -84,8 +88,8 @@ export const ROUTES: Routes = [
   bootstrap: [AppComponent]
 })
 
-export class AppModule { 
+export class AppModule {
 
-  
+
 
 }

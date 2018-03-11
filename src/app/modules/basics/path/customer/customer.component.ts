@@ -7,7 +7,10 @@ import { CustomerService } from './customer.service';
   template: `
     <app-customer-actions [selectedItems]="selectedItems" [category]="category"></app-customer-actions>
     <div class="content">
-      <app-category (onChange)="onCategoryChange($event)"></app-category>
+      <app-category
+        (onChange)="onCategoryChange($event)"
+        [resourceType]="'Customer'"
+      ></app-category>
       <app-customer-list (selectItems)="selectItems($event)"></app-customer-list>
     </div>
   `,

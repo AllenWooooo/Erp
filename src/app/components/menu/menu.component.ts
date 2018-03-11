@@ -97,14 +97,14 @@ export class MenuComponent {
           subMenu: [
             { name: '供应商', link: '/basics/supplier', outlet: 'basics-supplier' },
             { name: '客户', link: '/basics/customer', outlet: 'basics-customer' },
-            { name: '其他往来单位', link: '/basics/otherexchangeunit', 
+            { name: '其他往来单位', link: '/basics/otherexchangeunit',
                 outlet: 'basics-otherexchangeunit' }
           ]
         },
         {
           name: '公司内部组织',
           subMenu: [
-            { name: '部门信息', link: '/product' },
+            { name: '部门信息', link: '/basics/department', outlet: 'basics-department' },
             { name: '仓库信息', link: '/product' },
             { name: '内部职员', link: '/basics/employee', outlet: 'basics-employee' }
           ]
