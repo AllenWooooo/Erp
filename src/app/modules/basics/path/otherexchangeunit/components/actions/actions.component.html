@@ -2,7 +2,7 @@
   <app-quick-search [placeholder]="'输入编号、名称、手机号、联系人查询'" (onSearch)="onSearch($event)"></app-quick-search>
   <app-ui-button [style]="'primary'" (click)="show()">
     <i class="iconfont icon-add"></i>
-    新增供应商
+    新增往来单位
   </app-ui-button>
   <app-ui-button [style]="'danger'" [disabled]="!selectedItems.length" (click)="onCancel()">
     <i class="iconfont icon-delete"></i>
@@ -23,8 +23,8 @@
     </app-ui-button>
   </div>
 </div>
-<app-supplier-control
+<app-otherexchangeunit-control
   [show]="_show"
   [customerId]="selectedId"
   (onClose)="close()"
-></app-supplier-control>
+></app-otherexchangeunit-control>

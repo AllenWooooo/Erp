@@ -1,17 +1,17 @@
 import { Component, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
-import { SupplierService } from '../../supplier.service';
+import { OtherExchangeUnitService } from '../../other-exchange-unit.service';
 import { ConfirmService } from '@services/confirm.service';
 import { AlertService } from '@services/alert.service';
 
 @Component({
-  selector: 'app-supplier-list',
+  selector: 'app-otherexchangeunit-list',
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.less']
 })
 
-export class SupplierListComponent implements OnInit, OnDestroy {
-  private suppliers = <any>[];
+export class OtherExchangeUnitListComponent implements OnInit, OnDestroy {
+  private otherExchangeUnits = <any>[];
   private pagination = {};
   private _showContact = false;
   private contactList = <any>[];
@@ -23,29 +23,29 @@ export class SupplierListComponent implements OnInit, OnDestroy {
   @Output() selectItems: EventEmitter<any> = new EventEmitter();
 
   constructor(
-    private supplierService: SupplierService,
+    private otherExchangeUnitService: OtherExchangeUnitService,
     private confirmService: ConfirmService,
     private alertService: AlertService
   ) {
-    this.subscription = this.supplierService
+    this.subscription = this.otherExchangeUnitService
       .get()
-      .subscribe(({ suppliers, currentPagination }) => {
-        this.suppliers = suppliers;
+      .subscribe(({ otherExchangeUnits, currentPagination }) => {
+        this.otherExchangeUnits = otherExchangeUnits;
         this.pagination = currentPagination;
       });
   }
 
   ngOnInit() {
-    this.supplierService.list();
+    this.otherExchangeUnitService.list();
   }
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
   }
 
-  showContact(customerId) {
+  showContact(otherExchangeUnitId) {
     this._showContact = true;
-    this.supplierService.contactList(customerId).subscribe(data => {
+    this.otherExchangeUnitService.contactList(otherExchangeUnitId).subscribe(data => {
       this.contactList = data;
     });
   }
@@ -56,25 +56,25 @@ export class SupplierListComponent implements OnInit, OnDestroy {
 
   selectAll(evt) {
     this.allSelected = evt.target.checked;
-    this.suppliers = this.suppliers.map(item => ({
+    this.otherExchangeUnits = this.otherExchangeUnits.map(item => ({
       ...item,
       selected: this.allSelected
     }));
-    this.selectItems.emit(this.allSelected ? this.suppliers : []);
+    this.selectItems.emit(this.allSelected ? this.otherExchangeUnits : []);
 
   }
 
   select(evt, selectedItem) {
-    this.suppliers = this.suppliers.map(item => ({
+    this.otherExchangeUnits = this.otherExchangeUnits.map(item => ({
       ...item,
       selected: item.Id === selectedItem.Id ? evt.target.checked : item.selected
     }));
-    this.allSelected = this.suppliers.every(item => item.selected);
-    this.selectItems.emit(this.suppliers.filter(item => item.selected));
+    this.allSelected = this.otherExchangeUnits.every(item => item.selected);
+    this.selectItems.emit(this.otherExchangeUnits.filter(item => item.selected));
   }
 
   onPageChange({ current, pageSize }) {
-    this.supplierService.onPageChange({
+    this.otherExchangeUnitService.onPageChange({
       PageIndex: current,
       PageSize: pageSize
     });
@@ -93,7 +93,7 @@ export class SupplierListComponent implements OnInit, OnDestroy {
     this.confirmService.open({
       content: '确认删除吗？',
       onConfirm: () => {
-        this.supplierService
+        this.otherExchangeUnitService
           .cancel([id])
           .subscribe(data => {
             if (data.IsValid) {
@@ -101,7 +101,7 @@ export class SupplierListComponent implements OnInit, OnDestroy {
                 type: 'success',
                 content: '删除成功！'
               });
-              this.supplierService.list();
+              this.otherExchangeUnitService.list();
             } else {
               this.alertService.open({
                 type: 'danger',

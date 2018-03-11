@@ -5,10 +5,10 @@ import { Subject } from 'rxjs/Subject';
 
 
 @Injectable()
-export class SupplierService {
-  private suppliers$ = new Subject<any>();
+export class OtherExchangeUnitService {
+  private otherExchangeUnits$ = new Subject<any>();
   private state = {
-    suppliers: [],
+    otherExchangeUnits: [],
     currentQueryKey: '',
     currentCategory: { Id: null },
     currentPagination: {
@@ -20,7 +20,7 @@ export class SupplierService {
 
   constructor(private http: HttpService) {}
 
-  get() { return this.suppliers$.asObservable(); }
+  get() { return this.otherExchangeUnits$.asObservable(); }
 
   list() {
     const {
@@ -35,18 +35,18 @@ export class SupplierService {
     return this.http.post('/Customer/GetListPaged', {
       QueryKey: currentQueryKey,
       CustomerCategoryId: currentCategory.Id,
-      CustomerType: 'Supplier',
+      CustomerType: 'Other',
       PageIndex,
       PageSize
     }).subscribe(data => {
       const nextState = {
         ...this.state,
-        suppliers: data.CustomerList,
+        otherExchangeUnits: data.CustomerList,
         currentPagination: data.Pagination
       };
 
       this.state = nextState;
-      this.suppliers$.next(nextState);
+      this.otherExchangeUnits$.next(nextState);
     });
   }
 
@@ -60,7 +60,7 @@ export class SupplierService {
     const { currentCategory } = this.state;
 
     return this.http.get('/Customer/GetForNew', {
-      customerType: 'Supplier',
+      customerType: 'Other',
       customerCategoryId: currentCategory.Id
     });
   }
