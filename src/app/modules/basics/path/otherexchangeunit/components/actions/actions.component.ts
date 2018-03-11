@@ -1,22 +1,22 @@
 import { Component, Input } from '@angular/core';
-import { SupplierService } from '../../supplier.service';
+import { OtherExchangeUnitService } from '../../other-exchange-unit.service';
 import { ConfirmService } from '@services/confirm.service';
 import { AlertService } from '@services/alert.service';
 
 @Component({
-  selector: 'app-supplier-actions',
+  selector: 'app-otherexchangeunit-actions',
   templateUrl: './actions.component.html',
   styleUrls: ['./actions.component.less']
 })
 
-export class SupplierActionsComponent {
+export class OtherExchangeUnitActionsComponent {
   private _show = false;
   private selectedId: number;
   @Input() selectedItems = <any>[];
   @Input() category;
 
   constructor(
-    private supplierService: SupplierService,
+    private otherExchangeUnitService: OtherExchangeUnitService,
     private confirmService: ConfirmService,
     private alertService: AlertService
   ) {}
@@ -31,14 +31,14 @@ export class SupplierActionsComponent {
   }
 
   onSearch(queryKey) {
-    this.supplierService.onSearch(queryKey);
+    this.otherExchangeUnitService.onSearch(queryKey);
   }
 
   onCancel() {
     this.confirmService.open({
       content: '确认删除吗？',
       onConfirm: () => {
-        this.supplierService
+        this.otherExchangeUnitService
           .cancel(this.selectedItems.map(item => item.Id))
           .subscribe(data => {
             if (data.IsValid) {
@@ -46,7 +46,7 @@ export class SupplierActionsComponent {
                 type: 'success',
                 content: '删除成功！'
               });
-              this.supplierService.list();
+              this.otherExchangeUnitService.list();
             } else {
               this.alertService.open({
                 type: 'danger',

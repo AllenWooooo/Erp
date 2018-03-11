@@ -35,6 +35,14 @@ export const ROUTES: Routes = [
     loadChildren: './modules/basics/path/supplier/supplier.module#SupplierModule'
   },
   {
+    path: 'basics/otherexchangeunit',
+    loadChildren: './modules/basics/path/otherexchangeunit/other-exchange-unit.module#OtherExchangeUnitModule'
+  },
+  {
+    path: 'basics/customer',
+    loadChildren: './modules/basics/path/customer/customer.module#CustomerModule'
+  },
+  {
     path: 'basics/employee',
     loadChildren: './modules/basics/path/employee/employee.module#EmployeeModule'
   }

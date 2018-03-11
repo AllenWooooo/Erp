@@ -14,7 +14,7 @@
         <tr>
           <th class="form-label">
             <span class="required">*</span>
-            供应商编号：
+            往来单位编号：
           </th>
           <td class="form-control-group">
             <app-form-field [name]="'Code'">
@@ -23,7 +23,7 @@
           </td>
           <th>
             <span class="required">*</span>
-            供应商名称：
+            往来单位名称：
           </th>
           <td class="form-control-group">
             <app-form-field [name]="'Name'">
@@ -45,6 +45,7 @@
           <th class="form-label">银行账户：</th>
           <td class="form-control-group" colspan="3">
             <input type="text" formControlName="BankInfo" class="form-control" [ngModel]>
+            <input type="hidden" formControlName="CustomerType" class="form-control" [ngModel]>
           </td>
         </tr>
       </table>
@@ -111,5 +112,5 @@
       </app-ui-button>
     </div>
   </app-card>
-  <input type="hidden" formControlName="CustomerType" value="1" [ngModel]>
+  <input type="hidden" formControlName="CustomerType" value="3" [ngModel]>
 </form>

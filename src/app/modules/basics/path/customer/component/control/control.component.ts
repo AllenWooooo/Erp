@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { SupplierService } from '../../supplier.service';
+import { CustomerService } from '../../customer.service';
 import { FormService } from '@services/form.service';
 import { FormGroup, FormArray, FormControl, FormBuilder } from '@angular/forms';
 import { AlertService } from '@services/alert.service';
@@ -24,13 +24,13 @@ const contractor = {
 };
 
 @Component({
-  selector: 'app-supplier-control',
+  selector: 'app-customer-control',
   templateUrl: './control.component.html',
   styleUrls: ['./control.component.less'],
   providers: [FormService]
 })
 
-export class SupplierControlComponent {
+export class CustomerControlComponent {
   private contactList = [{}, {}, {}];
   private form = new FormGroup({});
   private _show = false;
@@ -69,13 +69,13 @@ export class SupplierControlComponent {
   refreshList() {
     if (this._show) {
       if (this.type === 'create') {
-        this.supplierService
+        this.customerService
           .newOne()
           .subscribe(data => {
             this.form = this.formService.createForm(data);
           });
       } else {
-        this.supplierService
+        this.customerService
           .detail(this.customerId)
           .subscribe(data => {
             this.form = this.formService.createForm(data);
@@ -87,7 +87,7 @@ export class SupplierControlComponent {
   @Output() onClose: EventEmitter<any> = new EventEmitter();
 
   constructor(
-    private supplierService: SupplierService,
+    private customerService: CustomerService,
     private formService: FormService,
     private fb: FormBuilder,
     private alertService: AlertService
@@ -103,25 +103,25 @@ export class SupplierControlComponent {
 
   onSubmit({ value }) {
     if (this.type === 'create') {
-      this.supplierService.create(value).subscribe(data => {
+      this.customerService.create(value).subscribe(data => {
         if (data.IsValid) {
           this.onClose.emit();
           this.alertService.open({
             type: 'success',
             content: '添加成功！'
           });
-          this.supplierService.list();
+          this.customerService.list();
         }
       });
     } else {
-      this.supplierService.update(value).subscribe(data => {
+      this.customerService.update(value).subscribe(data => {
         if (data.IsValid) {
           this.onClose.emit();
           this.alertService.open({
             type: 'success',
             content: '修改成功！'
           });
-          this.supplierService.list();
+          this.customerService.list();
         }
       });
     }
