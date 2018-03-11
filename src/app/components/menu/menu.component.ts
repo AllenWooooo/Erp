@@ -16,11 +16,10 @@ export class MenuComponent {
       icon: 'cart',
       subMenu: [
         {
-          name: '商品管理',
+          name: '采购订单管理',
           subMenu: [
-            { name: '商品信息', link: '/product' },
-            { name: '价格管理表', link: '/product' },
-            { name: '商品套餐', link: '/product' }
+            { name: '新增采购订单', link: '/purchase/order/new', outlet: 'purchase-order-new' },
+            { name: '采购订单历史', link: '/purchase/order/record' }
           ]
         }
       ]

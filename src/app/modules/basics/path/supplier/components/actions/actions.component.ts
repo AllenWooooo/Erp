@@ -40,8 +40,8 @@ export class SupplierActionsComponent {
       onConfirm: () => {
         this.supplierService
           .cancel(this.selectedItems.map(item => item.Id))
-          .subscribe(data => {
-            if (data.IsValid) {
+          .subscribe(({ IsValid }) => {
+            if (IsValid) {
               this.alertService.open({
                 type: 'success',
                 content: '删除成功！'

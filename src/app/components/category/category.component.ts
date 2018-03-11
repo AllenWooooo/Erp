@@ -13,13 +13,16 @@ export class CategoryComponent implements OnInit {
   private categories = <any>[];
   private selected = {};
 
+  @Input() categoryType = 'Customer';
+  @Input() resourceType = 'Supplier';
+
   @Output() onChange: EventEmitter<any> = new EventEmitter();
 
   constructor(private categoryService: CategoryService) {}
 
   ngOnInit() {
     this.categoryService
-      .get('Customer', 'Supplier')
+      .get(this.categoryType, this.resourceType)
       .subscribe(data => {
         this.categories = this.parseCategory(data);
       });

@@ -17,6 +17,8 @@ import { FormService } from '@services/form.service';
 import { EmployeeModule } from '../employee/employee.module';
 import { AreaModule } from '../area/area.module';
 import { AppCommonModule } from '@modules/common/common.module';
+import { SharedModule } from '@app/shared.module';
+
 
 export const ROUTES: Routes = [
   {
@@ -41,6 +43,7 @@ export const ROUTES: Routes = [
     EmployeeModule,
     AreaModule,
     AppCommonModule,
+    SharedModule,
     RouterModule.forChild(ROUTES)
   ],
   providers: [SupplierService]

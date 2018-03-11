@@ -7,7 +7,11 @@ import { SupplierService } from './supplier.service';
   template: `
     <app-supplier-actions [selectedItems]="selectedItems" [category]="category"></app-supplier-actions>
     <div class="content">
-      <app-category (onChange)="onCategoryChange($event)"></app-category>
+      <app-category
+        [categoryType]="'Customer'"
+        [resourceType]="'Supplier'"
+        (onChange)="onCategoryChange($event)"
+      ></app-category>
       <app-supplier-list (selectItems)="selectItems($event)"></app-supplier-list>
     </div>
   `,

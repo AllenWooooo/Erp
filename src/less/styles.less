@@ -68,6 +68,15 @@ table {
   }
 }
 
+.more-actions {
+  padding: 10px 16px;
+  border-bottom: 1px solid @border-color;
+
+  .btn + .btn {
+    margin-left: 10px;
+  }
+}
+
 .form {
   width: 100%;
   white-space: nowrap;
@@ -109,6 +118,7 @@ table {
 .form-control {
   display: block;
   width: 100%;
+  height: 30px;
   border-style: solid;
   border-width: 0 0 1px 0;
   border-color: @border-color;
@@ -170,5 +180,45 @@ table {
 
   &:hover {
     color: @close-hover-color;
+  }
+}
+
+.form-group {
+  display: flex;
+  align-items: center;
+
+  .form-group-label {
+    // display: flex;
+    // align-items: center;
+  }
+
+  .form-group-control {}
+
+  &+.form-group {
+    margin-left: 10px;
+  }
+}
+
+.selector-group {
+  position: relative;
+  width: 200px;
+
+  .form-control {
+    border-width: 1px;
+    border-radius: 4px;
+    padding-right: 40px;
+  }
+
+  .addon {
+    position: absolute;
+    top: 1px;
+    bottom: 1px;
+    right: 0;
+    width: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-left: 1px solid @border-color;
+    cursor: pointer;
   }
 }

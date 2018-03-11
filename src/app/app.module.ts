@@ -45,6 +45,10 @@ export const ROUTES: Routes = [
   {
     path: 'basics/employee',
     loadChildren: './modules/basics/path/employee/employee.module#EmployeeModule'
+  },
+  {
+    path: 'purchase/order/new',
+    loadChildren: './modules/purchase/path/order/path/new/new.module#PurchaseOrderNewModule'
   }
 ];
 
