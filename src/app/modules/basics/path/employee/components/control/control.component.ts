@@ -15,6 +15,7 @@ import { AlertService } from '@services/alert.service';
 export class EmployeeControlComponent {
   private form = new FormGroup({});
   private _show = false;
+  private _employeeId: number;
 
   @Input()
   get show() {
@@ -22,7 +23,19 @@ export class EmployeeControlComponent {
   }
 
   set show(isShow) {
-    if (isShow) {
+    this._show = isShow;
+  }
+
+  @Input() type = 'create';
+ 
+  @Input()
+  set employeeId(employeeId) {
+   this._employeeId = employeeId;
+   this.showPop();
+  }
+
+  private showPop(): void {
+    if (this._show) {
       if (this.type === 'create') {
         this.employeeService
           .newOne()
@@ -31,16 +44,18 @@ export class EmployeeControlComponent {
           });
       } else {
         this.employeeService
-          .detail(this.employeeId)
+          .detail(this._employeeId)
           .subscribe(data => {
             this.form = this.formService.createForm(data);
           });
       }
     }
-    this._show = isShow;
   }
-  @Input() type = 'create';
-  @Input() employeeId: number;
+
+  get employeeId() {
+    return this._employeeId;
+  }
+
   @Output() onClose: EventEmitter<any> = new EventEmitter();
 
   constructor(
@@ -48,7 +63,7 @@ export class EmployeeControlComponent {
     private formService: FormService,
     private fb: FormBuilder,
     private alertService: AlertService
-  ) {}
+  ) { }
 
   get formReady(): boolean { return !!Object.keys(this.form.controls).length; }
 
@@ -56,17 +71,27 @@ export class EmployeeControlComponent {
     this.onClose.emit();
   }
 
+  validate(data,option:string):void{
+    if (data.IsValid) {
+      this.onClose.emit();
+      this.alertService.open({
+        type: 'success',
+        content: option+'成功！'
+      });      
+      this.employeeService.list();
+    }
+  }
+
   onSubmit({ value }) {
-    this.employeeService.create(value).subscribe(data => {
-      if (data.IsValid) {
-        this.onClose.emit();
-        this.alertService.open({
-          type: 'success',
-          content: '添加成功！'
-        });
-        this.employeeService.list();
-      }
-    });
+    if(value.Id==0){
+      this.employeeService.create(value).subscribe(data => {
+        this.validate(data,"添加");
+      });
+    }else{
+      this.employeeService.modify(value).subscribe(data => {
+        this.validate(data,"修改");
+      });
+    }    
   }
 }
 

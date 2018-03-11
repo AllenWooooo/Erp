@@ -17,7 +17,7 @@ export class EmployeeSelectorComponent implements OnInit, ControlValueAccessor {
   private onTouched;
   private onChange;
 
-  constructor(private employeeService: EmployeeService) {}
+  constructor(private employeeService: EmployeeService) {console.log(1);}
 
   ngOnInit() {
     this.employeeService
@@ -26,13 +26,12 @@ export class EmployeeSelectorComponent implements OnInit, ControlValueAccessor {
         this.list = data.map(item => ({
           label: item.Name,
           value: item.Id
-        }));
-        this.innerValue = 0;
+        }));        
       });
   }
 
   writeValue(value) {
-    this.innerValue = value;
+    this.innerValue = value || 0;
   }
 
   registerOnChange(fn) {

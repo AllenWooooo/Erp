@@ -31,12 +31,12 @@ export const ROUTES: Routes = [
     component: HomeComponent
   },
   {
-    path: 'basics/supplier',
-    loadChildren: './modules/basics/path/supplier/supplier.module#SupplierModule'
-  },
-  {
     path: 'basics/employee',
     loadChildren: './modules/basics/path/employee/employee.module#EmployeeModule'
+  },
+  {
+    path: 'basics/supplier',
+    loadChildren: './modules/basics/path/supplier/supplier.module#SupplierModule'
   }
 ];
 
@@ -72,4 +72,8 @@ export const ROUTES: Routes = [
   bootstrap: [AppComponent]
 })
 
-export class AppModule { }
+export class AppModule { 
+
+  
+
+}

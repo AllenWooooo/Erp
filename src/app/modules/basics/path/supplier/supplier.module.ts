@@ -11,12 +11,8 @@ import { SupplierControlComponent } from './components/control/control.component
 import { QuickSearchComponent } from '@components/quick-search/quick-search.component';
 import { CategoryComponent } from '@components/category/category.component';
 import { CategoryNodeComponent } from '@components/category/category-node.component';
-import { CardComponent } from '@components/card/card.component';
-import { PaginationBarComponent } from '@components/pagination-bar/pagination-bar.component';
-import { FormFieldComponent } from '@components/form-field/form-field.component';
 import { SupplierService } from './supplier.service';
 import { FormService } from '@services/form.service';
-import { StringAddonPipe } from '@pipes/string-addon.pipe';
 
 import { EmployeeModule } from '../employee/employee.module';
 import { AreaModule } from '../area/area.module';
@@ -34,13 +30,8 @@ export const ROUTES: Routes = [
     SupplierListComponent,
     SupplierActionsComponent,
     SupplierControlComponent,
-    QuickSearchComponent,
     CategoryComponent,
-    CategoryNodeComponent,
-    CardComponent,
-    PaginationBarComponent,
-    FormFieldComponent,
-    StringAddonPipe
+    CategoryNodeComponent
   ],
   imports: [
     UIModule,

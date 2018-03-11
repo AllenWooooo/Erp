@@ -69,7 +69,6 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
   }
 
   update(id) {
-    console.log(id);
     this.selectedId = id;
     this._showUpdate = true;
   }

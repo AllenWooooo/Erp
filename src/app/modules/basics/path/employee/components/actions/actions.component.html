@@ -24,7 +24,9 @@
     </div>
   </div>
   <app-employee-control
+    [type]="'create'"
     [show]="_show"
+    [employeeId]="selectedId"
     (onClose)="close()"
   ></app-employee-control>
   

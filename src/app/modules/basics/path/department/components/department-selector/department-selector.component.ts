@@ -27,12 +27,11 @@ export class DepartmentSelectorComponent implements OnInit, ControlValueAccessor
           label: item.Name,
           value: item.Id
         }));
-        this.innerValue = 0;
       });
   }
 
   writeValue(value) {
-    this.innerValue = value;
+    this.innerValue = value || 0;
   }
 
   registerOnChange(fn) {

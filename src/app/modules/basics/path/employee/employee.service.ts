@@ -65,7 +65,6 @@ export class EmployeeService {
   }
 
   detail(employeeId) {
-    console.log(employeeId);
     return this.http.get(`/Employee/GetForModify?employeeId=${employeeId}`);
   }
 
@@ -75,9 +74,15 @@ export class EmployeeService {
     });
   }
 
-  cancel(employeeIdList) {
+  modify(employee){
+    return this.http.post('/Employee/Modify', {
+      employee
+    });
+  }
+
+  cancel(entityIdList) {
     return this.http.post('/Employee/Cancel', {
-      employeeIdList
+      entityIdList
     });
   }
 

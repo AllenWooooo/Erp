@@ -11,6 +11,7 @@ import { AlertService } from '@services/alert.service';
 
 export class EmployeeActionsComponent {
   private _show = false;
+  private selectedId: number;
 
   @Input() selectedItems = <any>[];
 
@@ -22,6 +23,7 @@ export class EmployeeActionsComponent {
 
   show() {
     this._show = true;
+    this.selectedId = 0;
   }
 
   close() {

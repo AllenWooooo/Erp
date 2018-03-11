@@ -15,7 +15,11 @@
     "target": "http://139.196.96.129:8899",
     "secure": false
   },
-  "/employee/**": {
+  "/Employee/**": {
+    "target": "http://139.196.96.129:8899",
+    "secure": false
+  },
+  "/Department/**": {
     "target": "http://139.196.96.129:8899",
     "secure": false
   },
