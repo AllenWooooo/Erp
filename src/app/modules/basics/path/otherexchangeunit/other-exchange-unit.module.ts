@@ -8,19 +8,13 @@ import { OtherExchangeUnitComponent } from './other-exchange-unit.component';
 import { OtherExchangeUnitListComponent } from './components/list/list.component';
 import { OtherExchangeUnitActionsComponent } from './components/actions/actions.component';
 import { OtherExchangeUnitControlComponent } from './components/control/control.component';
-import { QuickSearchComponent } from '@components/quick-search/quick-search.component';
-import { CategoryComponent } from '@components/category/category.component';
-import { CategoryNodeComponent } from '@components/category/category-node.component';
-import { CardComponent } from '@components/card/card.component';
-import { PaginationBarComponent } from '@components/pagination-bar/pagination-bar.component';
-import { FormFieldComponent } from '@components/form-field/form-field.component';
 import { OtherExchangeUnitService } from './other-exchange-unit.service';
 import { FormService } from '@services/form.service';
-import { StringAddonPipe } from '@pipes/string-addon.pipe';
 
 import { EmployeeModule } from '../employee/employee.module';
 import { AreaModule } from '../area/area.module';
 import { AppCommonModule } from '@modules/common/common.module';
+import { SharedModule } from '@app/shared.module';
 
 export const ROUTES: Routes = [
   {
@@ -33,14 +27,7 @@ export const ROUTES: Routes = [
     OtherExchangeUnitComponent,
     OtherExchangeUnitListComponent,
     OtherExchangeUnitActionsComponent,
-    OtherExchangeUnitControlComponent,
-    QuickSearchComponent,
-    CategoryComponent,
-    CategoryNodeComponent,
-    CardComponent,
-    PaginationBarComponent,
-    FormFieldComponent,
-    StringAddonPipe
+    OtherExchangeUnitControlComponent
   ],
   imports: [
     UIModule,
@@ -50,6 +37,7 @@ export const ROUTES: Routes = [
     EmployeeModule,
     AreaModule,
     AppCommonModule,
+    SharedModule,
     RouterModule.forChild(ROUTES)
   ],
   providers: [OtherExchangeUnitService]

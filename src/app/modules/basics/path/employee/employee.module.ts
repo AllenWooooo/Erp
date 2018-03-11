@@ -15,6 +15,7 @@ import { FormService } from '@services/form.service';
 
 import { DepartmentModule } from '../department/department.module';
 import { AppCommonModule } from '@modules/common/common.module';
+import { SharedModule} from '@app/shared.module';
 
 export const ROUTES: Routes = [
   {
@@ -37,6 +38,7 @@ export const ROUTES: Routes = [
     DepartmentModule,
     ReactiveFormsModule,
     AppCommonModule,
+    SharedModule,
     RouterModule.forChild(ROUTES)
   ],
   exports: [EmployeeSelectorComponent,EmployeeListComponent],
