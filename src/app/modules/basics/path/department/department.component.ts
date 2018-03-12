@@ -1,10 +1,19 @@
 import { Subscription } from 'rxjs/Subscription';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 
+import {  DepartmentService } from './department.service'
+
 @Component({
   selector: 'app-basics-department',
   template: `
-    <div>department
+    <app-department-actions [selectedItems]="selectedItems"  [category]="category"></app-department-actions>
+    <div class="content">    
+    <app-category
+        [categoryType]="'Customer'"
+        [resourceType]="'Supplier'"
+        (onChange)="onCategoryChange($event)"
+      ></app-category>
+      <app-department-list (selectItems)="selectItems($event)"></app-department-list>
     </div>
   `,
   styles: [`
@@ -22,12 +31,25 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 })
 
 export class DepartmentComponent implements OnInit, OnDestroy {
+  private selectedItems = <any>[];
+  private subscription: Subscription;
+
   constructor(
-  ) {}
+    private departmentService: DepartmentService
+  ) {
+  }
 
   ngOnInit() {
+    this.subscription = this.departmentService
+      .get().subscribe(({  }) => {
+      });
   }
 
   ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
+
+  selectItems(selected) {
+    this.selectedItems = selected;
   }
 }
