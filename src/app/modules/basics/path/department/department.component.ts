@@ -3,17 +3,21 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import {  DepartmentService } from './department.service'
 
+// <app-department-actions [selectedItems]="selectedItems"  [category]="category"></app-department-actions>
+
+
+// <app-department-list (selectItems)="selectItems($event)"></app-department-list>
 @Component({
   selector: 'app-basics-department',
-  template: `
-    <app-department-actions [selectedItems]="selectedItems"  [category]="category"></app-department-actions>
+  template: `   
+    <app-department-actions [selectedItems]="selectedItems"  [category]="category"></app-department-actions> 
     <div class="content">    
     <app-category
-        [categoryType]="'Customer'"
-        [resourceType]="'Supplier'"
-        (onChange)="onCategoryChange($event)"
-      ></app-category>
-      <app-department-list (selectItems)="selectItems($event)"></app-department-list>
+    [categoryType]="'Department'"
+    [resourceType]="'Department'"
+    (onChange)="onCategoryChange($event)"
+    ></app-category>
+    <app-department-list (selectItems)="selectItems($event)"></app-department-list>
     </div>
   `,
   styles: [`

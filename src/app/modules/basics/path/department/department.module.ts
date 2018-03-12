@@ -8,6 +8,9 @@ import { UIModule } from '@UI/ui.module';
 import { DepartmentService } from './department.service';
 import { DepartmentSelectorComponent } from './components/department-selector/department-selector.component';
 import { DepartmentComponent } from './department.component';
+import { DepartmentActionsComponent} from './components/actions/actions.component';
+import { DepartmentListComponent } from './components/list/list.component';
+import { DepartmentControlComponent } from './components/control/control.component';
 
 import { AppCommonModule } from '@modules/common/common.module';
 import { SharedModule} from '@app/shared.module';
@@ -22,7 +25,10 @@ export const ROUTES: Routes = [
 @NgModule({
   declarations: [
     DepartmentSelectorComponent,
-    DepartmentComponent
+    DepartmentComponent,
+    DepartmentActionsComponent,
+    DepartmentControlComponent,
+    DepartmentListComponent
   ],
   imports: [
     UIModule,

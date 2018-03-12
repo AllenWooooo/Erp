@@ -4,18 +4,17 @@ import { ConfirmService } from '@services/confirm.service';
 import { AlertService } from '@services/alert.service';
 
 @Component({
-  selector: 'app-dempartment-actions',
+  selector: 'app-department-actions',
   templateUrl: './actions.component.html',
   styleUrls: ['./actions.component.less']
 })
 
-export class DempartmentActionsComponent {
+export class DepartmentActionsComponent {
   private _show = false;
   private selectedId: number;
 
+  @Input() selectedItems = <any>[];  
   @Input() category;
-
-  @Input() selectedItems = <any>[];
 
   constructor(
     private departmentService: DepartmentService,
