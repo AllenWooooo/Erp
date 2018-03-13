@@ -30,5 +30,13 @@
   "/SalePriceLevel/**": {
     "target": "http://139.196.96.129:8899",
     "secure": false
+  },
+  "/FundsAccount/**": {
+    "target": "http://139.196.96.129:8899",
+    "secure": false
+  },
+  "/FeeType/**": {
+    "target": "http://139.196.96.129:8899",
+    "secure": false
   }
 }
