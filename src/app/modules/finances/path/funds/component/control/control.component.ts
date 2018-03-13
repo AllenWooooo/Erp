@@ -1,17 +1,17 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { FeeTypeService } from '../../feetype.service';
+import { FundsService } from '../../funds.service';
 import { FormService } from '@services/form.service';
 import { FormGroup, FormArray, FormControl, FormBuilder } from '@angular/forms';
 import { AlertService } from '@services/alert.service';
 
 @Component({
-  selector: 'app-feetype-control',
+  selector: 'app-funds-control',
   templateUrl: './control.component.html',
   styleUrls: ['./control.component.less'],
   providers: [FormService]
 })
 
-export class FeeTypeControlComponent {
+export class FundsControlComponent {
   private form = new FormGroup({});
   private _show = false;
 
@@ -25,37 +25,37 @@ export class FeeTypeControlComponent {
   }
   @Input() type = 'create';
 
-  private _feeTypeId: number;
+  private _fundsId: number;
 
-  get feeTypeId() {
-    return this._feeTypeId;
+  get fundsId() {
+    return this._fundsId;
   }
 
   @Input()
-  set feeTypeId(feeTypeId) {
-    this._feeTypeId = feeTypeId;
+  set fundsId(fundsId) {
+    this._fundsId = fundsId;
     this.refreshList();
   }
 
   getTitle(): string {
     if (this.type === 'create') {
-      return '添加费用类型';
+      return '添加银行账户';
     } else {
-      return '修改费用类型';
+      return '修改银行账户';
     }
   }
 
   refreshList() {
     if (this._show) {
       if (this.type === 'create') {
-        // this.feeTypeService
-        //   .newOne()
-        //   .subscribe(data => {
-             this.form = this.formService.createForm('{"Id":,"Name":"","Code":""}');
-        //   });
+        this.fundsService
+          .newOne()
+          .subscribe(data => {
+            this.form = this.formService.createForm(data);
+        });
       } else {
-        this.feeTypeService
-          .detail(this.feeTypeId)
+        this.fundsService
+          .detail(this.fundsId)
           .subscribe(data => {
             this.form = this.formService.createForm(data);
           });
@@ -66,7 +66,7 @@ export class FeeTypeControlComponent {
   @Output() onClose: EventEmitter<any> = new EventEmitter();
 
   constructor(
-    private feeTypeService: FeeTypeService,
+    private fundsService: FundsService,
     private formService: FormService,
     private fb: FormBuilder,
     private alertService: AlertService
@@ -80,25 +80,25 @@ export class FeeTypeControlComponent {
 
   onSubmit({ value }) {
     if (this.type === 'create') {
-      this.feeTypeService.create(value).subscribe(data => {
+      this.fundsService.create(value).subscribe(data => {
         if (data.IsValid) {
           this.onClose.emit();
           this.alertService.open({
             type: 'success',
             content: '添加成功！'
           });
-          this.feeTypeService.list();
+          this.fundsService.list();
         }
       });
     } else {
-      this.feeTypeService.update(value).subscribe(data => {
+      this.fundsService.update(value).subscribe(data => {
         if (data.IsValid) {
           this.onClose.emit();
           this.alertService.open({
             type: 'success',
             content: '修改成功！'
           });
-          this.feeTypeService.list();
+          this.fundsService.list();
         }
       });
     }

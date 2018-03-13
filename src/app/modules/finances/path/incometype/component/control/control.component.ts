@@ -51,7 +51,7 @@ export class IncomeTypeControlComponent {
         // this.incomeTypeService
         //   .newOne()
         //   .subscribe(data => {
-          this.form = this.formService.createForm('{"Id":41,"Name":"","Code":""}');
+          this.form = this.formService.createForm('{"Id":0,"Name":"","Code":""}');
         //   });
       } else {
         this.incomeTypeService

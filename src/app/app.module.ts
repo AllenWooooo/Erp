@@ -51,6 +51,14 @@ export const ROUTES: Routes = [
     loadChildren: './modules/finances/path/feetype/feetype.module#FeeTypeModule'
   },
   {
+    path: 'finances/funds',
+    loadChildren: './modules/finances/path/funds/funds.module#FundsModule'
+  },
+  {
+    path: 'finances/feetype',
+    loadChildren: './modules/finances/path/feetype/feetype.module#FeeTypeModule'
+  },
+  {
     path: 'basics/employee',
     loadChildren: './modules/basics/path/employee/employee.module#EmployeeModule'
   },
