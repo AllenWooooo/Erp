@@ -57,11 +57,11 @@ export class MenuComponent {
       icon: 'dollar',
       subMenu: [
         {
-          name: '商品管理',
+          name: '基础资料',
           subMenu: [
-            { name: '商品信息', link: '/product' },
-            { name: '价格管理表', link: '/product' },
-            { name: '商品套餐', link: '/product' }
+            { name: '银行账户', link: '/finances/funds', outlet: 'finances-funds' },
+            { name: '费用类型', link: '/finances/feetype', outlet: 'finances-feetype' },
+            { name: '收入类型', link: '/finances/incometype', outlet: 'finances-incometype' }
           ]
         }
       ]

@@ -43,6 +43,14 @@ export const ROUTES: Routes = [
     loadChildren: './modules/basics/path/customer/customer.module#CustomerModule'
   },
   {
+    path: 'finances/incometype',
+    loadChildren: './modules/finances/path/incometype/incometype.module#IncomeTypeModule'
+  },
+  {
+    path: 'finances/feetype',
+    loadChildren: './modules/finances/path/feetype/feetype.module#FeeTypeModule'
+  },
+  {
     path: 'basics/employee',
     loadChildren: './modules/basics/path/employee/employee.module#EmployeeModule'
   },
