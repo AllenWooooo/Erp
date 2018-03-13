@@ -78,7 +78,7 @@ export class SupplierService {
   update(customer) {
     return this.http.post('/Customer/Modify', {
       customer
-    })
+    });
   }
 
   cancel(customerIdList) {
