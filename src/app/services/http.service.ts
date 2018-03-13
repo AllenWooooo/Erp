@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
+import * as settings from '../../assets/appsettings.json';
 
 interface BodyMethodOption {
   params: Object;
@@ -48,9 +49,18 @@ export class HttpService {
     }
 
     return ret;
-}
+  }
+
+  private getUrl(url: string): string {
+    const crossSupport = (<any>settings).CrossSupport;
+    if (!crossSupport) {
+      return url;
+    }
+    return 'http://' + (<any>settings).CrossProxyURL + url;
+  }
 
   private request(method: string, url: string, params?: Object, option?: Object) {
+    url = this.getUrl(url);
     return this.http[method](url, {
       ...option,
       params: this.parseParams(params)
@@ -58,6 +68,7 @@ export class HttpService {
   }
 
   private requestWithBody(method: string, url: string, body: any, option?: BodyMethodOption) {
+    url = this.getUrl(url);
     return this.http[method](url, body, {
       ...option,
       params: option ? this.parseParams(option.params) : undefined
