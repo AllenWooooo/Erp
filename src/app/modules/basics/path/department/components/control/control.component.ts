@@ -17,6 +17,8 @@ export class DepartmentControlComponent {
   private _show = false;
   private _departmentId: number;
 
+  @Input() category:any;
+
   @Input()
   get show() {
     return this._show;
@@ -40,6 +42,7 @@ export class DepartmentControlComponent {
         this.departmentService
           .newOne()
           .subscribe(data => {
+            data.CategoryId = this.category.Id;
             this.form = this.formService.createForm(data);
           });
       } else {
@@ -66,6 +69,7 @@ export class DepartmentControlComponent {
   ) { }
 
   get formReady(): boolean { return !!Object.keys(this.form.controls).length; }
+  get categoryName():String { return this.category? this.category.Name : this.form.get("CategoryName").value;}
 
   handleClose() {
     this.onClose.emit();

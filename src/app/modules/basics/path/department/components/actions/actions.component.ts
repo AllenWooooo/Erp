@@ -12,9 +12,18 @@ import { AlertService } from '@services/alert.service';
 export class DepartmentActionsComponent {
   private _show = false;
   private selectedId: number;
+  private _category:any;
+  private selectCategory:any;
 
   @Input() selectedItems = <any>[];  
-  @Input() category;
+
+  @Input() set category(category){
+    this._category = category;
+  };
+
+  get category(){
+    return this._category;
+  }
 
   constructor(
     private departmentService: DepartmentService,
@@ -24,6 +33,7 @@ export class DepartmentActionsComponent {
 
   show() {
     this._show = true;
+    this.selectCategory = this.category;
     this.selectedId = 0;
   }
 

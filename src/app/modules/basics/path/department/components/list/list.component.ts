@@ -15,10 +15,12 @@ export class DepartmentListComponent implements OnInit, OnDestroy {
   private pagination = {};
   private allSelected = false;
   private selectedId: number;
+  private selectCategory:any;
   private _showUpdate = false;
   private subscription: Subscription;
 
   @Output() selectItems: EventEmitter<any> = new EventEmitter();
+
 
   constructor(
     private departmentService: DepartmentService,

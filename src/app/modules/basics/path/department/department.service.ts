@@ -7,9 +7,10 @@ import { Subject } from 'rxjs/Subject';
 @Injectable()
 export class DepartmentService {
   private department$ = new Subject<any>();
-  
-  private state ={
+
+  private state = {
     department: [],
+    currentCategory: { Id: null },
     currentQueryKey: '',
     currentDepartment: { Id: null },
     currentPagination: {
@@ -19,20 +20,21 @@ export class DepartmentService {
     }
   };
 
-  constructor(private http: HttpService) {}
+  constructor(private http: HttpService) { }
 
   all() {
     return this.http.get('/Department/GetAll');
   }
 
-  dropdownlist(){
-      return this.http.get('/Department/GetDropdownList');
+  dropdownlist() {
+    return this.http.get('/Department/GetDropdownList');
   }
 
   get() { return this.department$.asObservable(); }
 
   list() {
     const {
+      currentCategory,
       currentQueryKey,
       currentPagination: {
         PageIndex,
@@ -42,7 +44,8 @@ export class DepartmentService {
 
     return this.http.post('/Department/GetListPaged', {
       QueryKey: currentQueryKey,
-      Status:1,
+      DepartmentCategoryId: currentCategory.Id,
+      Status: 1,
       PageIndex,
       PageSize
     }).subscribe(data => {
@@ -74,7 +77,7 @@ export class DepartmentService {
     });
   }
 
-  modify(department){
+  modify(department) {
     return this.http.post('/Department/Modify', {
       department
     });
@@ -84,6 +87,16 @@ export class DepartmentService {
     return this.http.post('/Department/Cancel', {
       entityIdList
     });
+  }
+
+  onCategoryChange(selected) {
+    const nextState = {
+      ...this.state,
+      currentCategory: selected
+    };
+
+    this.state = nextState;
+    this.list();
   }
 
   onPageChange(pagination) {
