@@ -67,6 +67,10 @@ export const ROUTES: Routes = [
     loadChildren: './modules/basics/path/department/department.module#DepartmentModule'
   },
   {
+    path: 'basics/area',
+    loadChildren: './modules/basics/path/area/area.module#AreaModule'
+  },
+  {
     path: 'purchase/order/new',
     loadChildren: './modules/purchase/path/order/path/new/new.module#PurchaseOrderNewModule'
   }

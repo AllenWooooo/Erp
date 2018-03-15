@@ -98,7 +98,8 @@ export class MenuComponent {
             { name: '供应商', link: '/basics/supplier', outlet: 'basics-supplier' },
             { name: '客户', link: '/basics/customer', outlet: 'basics-customer' },
             { name: '其他往来单位', link: '/basics/otherexchangeunit',
-                outlet: 'basics-otherexchangeunit' }
+                outlet: 'basics-otherexchangeunit' },
+            { name: '地区信息', link: '/basics/area', outlet: 'basics-area' },
           ]
         },
         {
