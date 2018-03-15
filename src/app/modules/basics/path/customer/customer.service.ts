@@ -75,6 +75,34 @@ export class CustomerService {
     });
   }
 
+  listDisabled() {
+    const {
+      currentCategory,
+      currentQueryKey,
+      currentPagination: {
+        PageIndex,
+        PageSize
+      }
+    } = this.state;
+
+    return this.http.post('/Customer/GetListPaged', {
+      QueryKey: currentQueryKey,
+      CustomerCategoryId: currentCategory.Id,
+      CustomerType: 'Customer',
+      PageIndex,
+      PageSize
+    }).subscribe(data => {
+      const nextState = {
+        ...this.state,
+        customers: data.CustomerList,
+        currentPagination: data.Pagination
+      };
+
+      this.state = nextState;
+      this.customers$.next(nextState);
+    });
+  }
+
   update(customer) {
     return this.http.post('/Customer/Modify', {
       customer
