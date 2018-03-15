@@ -18,7 +18,7 @@
     <app-ui-button>
       打印
     </app-ui-button>
-    <app-ui-button [style]="'danger'">
+    <app-ui-button (click)="showDisabled()" [style]="'danger'">
       已停用列表
     </app-ui-button>
   </div>

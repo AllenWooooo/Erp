@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { CustomerService } from '../../customer.service';
 import { ConfirmService } from '@services/confirm.service';
 import { AlertService } from '@services/alert.service';
+import { TabsService } from '../../../../../../components/tabs/tabs.service';
 
 @Component({
   selector: 'app-customer-actions',
@@ -18,7 +19,8 @@ export class CustomerActionsComponent {
   constructor(
     private customerService: CustomerService,
     private confirmService: ConfirmService,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private tabsService: TabsService
   ) {}
 
   show() {
@@ -28,6 +30,14 @@ export class CustomerActionsComponent {
 
   close() {
     this._show = false;
+  }
+
+  showDisabled() {
+    this.tabsService.create({
+      name: '停用客户',
+      link: '/basics/customer/disabled',
+      outlet: 'basics-customer-disabled'
+    });
   }
 
   onSearch(queryKey) {

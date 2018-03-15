@@ -55,8 +55,8 @@ export const ROUTES: Routes = [
     loadChildren: './modules/finances/path/funds/funds.module#FundsModule'
   },
   {
-    path: 'finances/feetype',
-    loadChildren: './modules/finances/path/feetype/feetype.module#FeeTypeModule'
+    path: 'basics/customer/disabled',
+    loadChildren: './modules/basics/path/customer/customer-disabled.module#CustomerDisabledModule'
   },
   {
     path: 'basics/employee',
