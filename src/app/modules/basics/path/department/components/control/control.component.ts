@@ -16,8 +16,16 @@ export class DepartmentControlComponent {
   private form = new FormGroup({});
   private _show = false;
   private _departmentId: number;
+  private _category:any;
 
-  @Input() category:any;
+  @Input() 
+  set category(category){
+    this._category = category;
+  };
+
+  get category(){
+    return this._category;
+  }
 
   @Input()
   get show() {
@@ -42,7 +50,7 @@ export class DepartmentControlComponent {
         this.departmentService
           .newOne()
           .subscribe(data => {
-            data.CategoryId = this.category.Id;
+            data.CategoryId = this._category.Id;
             this.form = this.formService.createForm(data);
           });
       } else {
