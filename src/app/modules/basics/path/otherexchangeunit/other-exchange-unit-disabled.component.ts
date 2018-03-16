@@ -93,7 +93,7 @@ export class OtherExchangeUnitDisabledComponent implements OnInit, OnDestroy {
   }
 
   onCategoryChange(selected) {
-    this.supplierService.onCategoryChangeDisabled(selected);
+    this.otherExchangeUnitService.onCategoryChangeDisabled(selected);
   }
 
   delete() {

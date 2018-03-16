@@ -28,12 +28,12 @@ export class OtherExchangeUnitDisabledListComponent implements OnInit, OnDestroy
   @Output() selectItems: EventEmitter<any> = new EventEmitter();
 
   constructor(
-    private otherExchangeService: OtherExchangeUnitService,
+    private otherExchangeUnitService: OtherExchangeUnitService,
     private confirmService: ConfirmService,
     private alertService: AlertService,
     private appService: AppService
   ) {
-    this.subscription = this.otherExchangeService
+    this.subscription = this.otherExchangeUnitService
       .get()
       .subscribe(({ otherExchangeUnits, currentPagination }) => {
         this.otherExchangeUnits = otherExchangeUnits;
@@ -52,7 +52,7 @@ export class OtherExchangeUnitDisabledListComponent implements OnInit, OnDestroy
 
   ngOnInit() {
     this.getSystemConfig();
-    this.otherExchangeService.listDisabled();
+    this.otherExchangeUnitService.listDisabled();
   }
 
   ngOnDestroy() {
@@ -79,7 +79,7 @@ export class OtherExchangeUnitDisabledListComponent implements OnInit, OnDestroy
   }
 
   onPageChange({ current, pageSize }) {
-    this.otherExchangeService.onPageChangeDisabled({
+    this.otherExchangeUnitService.onPageChangeDisabled({
       PageIndex: current,
       PageSize: pageSize
     });
@@ -89,7 +89,7 @@ export class OtherExchangeUnitDisabledListComponent implements OnInit, OnDestroy
     this.confirmService.open({
       content: '确认删除吗？',
       onConfirm: () => {
-        this.supplierService
+        this.otherExchangeUnitService
           .remove([id])
           .subscribe(data => {
             if (data.IsValid) {
@@ -97,7 +97,7 @@ export class OtherExchangeUnitDisabledListComponent implements OnInit, OnDestroy
                 type: 'success',
                 content: '删除成功！'
               });
-              this.supplierService.listDisabled();
+              this.otherExchangeUnitService.listDisabled();
             } else {
               this.alertService.open({
                 type: 'danger',
@@ -113,7 +113,7 @@ export class OtherExchangeUnitDisabledListComponent implements OnInit, OnDestroy
     this.confirmService.open({
       content: '确认还原吗？',
       onConfirm: () => {
-        this.otherExchangeService
+        this.otherExchangeUnitService
           .restore([id])
           .subscribe(data => {
             if (data.IsValid) {
@@ -121,7 +121,7 @@ export class OtherExchangeUnitDisabledListComponent implements OnInit, OnDestroy
                 type: 'success',
                 content: '还原成功！'
               });
-              this.otherExchangeService.listDisabled();
+              this.otherExchangeUnitService.listDisabled();
             } else {
               this.alertService.open({
                 type: 'danger',
