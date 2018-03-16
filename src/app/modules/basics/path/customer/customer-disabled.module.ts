@@ -4,7 +4,8 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { UIModule } from '@UI/ui.module';
-import { CustomerDisabledComponent } from './component/disabled/disabled.component';
+import { CustomerDisabledListComponent } from './component/disabled/disabled.component';
+import { CustomerDisabledComponent } from './customer-disabled.component';
 import { CustomerService } from './customer.service';
 import { FormService } from '@services/form.service';
 
@@ -21,7 +22,8 @@ export const ROUTES: Routes = [
 
 @NgModule({
   declarations: [
-    CustomerDisabledComponent
+    CustomerDisabledComponent,
+    CustomerDisabledListComponent
   ],
   imports: [
     UIModule,

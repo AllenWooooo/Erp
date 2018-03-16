@@ -1,29 +1,25 @@
 import { Component, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 import { CustomerService } from '../../customer.service';
-import { ConfirmService } from '@services/confirm.service';
-import { AlertService } from '@services/alert.service';
 import { TabsService } from '../../../../../../components/tabs/tabs.service';
 
 @Component({
-  selector: 'app-customer-disabled',
+  selector: 'app-customer-disabled-list',
   templateUrl: './disabled.component.html',
   styleUrls: ['./disabled.component.less']
 })
 
-export class CustomerDisabledComponent implements OnInit, OnDestroy {
+export class CustomerDisabledListComponent implements OnInit, OnDestroy {
   private customers = <any>[];
   private pagination = {};
   private allSelected = false;
   private selectedId: number;
   private subscription: Subscription;
 
-  selectItems: EventEmitter<any> = new EventEmitter();
+  @Output() selectItems: EventEmitter<any> = new EventEmitter();
 
   constructor(
     private customerService: CustomerService,
-    private confirmService: ConfirmService,
-    private alertService: AlertService,
     private tabsService: TabsService
   ) {
     this.subscription = this.customerService
@@ -65,38 +61,6 @@ export class CustomerDisabledComponent implements OnInit, OnDestroy {
     this.customerService.onPageChange({
       PageIndex: current,
       PageSize: pageSize
-    });
-  }
-
-  showDisabled(menu) {
-    this.tabsService.create({
-      name: '停用客户',
-      link: '/basics/customer/disabled',
-      outlet: 'basics-customer-disabled'
-    });
-  }
-
-  restore(id) {
-    this.confirmService.open({
-      content: '确认删除吗？',
-      onConfirm: () => {
-        this.customerService
-          .cancel([id])
-          .subscribe(data => {
-            if (data.IsValid) {
-              this.alertService.open({
-                type: 'success',
-                content: '删除成功！'
-              });
-              this.customerService.list();
-            } else {
-              this.alertService.open({
-                type: 'danger',
-                content: '删除失败, ' + data.ErrorMessages
-              });
-            }
-          });
-      }
     });
   }
 }
