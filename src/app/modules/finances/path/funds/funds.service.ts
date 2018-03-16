@@ -46,6 +46,31 @@ export class FundsService {
     });
   }
 
+  listDisabled() {
+    const {
+      currentQueryKey,
+      currentPagination: {
+        PageIndex,
+        PageSize
+      }
+    } = this.state;
+
+    return this.http.post('/FundsAccount/GetCancelListPaged', {
+      QueryKey: currentQueryKey,
+      PageIndex,
+      PageSize
+    }).subscribe(data => {
+      const nextState = {
+        ...this.state,
+        funds: data.FundsAccountList,
+        currentPagination: data.Pagination
+      };
+
+      this.state = nextState;
+      this.funds$.next(nextState);
+    });
+  }
+
   newOne() {
     return this.http.get('/FundsAccount/GetForNew');
   }
@@ -66,9 +91,9 @@ export class FundsService {
     });
   }
 
-  cancel(fundsAccountIdList) {
+  cancel(entityIdList) {
     return this.http.post('/FundsAccount/Cancel', {
-      fundsAccountIdList
+      entityIdList
     });
   }
 
@@ -85,6 +110,19 @@ export class FundsService {
     this.list();
   }
 
+  onPageChangeDisabled(pagination) {
+    const nextState = {
+      ...this.state,
+      currentPagination: {
+        ...this.state.currentPagination,
+        ...pagination
+      }
+    };
+
+    this.state = nextState;
+    this.listDisabled();
+  }
+
   onSearch(queryKey) {
     const nextState = {
       ...this.state,
@@ -93,5 +131,27 @@ export class FundsService {
 
     this.state = nextState;
     this.list();
+  }
+
+  onSearchDisabled(queryKey) {
+    const nextState = {
+      ...this.state,
+      currentQueryKey: queryKey
+    };
+
+    this.state = nextState;
+    this.listDisabled();
+  }
+
+  remove(entityIdList) {
+    return this.http.post('/FundsAccount/Remove', {
+      entityIdList
+    });
+  }
+
+  restore(entityIdList) {
+    return this.http.post('/FundsAccount/Restore', {
+      entityIdList
+    });
   }
 }

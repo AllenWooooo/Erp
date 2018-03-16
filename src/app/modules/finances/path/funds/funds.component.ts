@@ -26,7 +26,6 @@ import { FundsService } from './funds.service';
 
 export class FundsComponent implements OnInit, OnDestroy {
   private selectedItems = <any>[];
-  private category;
   private subscription: Subscription;
 
   constructor(
@@ -34,15 +33,9 @@ export class FundsComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.subscription = this.fundsService
-      .get()
-      .subscribe(({ currentCategory }) => {
-        this.category = currentCategory;
-      });
   }
 
   ngOnDestroy() {
-    this.subscription.unsubscribe();
   }
 
   selectItems(selected) {

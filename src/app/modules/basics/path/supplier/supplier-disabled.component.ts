@@ -25,7 +25,12 @@ import { AppService } from '@services/app.service';
   <div class="content">
     <app-category
         (onChange)="onCategoryChange($event)"
+<<<<<<< HEAD
         [resourceType]="'Customer'"
+=======
+        [categoryType]="'Customer'"
+        [resourceType]="'Supplier'"
+>>>>>>> 324e2e9ab3fff31cf51fd6fe591a6aae25c90252
     ></app-category>
     <app-supplier-disabled-list (selectItems)="selectItems($event)"></app-supplier-disabled-list>
   </div>

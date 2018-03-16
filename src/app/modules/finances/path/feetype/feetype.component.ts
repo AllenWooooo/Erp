@@ -26,7 +26,6 @@ import { FeeTypeService } from './feetype.service';
 
 export class FeeTypeComponent implements OnInit, OnDestroy {
   private selectedItems = <any>[];
-  private category;
   private subscription: Subscription;
 
   constructor(
@@ -34,15 +33,9 @@ export class FeeTypeComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.subscription = this.feeTypeService
-      .get()
-      .subscribe(({ currentCategory }) => {
-        this.category = currentCategory;
-      });
   }
 
   ngOnDestroy() {
-    this.subscription.unsubscribe();
   }
 
   selectItems(selected) {

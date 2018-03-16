@@ -47,6 +47,32 @@ export class FeeTypeService {
     });
   }
 
+  listDisabled() {
+    const {
+      currentQueryKey,
+      currentPagination: {
+        PageIndex,
+        PageSize
+      }
+    } = this.state;
+
+    return this.http.post('/FeeType/GetCancelListPaged', {
+      QueryKey: currentQueryKey,
+      BlanceType: 'Fee',
+      PageIndex,
+      PageSize
+    }).subscribe(data => {
+      const nextState = {
+        ...this.state,
+        feeTypes: data.FeeTypeList,
+        currentPagination: data.Pagination
+      };
+
+      this.state = nextState;
+      this.feeTypes$.next(nextState);
+    });
+  }
+
   newOne() {
     return this.http.get('/FeeType/GetForModify');
   }
@@ -67,9 +93,9 @@ export class FeeTypeService {
     });
   }
 
-  cancel(feeTypeIdList) {
+  cancel(entityIdList) {
     return this.http.post('/FeeType/Cancel', {
-      feeTypeIdList
+      entityIdList
     });
   }
 
@@ -86,6 +112,19 @@ export class FeeTypeService {
     this.list();
   }
 
+  onPageChangeDisabled(pagination) {
+    const nextState = {
+      ...this.state,
+      currentPagination: {
+        ...this.state.currentPagination,
+        ...pagination
+      }
+    };
+
+    this.state = nextState;
+    this.listDisabled();
+  }
+
   onSearch(queryKey) {
     const nextState = {
       ...this.state,
@@ -94,5 +133,27 @@ export class FeeTypeService {
 
     this.state = nextState;
     this.list();
+  }
+
+  onSearchDisabled(queryKey) {
+    const nextState = {
+      ...this.state,
+      currentQueryKey: queryKey
+    };
+
+    this.state = nextState;
+    this.listDisabled();
+  }
+
+  remove(entityIdList) {
+    return this.http.post('/FeeType/Remove', {
+      entityIdList
+    });
+  }
+
+  restore(entityIdList) {
+    return this.http.post('/FeeType/Restore', {
+      entityIdList
+    });
   }
 }

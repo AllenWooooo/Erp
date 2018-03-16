@@ -1,31 +1,37 @@
 import { Component, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 import { IncomeTypeService } from '../../incometype.service';
+import { LocalStorage } from 'ngx-webstorage';
 import { ConfirmService } from '@services/confirm.service';
 import { AlertService } from '@services/alert.service';
-import { LocalStorage } from 'ngx-webstorage';
+import { AppService } from '@services/app.service';
 
 @Component({
-  selector: 'app-incometype-list',
-  templateUrl: './list.component.html',
-  styleUrls: ['./list.component.less']
+  selector: 'app-incometype-disabled-list',
+  templateUrl: './disabled.component.html',
+  styleUrls: ['./disabled.component.less'],
+  providers: [
+    AppService
+  ]
 })
 
-export class IncomeTypeListComponent implements OnInit, OnDestroy {
+export class IncomeTypeDisabledListComponent implements OnInit, OnDestroy {
   private incomeTypes = <any>[];
   private pagination = {};
-  private _showContact = false;
   private allSelected = false;
   private selectedId: number;
-  private _showUpdate = false;
   private subscription: Subscription;
+
+  @LocalStorage()
+  systemConfig: any;
 
   @Output() selectItems: EventEmitter<any> = new EventEmitter();
 
   constructor(
     private incomeTypeService: IncomeTypeService,
     private confirmService: ConfirmService,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private appService: AppService
   ) {
     this.subscription = this.incomeTypeService
       .get()
@@ -35,8 +41,18 @@ export class IncomeTypeListComponent implements OnInit, OnDestroy {
       });
   }
 
+  getSystemConfig(): any {
+    if (!this.systemConfig) {
+      this.appService.getSystemConfig().subscribe((data) => {
+        this.systemConfig = data;
+      });
+    }
+    return this.systemConfig;
+  }
+
   ngOnInit() {
-    this.incomeTypeService.list();
+    this.getSystemConfig();
+    this.incomeTypeService.listDisabled();
   }
 
   ngOnDestroy() {
@@ -63,38 +79,53 @@ export class IncomeTypeListComponent implements OnInit, OnDestroy {
   }
 
   onPageChange({ current, pageSize }) {
-    this.incomeTypeService.onPageChange({
+    this.incomeTypeService.onPageChangeDisabled({
       PageIndex: current,
       PageSize: pageSize
     });
   }
 
-  update(id) {
-    this.selectedId = id;
-    this._showUpdate = true;
-  }
-
-  closeUpdate() {
-    this._showUpdate = false;
-  }
-
-  onCancel(id) {
+  delete(id) {
     this.confirmService.open({
-      content: '确认停用吗？',
+      content: '确认删除吗？',
       onConfirm: () => {
         this.incomeTypeService
-          .cancel([id])
+          .remove([id])
           .subscribe(data => {
             if (data.IsValid) {
               this.alertService.open({
                 type: 'success',
-                content: '停用成功！'
+                content: '删除成功！'
               });
-              this.incomeTypeService.list();
+              this.incomeTypeService.listDisabled();
             } else {
               this.alertService.open({
                 type: 'danger',
-                content: '停用失败, ' + data.ErrorMessages
+                content: '删除失败, ' + data.ErrorMessages
+              });
+            }
+          });
+      }
+    });
+  }
+
+  restore(id) {
+    this.confirmService.open({
+      content: '确认还原吗？',
+      onConfirm: () => {
+        this.incomeTypeService
+          .restore([id])
+          .subscribe(data => {
+            if (data.IsValid) {
+              this.alertService.open({
+                type: 'success',
+                content: '还原成功！'
+              });
+              this.incomeTypeService.listDisabled();
+            } else {
+              this.alertService.open({
+                type: 'danger',
+                content: '还原失败, ' + data.ErrorMessages
               });
             }
           });

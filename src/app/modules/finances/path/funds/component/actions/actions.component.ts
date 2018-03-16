@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { FundsService } from '../../funds.service';
 import { ConfirmService } from '@services/confirm.service';
 import { AlertService } from '@services/alert.service';
+import { TabsService } from '../../../../../../components/tabs/tabs.service';
 
 @Component({
   selector: 'app-funds-actions',
@@ -18,7 +19,8 @@ export class FundsActionsComponent {
   constructor(
     private fundsService: FundsService,
     private confirmService: ConfirmService,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private tabsService: TabsService
   ) {}
 
   show() {
@@ -32,6 +34,14 @@ export class FundsActionsComponent {
 
   onSearch(queryKey) {
     this.fundsService.onSearch(queryKey);
+  }
+
+  showDisabled() {
+    this.tabsService.create({
+      name: '停用资金账户',
+      link: '/finances/funds/disabled',
+      outlet: 'finances-funds-disabled'
+    });
   }
 
   onCancel() {

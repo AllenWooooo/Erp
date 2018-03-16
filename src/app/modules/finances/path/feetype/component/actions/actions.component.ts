@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { FeeTypeService } from '../../feetype.service';
 import { ConfirmService } from '@services/confirm.service';
 import { AlertService } from '@services/alert.service';
+import { TabsService } from '../../../../../../components/tabs/tabs.service';
 
 @Component({
   selector: 'app-feetype-actions',
@@ -18,7 +19,8 @@ export class FeeTypeActionsComponent {
   constructor(
     private feeTypeService: FeeTypeService,
     private confirmService: ConfirmService,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private tabsService: TabsService
   ) {}
 
   show() {
@@ -32,6 +34,14 @@ export class FeeTypeActionsComponent {
 
   onSearch(queryKey) {
     this.feeTypeService.onSearch(queryKey);
+  }
+
+  showDisabled() {
+    this.tabsService.create({
+      name: '停用费用类型',
+      link: '/finances/feetype/disabled',
+      outlet: 'finances-feetype-disabled'
+    });
   }
 
   onCancel() {

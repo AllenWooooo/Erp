@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { OtherExchangeUnitService } from '../../other-exchange-unit.service';
 import { ConfirmService } from '@services/confirm.service';
 import { AlertService } from '@services/alert.service';
+import { LocalStorage } from 'ngx-webstorage';
 
 @Component({
   selector: 'app-otherexchangeunit-list',
@@ -91,7 +92,7 @@ export class OtherExchangeUnitListComponent implements OnInit, OnDestroy {
 
   onCancel(id) {
     this.confirmService.open({
-      content: '确认删除吗？',
+      content: '确认停用吗？',
       onConfirm: () => {
         this.otherExchangeUnitService
           .cancel([id])
@@ -99,13 +100,13 @@ export class OtherExchangeUnitListComponent implements OnInit, OnDestroy {
             if (data.IsValid) {
               this.alertService.open({
                 type: 'success',
-                content: '删除成功！'
+                content: '停用成功！'
               });
               this.otherExchangeUnitService.list();
             } else {
               this.alertService.open({
                 type: 'danger',
-                content: '删除失败, ' + data.ErrorMessages
+                content: '停用失败, ' + data.ErrorMessages
               });
             }
           });
