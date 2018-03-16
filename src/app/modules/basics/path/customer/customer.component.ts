@@ -9,6 +9,7 @@ import { CustomerService } from './customer.service';
     <div class="content">
       <app-category
         (onChange)="onCategoryChange($event)"
+        [categoryType]="'Customer'"
         [resourceType]="'Customer'"
       ></app-category>
       <app-customer-list (selectItems)="selectItems($event)"></app-customer-list>

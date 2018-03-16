@@ -7,7 +7,10 @@ import { OtherExchangeUnitService } from './other-exchange-unit.service';
   template: `
     <app-otherexchangeunit-actions [selectedItems]="selectedItems" [category]="category"></app-otherexchangeunit-actions>
     <div class="content">
-      <app-category (onChange)="onCategoryChange($event)"></app-category>
+      <app-category (onChange)="onCategoryChange($event)"  
+        [categoryType]="'Customer'"
+        [resourceType]="'Other'"
+      ></app-category>
       <app-otherexchangeunit-list (selectItems)="selectItems($event)"></app-otherexchangeunit-list>
     </div>
   `,
