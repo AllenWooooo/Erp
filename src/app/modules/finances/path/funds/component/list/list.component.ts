@@ -3,6 +3,8 @@ import { Subscription } from 'rxjs/Subscription';
 import { FundsService } from '../../funds.service';
 import { ConfirmService } from '@services/confirm.service';
 import { AlertService } from '@services/alert.service';
+import { AppService } from '@services/app.service';
+import { LocalStorage } from 'ngx-webstorage';
 
 @Component({
   selector: 'app-funds-list',
@@ -13,19 +15,21 @@ import { AlertService } from '@services/alert.service';
 export class FundsListComponent implements OnInit, OnDestroy {
   private funds = <any>[];
   private pagination = {};
-  private _showContact = false;
-  private contactList = <any>[];
   private allSelected = false;
   private selectedId: number;
   private _showUpdate = false;
   private subscription: Subscription;
+
+  @LocalStorage()
+  systemConfig: any;
 
   @Output() selectItems: EventEmitter<any> = new EventEmitter();
 
   constructor(
     private fundsService: FundsService,
     private confirmService: ConfirmService,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private appService: AppService
   ) {
     this.subscription = this.fundsService
       .get()
@@ -35,7 +39,17 @@ export class FundsListComponent implements OnInit, OnDestroy {
       });
   }
 
+  getSystemConfig(): any {
+    if (!this.systemConfig) {
+      this.appService.getSystemConfig().subscribe((data) => {
+        this.systemConfig = data;
+      });
+    }
+    return this.systemConfig;
+  }
+
   ngOnInit() {
+    this.getSystemConfig();
     this.fundsService.list();
   }
 
@@ -78,12 +92,12 @@ export class FundsListComponent implements OnInit, OnDestroy {
     this._showUpdate = false;
   }
 
-  onCancel(id) {
+  onRemove(id) {
     this.confirmService.open({
       content: '确认删除吗？',
       onConfirm: () => {
         this.fundsService
-          .cancel([id])
+          .remove([id])
           .subscribe(data => {
             if (data.IsValid) {
               this.alertService.open({
@@ -95,6 +109,30 @@ export class FundsListComponent implements OnInit, OnDestroy {
               this.alertService.open({
                 type: 'danger',
                 content: '删除失败, ' + data.ErrorMessages
+              });
+            }
+          });
+      }
+    });
+  }
+
+  onCancel(id) {
+    this.confirmService.open({
+      content: '确认停用吗？',
+      onConfirm: () => {
+        this.fundsService
+          .cancel([id])
+          .subscribe(data => {
+            if (data.IsValid) {
+              this.alertService.open({
+                type: 'success',
+                content: '停用成功！'
+              });
+              this.fundsService.list();
+            } else {
+              this.alertService.open({
+                type: 'danger',
+                content: '停用失败, ' + data.ErrorMessages
               });
             }
           });

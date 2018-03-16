@@ -93,9 +93,9 @@ export class FeeTypeService {
     });
   }
 
-  cancel(feeTypeIdList) {
+  cancel(entityIdList) {
     return this.http.post('/FeeType/Cancel', {
-      feeTypeIdList
+      entityIdList
     });
   }
 
@@ -145,15 +145,15 @@ export class FeeTypeService {
     this.listDisabled();
   }
 
-  remove(feeTypeIdList) {
+  remove(entityIdList) {
     return this.http.post('/FeeType/Remove', {
-      feeTypeIdList
+      entityIdList
     });
   }
 
-  restore(feeTypeIdList) {
+  restore(entityIdList) {
     return this.http.post('/FeeType/Restore', {
-      feeTypeIdList
+      entityIdList
     });
   }
 }

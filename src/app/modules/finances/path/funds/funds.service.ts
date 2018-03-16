@@ -91,9 +91,9 @@ export class FundsService {
     });
   }
 
-  cancel(fundsAccountIdList) {
+  cancel(entityIdList) {
     return this.http.post('/FundsAccount/Cancel', {
-      fundsAccountIdList
+      entityIdList
     });
   }
 
@@ -143,15 +143,15 @@ export class FundsService {
     this.listDisabled();
   }
 
-  remove(feeTypeIdList) {
+  remove(entityIdList) {
     return this.http.post('/FundsAccount/Remove', {
-      feeTypeIdList
+      entityIdList
     });
   }
 
-  restore(feeTypeIdList) {
+  restore(entityIdList) {
     return this.http.post('/FundsAccount/Restore', {
-      feeTypeIdList
+      entityIdList
     });
   }
 }

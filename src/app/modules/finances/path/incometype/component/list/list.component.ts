@@ -3,6 +3,8 @@ import { Subscription } from 'rxjs/Subscription';
 import { IncomeTypeService } from '../../incometype.service';
 import { ConfirmService } from '@services/confirm.service';
 import { AlertService } from '@services/alert.service';
+import { AppService } from '@services/app.service';
+import { LocalStorage } from 'ngx-webstorage';
 
 @Component({
   selector: 'app-incometype-list',
@@ -19,12 +21,16 @@ export class IncomeTypeListComponent implements OnInit, OnDestroy {
   private _showUpdate = false;
   private subscription: Subscription;
 
+  @LocalStorage()
+  systemConfig: any;
+
   @Output() selectItems: EventEmitter<any> = new EventEmitter();
 
   constructor(
     private incomeTypeService: IncomeTypeService,
     private confirmService: ConfirmService,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private appService: AppService
   ) {
     this.subscription = this.incomeTypeService
       .get()
@@ -34,7 +40,17 @@ export class IncomeTypeListComponent implements OnInit, OnDestroy {
       });
   }
 
+  getSystemConfig(): any {
+    if (!this.systemConfig) {
+      this.appService.getSystemConfig().subscribe((data) => {
+        this.systemConfig = data;
+      });
+    }
+    return this.systemConfig;
+  }
+
   ngOnInit() {
+    this.getSystemConfig();
     this.incomeTypeService.list();
   }
 
@@ -78,6 +94,30 @@ export class IncomeTypeListComponent implements OnInit, OnDestroy {
   }
 
   onCancel(id) {
+    this.confirmService.open({
+      content: '确认停用吗？',
+      onConfirm: () => {
+        this.incomeTypeService
+          .cancel([id])
+          .subscribe(data => {
+            if (data.IsValid) {
+              this.alertService.open({
+                type: 'success',
+                content: '停用成功！'
+              });
+              this.incomeTypeService.list();
+            } else {
+              this.alertService.open({
+                type: 'danger',
+                content: '停用失败, ' + data.ErrorMessages
+              });
+            }
+          });
+      }
+    });
+  }
+
+  onRemove(id) {
     this.confirmService.open({
       content: '确认删除吗？',
       onConfirm: () => {

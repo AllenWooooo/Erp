@@ -3,6 +3,8 @@ import { Subscription } from 'rxjs/Subscription';
 import { CustomerService } from '../../customer.service';
 import { ConfirmService } from '@services/confirm.service';
 import { AlertService } from '@services/alert.service';
+import { AppService } from '@services/app.service';
+import { LocalStorage } from 'ngx-webstorage';
 
 @Component({
   selector: 'app-customer-list',
@@ -20,12 +22,16 @@ export class CustomerListComponent implements OnInit, OnDestroy {
   private _showUpdate = false;
   private subscription: Subscription;
 
+  @LocalStorage()
+  systemConfig: any;
+
   @Output() selectItems: EventEmitter<any> = new EventEmitter();
 
   constructor(
     private customerService: CustomerService,
     private confirmService: ConfirmService,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private appService: AppService
   ) {
     this.subscription = this.customerService
       .get()
@@ -35,7 +41,17 @@ export class CustomerListComponent implements OnInit, OnDestroy {
       });
   }
 
+  getSystemConfig(): any {
+    if (!this.systemConfig) {
+      this.appService.getSystemConfig().subscribe((data) => {
+        this.systemConfig = data;
+      });
+    }
+    return this.systemConfig;
+  }
+
   ngOnInit() {
+    this.getSystemConfig();
     this.customerService.list();
   }
 
