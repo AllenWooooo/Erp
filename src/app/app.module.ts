@@ -59,6 +59,14 @@ export const ROUTES: Routes = [
     loadChildren: './modules/basics/path/customer/customer-disabled.module#CustomerDisabledModule'
   },
   {
+    path: 'basics/supplier/disabled',
+    loadChildren: './modules/basics/path/supplier/supplier-disabled.module#SupplierDisabledModule'
+  },
+  {
+    path: 'basics/otherexchangeunit/disabled',
+    loadChildren: './modules/basics/path/otherexchangeunit/other-exchange-unit-disabled.module#OtherExchangeUnitDisabledModule'
+  },
+  {
     path: 'basics/employee',
     loadChildren: './modules/basics/path/employee/employee.module#EmployeeModule'
   },
@@ -69,6 +77,11 @@ export const ROUTES: Routes = [
   {
     path: 'basics/area',
     loadChildren: './modules/basics/path/area/area.module#AreaModule'
+  },
+  
+  {
+    path: 'products/storage',
+    loadChildren: './modules/products/path/storage/storage.module#StorageModule'
   },
   {
     path: 'purchase/order/new',

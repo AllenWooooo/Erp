@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { OtherExchangeUnitService } from '../../other-exchange-unit.service';
 import { ConfirmService } from '@services/confirm.service';
 import { AlertService } from '@services/alert.service';
+import { TabsService } from '../../../../../../components/tabs/tabs.service';
 
 @Component({
   selector: 'app-otherexchangeunit-actions',
@@ -18,7 +19,8 @@ export class OtherExchangeUnitActionsComponent {
   constructor(
     private otherExchangeUnitService: OtherExchangeUnitService,
     private confirmService: ConfirmService,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private tabsService: TabsService
   ) {}
 
   show() {
@@ -32,6 +34,14 @@ export class OtherExchangeUnitActionsComponent {
 
   onSearch(queryKey) {
     this.otherExchangeUnitService.onSearch(queryKey);
+  }
+
+  showDisabled() {
+    this.tabsService.create({
+      name: '停用往来单位',
+      link: '/basics/otherexchangeunit/disabled',
+      outlet: 'basics-otherexchangeunit-disabled'
+    });
   }
 
   onCancel() {

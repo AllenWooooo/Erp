@@ -5,13 +5,12 @@ import { Subject } from 'rxjs/Subject';
 
 
 @Injectable()
-export class AreaService {
-  private area$ = new Subject<any>();
+export class StorageService {
+  private storage$ = new Subject<any>();
 
   private state ={
-    area: [],
+    storage: [],
     currentQueryKey: '',
-    areaParentId:0,
     currentPagination: {
       PageIndex: 1,
       PageSize: 25,
@@ -22,22 +21,21 @@ export class AreaService {
   constructor(private http: HttpService) {}
 
   all() {
-    return this.http.get('/Area/GetAll');
+    return this.http.get('/Storage/GetAll');
   }
 
-  get() { return this.area$.asObservable(); }
+  get() { return this.storage$.asObservable(); }
 
   list() {
     const {
       currentQueryKey,
-      areaParentId,
       currentPagination: {
         PageIndex,
         PageSize
       }
     } = this.state;
 
-    return this.http.post('/Area/GetListPaged', {
+    return this.http.post('/Storage/GetListPaged', {
       QueryKey: currentQueryKey,
       Status:1,
       PageIndex,
@@ -45,53 +43,42 @@ export class AreaService {
     }).subscribe(data => {
       const nextState = {
         ...this.state,
-        areas: data.AreaList,
+        storages: data.StorageList,
         currentPagination: data.Pagination
       };
 
       this.state = nextState;
-      this.area$.next(nextState);
+      this.storage$.next(nextState);
     });
   }
 
   newOne() {
-    const { areaParentId  } = this.state;
+    const {  } = this.state;
 
-    return this.http.get('/Area/GetForNew', {
-      areaParentId
+    return this.http.get('/Storage/GetForNew', {
     });
   }
 
-  detail(areaId) {
-    return this.http.get(`/Area/GetForModify?areaId=${areaId}`);
+  detail(storageId) {
+    return this.http.get(`/Storage/GetForModify?storageId=${storageId}`);
   }
 
-  create(area) {
-    return this.http.post('/Area/New', {
-      area
+  create(storage) {
+    return this.http.post('/Storage/New', {
+      storage
     });
   }
 
-  modify(area){
-    return this.http.post('/Area/Modify', {
-      area
+  modify(storage){
+    return this.http.post('/Storage/Modify', {
+      storage
     });
   }
 
   cancel(entityIdList) {
-    return this.http.post('/Area/Cancel', {
+    return this.http.post('/Storage/Cancel', {
       entityIdList
     });
-  }
-
-  onDepartmentChange(selected) {
-    const nextState = {
-      ...this.state,
-      currentDepartment: selected
-    };
-
-    this.state = nextState;
-    this.list();
   }
 
   onPageChange(pagination) {

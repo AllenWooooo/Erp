@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpService } from '@services/http.service';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
-
+import { AppService } from '@services/app.service';
 
 @Injectable()
 export class CustomerService {
@@ -65,6 +65,8 @@ export class CustomerService {
     });
   }
 
+
+
   detail(customerId) {
     return this.http.get(`/Customer/GetForModify?customerId=${customerId}`);
   }
@@ -85,7 +87,7 @@ export class CustomerService {
       }
     } = this.state;
 
-    return this.http.post('/Customer/GetListPaged', {
+    return this.http.post('/Customer/GetCancelListPaged', {
       QueryKey: currentQueryKey,
       CustomerCategoryId: currentCategory.Id,
       CustomerType: 'Customer',
@@ -109,10 +111,32 @@ export class CustomerService {
     });
   }
 
+  remove(customerIdList) {
+    return this.http.post('/Customer/Remove', {
+      customerIdList
+    });
+  }
+
   cancel(customerIdList) {
     return this.http.post('/Customer/Cancel', {
       customerIdList
     });
+  }
+
+  restore(customerIdList) {
+    return this.http.post('/Customer/Restore', {
+      customerIdList
+    });
+  }
+
+  onCategoryChangeDisabled(selected) {
+    const nextState = {
+      ...this.state,
+      currentCategory: selected
+    };
+
+    this.state = nextState;
+    this.listDisabled();
   }
 
   onCategoryChange(selected) {
@@ -138,6 +162,19 @@ export class CustomerService {
     this.list();
   }
 
+  onPageChangeDisabled(pagination) {
+    const nextState = {
+      ...this.state,
+      currentPagination: {
+        ...this.state.currentPagination,
+        ...pagination
+      }
+    };
+
+    this.state = nextState;
+    this.listDisabled();
+  }
+
   onSearch(queryKey) {
     const nextState = {
       ...this.state,
@@ -146,5 +183,15 @@ export class CustomerService {
 
     this.state = nextState;
     this.list();
+  }
+
+  onSearchDisabled(queryKey) {
+    const nextState = {
+      ...this.state,
+      currentQueryKey: queryKey
+    };
+
+    this.state = nextState;
+    this.listDisabled();
   }
 }

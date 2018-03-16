@@ -22,6 +22,34 @@ export class OtherExchangeUnitService {
 
   get() { return this.otherExchangeUnits$.asObservable(); }
 
+  listDisabled() {
+    const {
+      currentCategory,
+      currentQueryKey,
+      currentPagination: {
+        PageIndex,
+        PageSize
+      }
+    } = this.state;
+
+    return this.http.post('/Customer/GetCancelListPaged', {
+      QueryKey: currentQueryKey,
+      CustomerCategoryId: currentCategory.Id,
+      CustomerType: 'Other',
+      PageIndex,
+      PageSize
+    }).subscribe(data => {
+      const nextState = {
+        ...this.state,
+        otherExchangeUnits: data.CustomerList,
+        currentPagination: data.Pagination
+      };
+
+      this.state = nextState;
+      this.otherExchangeUnits$.next(nextState);
+    });
+  }
+
   list() {
     const {
       currentCategory,
@@ -78,7 +106,7 @@ export class OtherExchangeUnitService {
   update(customer) {
     return this.http.post('/Customer/Modify', {
       customer
-    })
+    });
   }
 
   cancel(customerIdList) {
@@ -97,6 +125,16 @@ export class OtherExchangeUnitService {
     this.list();
   }
 
+  onCategoryChangeDisabled(selected) {
+    const nextState = {
+      ...this.state,
+      currentCategory: selected
+    };
+
+    this.state = nextState;
+    this.listDisabled();
+  }
+
   onPageChange(pagination) {
     const nextState = {
       ...this.state,
@@ -110,6 +148,19 @@ export class OtherExchangeUnitService {
     this.list();
   }
 
+  onPageChangeDisabled(pagination) {
+    const nextState = {
+      ...this.state,
+      currentPagination: {
+        ...this.state.currentPagination,
+        ...pagination
+      }
+    };
+
+    this.state = nextState;
+    this.listDisabled();
+  }
+
   onSearch(queryKey) {
     const nextState = {
       ...this.state,
@@ -118,5 +169,27 @@ export class OtherExchangeUnitService {
 
     this.state = nextState;
     this.list();
+  }
+
+  onSearchDisabled(queryKey) {
+    const nextState = {
+      ...this.state,
+      currentQueryKey: queryKey
+    };
+
+    this.state = nextState;
+    this.listDisabled();
+  }
+
+  remove(customerIdList) {
+    return this.http.post('/Customer/Remove', {
+      customerIdList
+    });
+  }
+
+  restore(customerIdList) {
+    return this.http.post('/Customer/Restore', {
+      customerIdList
+    });
   }
 }
