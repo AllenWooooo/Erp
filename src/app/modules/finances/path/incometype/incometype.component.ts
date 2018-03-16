@@ -26,7 +26,6 @@ import { IncomeTypeService } from './incometype.service';
 
 export class IncomeTypeComponent implements OnInit, OnDestroy {
   private selectedItems = <any>[];
-  private category;
   private subscription: Subscription;
 
   constructor(
@@ -34,15 +33,9 @@ export class IncomeTypeComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.subscription = this.incomeTypeService
-      .get()
-      .subscribe(({ currentCategory }) => {
-        this.category = currentCategory;
-      });
   }
 
   ngOnDestroy() {
-    this.subscription.unsubscribe();
   }
 
   selectItems(selected) {

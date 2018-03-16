@@ -21,6 +21,32 @@ export class IncomeTypeService {
 
   get() { return this.incomeTypes$.asObservable(); }
 
+  listDisabled() {
+    const {
+      currentQueryKey,
+      currentPagination: {
+        PageIndex,
+        PageSize
+      }
+    } = this.state;
+
+    return this.http.post('/FeeType/GetCancelListPaged', {
+      QueryKey: currentQueryKey,
+      BlanceType: 'Income',
+      PageIndex,
+      PageSize
+    }).subscribe(data => {
+      const nextState = {
+        ...this.state,
+        incomeTypes: data.FeeTypeList,
+        currentPagination: data.Pagination
+      };
+
+      this.state = nextState;
+      this.incomeTypes$.next(nextState);
+    });
+  }
+
   list() {
     const {
       currentQueryKey,
@@ -86,6 +112,20 @@ export class IncomeTypeService {
     this.list();
   }
 
+  onPageChangeDisabled(pagination) {
+    const nextState = {
+      ...this.state,
+      currentPagination: {
+        ...this.state.currentPagination,
+        ...pagination
+      }
+    };
+
+    this.state = nextState;
+    this.listDisabled();
+  }
+
+
   onSearch(queryKey) {
     const nextState = {
       ...this.state,
@@ -94,5 +134,27 @@ export class IncomeTypeService {
 
     this.state = nextState;
     this.list();
+  }
+
+  onSearchDisabled(queryKey) {
+    const nextState = {
+      ...this.state,
+      currentQueryKey: queryKey
+    };
+
+    this.state = nextState;
+    this.listDisabled();
+  }
+
+  remove(feeTypeIdList) {
+    return this.http.post('/FeeType/Remove', {
+      feeTypeIdList
+    });
+  }
+
+  restore(feeTypeIdList) {
+    return this.http.post('/FeeType/Restore', {
+      feeTypeIdList
+    });
   }
 }

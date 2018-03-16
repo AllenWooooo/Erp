@@ -34,15 +34,9 @@ export class FeeTypeComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.subscription = this.feeTypeService
-      .get()
-      .subscribe(({ currentCategory }) => {
-        this.category = currentCategory;
-      });
   }
 
   ngOnDestroy() {
-    this.subscription.unsubscribe();
   }
 
   selectItems(selected) {

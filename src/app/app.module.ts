@@ -67,6 +67,18 @@ export const ROUTES: Routes = [
     loadChildren: './modules/basics/path/otherexchangeunit/other-exchange-unit-disabled.module#OtherExchangeUnitDisabledModule'
   },
   {
+    path: 'finances/incometype/disabled',
+    loadChildren: './modules/finances/path/incometype/incometype-disabled.module#IncomeTypeDisabledModule'
+  },
+  {
+    path: 'finances/feetype/disabled',
+    loadChildren: './modules/finances/path/feetype/feetype-disabled.module#FeeTypeDisabledModule'
+  },
+  {
+    path: 'finances/funds/disabled',
+    loadChildren: './modules/finances/path/funds/funds-disabled.module#FundsDisabledModule'
+  },
+  {
     path: 'basics/employee',
     loadChildren: './modules/basics/path/employee/employee.module#EmployeeModule'
   },

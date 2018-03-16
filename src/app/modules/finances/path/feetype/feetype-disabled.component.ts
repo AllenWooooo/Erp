@@ -1,13 +1,13 @@
 import { Subscription } from 'rxjs/Subscription';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { CustomerService } from './customer.service';
+import { FeeTypeService } from './feetype.service';
 import { ConfirmService } from '@services/confirm.service';
 import { AlertService } from '@services/alert.service';
 import { LocalStorage } from 'ngx-webstorage';
 import { AppService } from '@services/app.service';
 
 @Component({
-  selector: 'app-customer-disabled',
+  selector: 'app-feetype-disabled',
   template: `
   <div class="actions">
     <app-quick-search [placeholder]="'输入编号、名称、手机号、联系人查询'" (onSearch)="onSearchDisabled($event)"></app-quick-search>
@@ -23,7 +23,7 @@ import { AppService } from '@services/app.service';
     </div>
   </div>
   <div class="content">
-    <app-customer-disabled-list (selectItems)="selectItems($event)"></app-customer-disabled-list>
+    <app-feetype-disabled-list (selectItems)="selectItems($event)"></app-feetype-disabled-list>
   </div>
   `,
   styles: [`
@@ -43,16 +43,15 @@ import { AppService } from '@services/app.service';
   ]
 })
 
-export class CustomerDisabledComponent implements OnInit, OnDestroy {
+export class FeeTypeDisabledComponent implements OnInit, OnDestroy {
   private selectedItems = <any>[];
-  private category;
   private subscription: Subscription;
 
   @LocalStorage()
   systemConfig: any;
 
   constructor(
-    private customerService: CustomerService,
+    private feeTypeService: FeeTypeService,
     private confirmService: ConfirmService,
     private alertService: AlertService,
     private appService: AppService
@@ -60,19 +59,13 @@ export class CustomerDisabledComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.systemConfig = this.getSystemConfig();
-    this.subscription = this.customerService
-      .get()
-      .subscribe(({ currentCategory }) => {
-        this.category = currentCategory;
-      });
   }
 
   onSearch(queryKey) {
-    this.customerService.onSearchDisabled(queryKey);
+    this.feeTypeService.onSearchDisabled(queryKey);
   }
 
   ngOnDestroy() {
-    this.subscription.unsubscribe();
   }
 
   getSystemConfig(): any {
@@ -88,15 +81,11 @@ export class CustomerDisabledComponent implements OnInit, OnDestroy {
     this.selectedItems = selected;
   }
 
-  onCategoryChange(selected) {
-    this.customerService.onCategoryChangeDisabled(selected);
-  }
-
   delete() {
     this.confirmService.open({
       content: '确认删除吗？',
       onConfirm: () => {
-        this.customerService
+        this.feeTypeService
           .remove(this.selectedItems.map(item => item.Id))
           .subscribe(data => {
             if (data.IsValid) {
@@ -104,7 +93,7 @@ export class CustomerDisabledComponent implements OnInit, OnDestroy {
                 type: 'success',
                 content: '删除成功！'
               });
-              this.customerService.listDisabled();
+              this.feeTypeService.listDisabled();
             } else {
               this.alertService.open({
                 type: 'danger',
@@ -120,7 +109,7 @@ export class CustomerDisabledComponent implements OnInit, OnDestroy {
     this.confirmService.open({
       content: '确认还原吗？',
       onConfirm: () => {
-        this.customerService
+        this.feeTypeService
           .restore(this.selectedItems.map(item => item.Id))
           .subscribe(data => {
             if (data.IsValid) {
@@ -128,7 +117,7 @@ export class CustomerDisabledComponent implements OnInit, OnDestroy {
                 type: 'success',
                 content: '还原成功！'
               });
-              this.customerService.listDisabled();
+              this.feeTypeService.listDisabled();
             } else {
               this.alertService.open({
                 type: 'danger',
