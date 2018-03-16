@@ -3,7 +3,6 @@ import { Subscription } from 'rxjs/Subscription';
 import { CustomerService } from '../../customer.service';
 import { ConfirmService } from '@services/confirm.service';
 import { AlertService } from '@services/alert.service';
-import { AppService } from '@services/app.service';
 import { LocalStorage } from 'ngx-webstorage';
 
 @Component({
@@ -22,16 +21,12 @@ export class CustomerListComponent implements OnInit, OnDestroy {
   private _showUpdate = false;
   private subscription: Subscription;
 
-  @LocalStorage()
-  systemConfig: any;
-
   @Output() selectItems: EventEmitter<any> = new EventEmitter();
 
   constructor(
     private customerService: CustomerService,
     private confirmService: ConfirmService,
-    private alertService: AlertService,
-    private appService: AppService
+    private alertService: AlertService
   ) {
     this.subscription = this.customerService
       .get()
@@ -41,17 +36,7 @@ export class CustomerListComponent implements OnInit, OnDestroy {
       });
   }
 
-  getSystemConfig(): any {
-    if (!this.systemConfig) {
-      this.appService.getSystemConfig().subscribe((data) => {
-        this.systemConfig = data;
-      });
-    }
-    return this.systemConfig;
-  }
-
   ngOnInit() {
-    this.getSystemConfig();
     this.customerService.list();
   }
 
@@ -107,7 +92,7 @@ export class CustomerListComponent implements OnInit, OnDestroy {
 
   onCancel(id) {
     this.confirmService.open({
-      content: '确认删除吗？',
+      content: '确认停用吗？',
       onConfirm: () => {
         this.customerService
           .cancel([id])
@@ -115,13 +100,13 @@ export class CustomerListComponent implements OnInit, OnDestroy {
             if (data.IsValid) {
               this.alertService.open({
                 type: 'success',
-                content: '删除成功！'
+                content: '停用成功！'
               });
               this.customerService.list();
             } else {
               this.alertService.open({
                 type: 'danger',
-                content: '删除失败, ' + data.ErrorMessages
+                content: '停用失败, ' + data.ErrorMessages
               });
             }
           });

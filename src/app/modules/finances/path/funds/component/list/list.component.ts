@@ -3,7 +3,6 @@ import { Subscription } from 'rxjs/Subscription';
 import { FundsService } from '../../funds.service';
 import { ConfirmService } from '@services/confirm.service';
 import { AlertService } from '@services/alert.service';
-import { AppService } from '@services/app.service';
 import { LocalStorage } from 'ngx-webstorage';
 
 @Component({
@@ -20,16 +19,12 @@ export class FundsListComponent implements OnInit, OnDestroy {
   private _showUpdate = false;
   private subscription: Subscription;
 
-  @LocalStorage()
-  systemConfig: any;
-
   @Output() selectItems: EventEmitter<any> = new EventEmitter();
 
   constructor(
     private fundsService: FundsService,
     private confirmService: ConfirmService,
-    private alertService: AlertService,
-    private appService: AppService
+    private alertService: AlertService
   ) {
     this.subscription = this.fundsService
       .get()
@@ -39,17 +34,7 @@ export class FundsListComponent implements OnInit, OnDestroy {
       });
   }
 
-  getSystemConfig(): any {
-    if (!this.systemConfig) {
-      this.appService.getSystemConfig().subscribe((data) => {
-        this.systemConfig = data;
-      });
-    }
-    return this.systemConfig;
-  }
-
   ngOnInit() {
-    this.getSystemConfig();
     this.fundsService.list();
   }
 
@@ -90,30 +75,6 @@ export class FundsListComponent implements OnInit, OnDestroy {
 
   closeUpdate() {
     this._showUpdate = false;
-  }
-
-  onRemove(id) {
-    this.confirmService.open({
-      content: '确认删除吗？',
-      onConfirm: () => {
-        this.fundsService
-          .remove([id])
-          .subscribe(data => {
-            if (data.IsValid) {
-              this.alertService.open({
-                type: 'success',
-                content: '删除成功！'
-              });
-              this.fundsService.list();
-            } else {
-              this.alertService.open({
-                type: 'danger',
-                content: '删除失败, ' + data.ErrorMessages
-              });
-            }
-          });
-      }
-    });
   }
 
   onCancel(id) {
