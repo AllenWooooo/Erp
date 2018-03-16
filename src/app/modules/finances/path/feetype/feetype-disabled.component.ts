@@ -22,7 +22,7 @@ import { AppService } from '@services/app.service';
     <div class="more">
     </div>
   </div>
-  <div class="content">
+  <div class="content"> 
     <app-feetype-disabled-list (selectItems)="selectItems($event)"></app-feetype-disabled-list>
   </div>
   `,
