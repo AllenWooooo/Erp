@@ -26,7 +26,6 @@ import { FeeTypeService } from './feetype.service';
 
 export class FeeTypeComponent implements OnInit, OnDestroy {
   private selectedItems = <any>[];
-  private category;
   private subscription: Subscription;
 
   constructor(
