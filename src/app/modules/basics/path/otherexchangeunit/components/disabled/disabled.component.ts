@@ -1,13 +1,13 @@
 import { Component, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
-import { CustomerService } from '../../customer.service';
+import { OtherExchangeUnitService } from '../../other-exchange-unit.service';
 import { LocalStorage } from 'ngx-webstorage';
 import { ConfirmService } from '@services/confirm.service';
 import { AlertService } from '@services/alert.service';
 import { AppService } from '@services/app.service';
 
 @Component({
-  selector: 'app-customer-disabled-list',
+  selector: 'app-otherexchangeunit-disabled-list',
   templateUrl: './disabled.component.html',
   styleUrls: ['./disabled.component.less'],
   providers: [
@@ -15,8 +15,8 @@ import { AppService } from '@services/app.service';
   ]
 })
 
-export class CustomerDisabledListComponent implements OnInit, OnDestroy {
-  private customers = <any>[];
+export class OtherExchangeUnitDisabledListComponent implements OnInit, OnDestroy {
+  private otherExchangeUnits = <any>[];
   private pagination = {};
   private allSelected = false;
   private selectedId: number;
@@ -28,15 +28,15 @@ export class CustomerDisabledListComponent implements OnInit, OnDestroy {
   @Output() selectItems: EventEmitter<any> = new EventEmitter();
 
   constructor(
-    private customerService: CustomerService,
+    private otherExchangeService: OtherExchangeUnitService,
     private confirmService: ConfirmService,
     private alertService: AlertService,
     private appService: AppService
   ) {
-    this.subscription = this.customerService
+    this.subscription = this.otherExchangeService
       .get()
-      .subscribe(({ customers, currentPagination }) => {
-        this.customers = customers;
+      .subscribe(({ otherExchangeUnits, currentPagination }) => {
+        this.otherExchangeUnits = otherExchangeUnits;
         this.pagination = currentPagination;
       });
   }
@@ -52,7 +52,7 @@ export class CustomerDisabledListComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.getSystemConfig();
-    this.customerService.listDisabled();
+    this.otherExchangeService.listDisabled();
   }
 
   ngOnDestroy() {
@@ -61,25 +61,25 @@ export class CustomerDisabledListComponent implements OnInit, OnDestroy {
 
   selectAll(evt) {
     this.allSelected = evt.target.checked;
-    this.customers = this.customers.map(item => ({
+    this.otherExchangeUnits = this.otherExchangeUnits.map(item => ({
       ...item,
       selected: this.allSelected
     }));
-    this.selectItems.emit(this.allSelected ? this.customers : []);
+    this.selectItems.emit(this.allSelected ? this.otherExchangeUnits : []);
 
   }
 
   select(evt, selectedItem) {
-    this.customers = this.customers.map(item => ({
+    this.otherExchangeUnits = this.otherExchangeUnits.map(item => ({
       ...item,
       selected: item.Id === selectedItem.Id ? evt.target.checked : item.selected
     }));
-    this.allSelected = this.customers.every(item => item.selected);
-    this.selectItems.emit(this.customers.filter(item => item.selected));
+    this.allSelected = this.otherExchangeUnits.every(item => item.selected);
+    this.selectItems.emit(this.otherExchangeUnits.filter(item => item.selected));
   }
 
   onPageChange({ current, pageSize }) {
-    this.customerService.onPageChangeDisabled({
+    this.otherExchangeService.onPageChangeDisabled({
       PageIndex: current,
       PageSize: pageSize
     });
@@ -89,7 +89,7 @@ export class CustomerDisabledListComponent implements OnInit, OnDestroy {
     this.confirmService.open({
       content: '确认删除吗？',
       onConfirm: () => {
-        this.customerService
+        this.supplierService
           .remove([id])
           .subscribe(data => {
             if (data.IsValid) {
@@ -97,7 +97,7 @@ export class CustomerDisabledListComponent implements OnInit, OnDestroy {
                 type: 'success',
                 content: '删除成功！'
               });
-              this.customerService.listDisabled();
+              this.supplierService.listDisabled();
             } else {
               this.alertService.open({
                 type: 'danger',
@@ -113,7 +113,7 @@ export class CustomerDisabledListComponent implements OnInit, OnDestroy {
     this.confirmService.open({
       content: '确认还原吗？',
       onConfirm: () => {
-        this.customerService
+        this.otherExchangeService
           .restore([id])
           .subscribe(data => {
             if (data.IsValid) {
@@ -121,7 +121,7 @@ export class CustomerDisabledListComponent implements OnInit, OnDestroy {
                 type: 'success',
                 content: '还原成功！'
               });
-              this.customerService.listDisabled();
+              this.otherExchangeService.listDisabled();
             } else {
               this.alertService.open({
                 type: 'danger',

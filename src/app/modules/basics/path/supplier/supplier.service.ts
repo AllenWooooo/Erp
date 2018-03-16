@@ -22,6 +22,34 @@ export class SupplierService {
 
   get() { return this.suppliers$.asObservable(); }
 
+  listDisabled() {
+    const {
+      currentCategory,
+      currentQueryKey,
+      currentPagination: {
+        PageIndex,
+        PageSize
+      }
+    } = this.state;
+
+    return this.http.post('/Customer/GetCancelListPaged', {
+      QueryKey: currentQueryKey,
+      CustomerCategoryId: currentCategory.Id,
+      CustomerType: 'Supplier',
+      PageIndex,
+      PageSize
+    }).subscribe(data => {
+      const nextState = {
+        ...this.state,
+        suppliers: data.CustomerList,
+        currentPagination: data.Pagination
+      };
+
+      this.state = nextState;
+      this.suppliers$.next(nextState);
+    });
+  }
+
   list() {
     const {
       currentCategory,
@@ -97,6 +125,16 @@ export class SupplierService {
     this.list();
   }
 
+  onCategoryChangeDisabled(selected) {
+    const nextState = {
+      ...this.state,
+      currentCategory: selected
+    };
+
+    this.state = nextState;
+    this.listDisabled();
+  }
+
   onPageChange(pagination) {
     const nextState = {
       ...this.state,
@@ -110,6 +148,19 @@ export class SupplierService {
     this.list();
   }
 
+  onPageChangeDisabled(pagination) {
+    const nextState = {
+      ...this.state,
+      currentPagination: {
+        ...this.state.currentPagination,
+        ...pagination
+      }
+    };
+
+    this.state = nextState;
+    this.listDisabled();
+  }
+
   onSearch(queryKey) {
     const nextState = {
       ...this.state,
@@ -118,5 +169,27 @@ export class SupplierService {
 
     this.state = nextState;
     this.list();
+  }
+
+  onSearchDisabled(queryKey) {
+    const nextState = {
+      ...this.state,
+      currentQueryKey: queryKey
+    };
+
+    this.state = nextState;
+    this.listDisabled();
+  }
+
+  remove(customerIdList) {
+    return this.http.post('/Customer/Remove', {
+      customerIdList
+    });
+  }
+
+  restore(customerIdList) {
+    return this.http.post('/Customer/Restore', {
+      customerIdList
+    });
   }
 }

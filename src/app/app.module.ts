@@ -59,6 +59,14 @@ export const ROUTES: Routes = [
     loadChildren: './modules/basics/path/customer/customer-disabled.module#CustomerDisabledModule'
   },
   {
+    path: 'basics/supplier/disabled',
+    loadChildren: './modules/basics/path/supplier/supplier-disabled.module#SupplierDisabledModule'
+  },
+  {
+    path: 'basics/otherexchangeunit/disabled',
+    loadChildren: './modules/basics/path/otherexchangeunit/other-exchange-unit-disabled.module#OtherExchangeUnitDisabledModule'
+  },
+  {
     path: 'basics/employee',
     loadChildren: './modules/basics/path/employee/employee.module#EmployeeModule'
   },

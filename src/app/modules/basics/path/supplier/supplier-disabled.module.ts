@@ -4,9 +4,9 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { UIModule } from '@UI/ui.module';
-import { CustomerDisabledListComponent } from './component/disabled/disabled.component';
-import { CustomerDisabledComponent } from './customer-disabled.component';
-import { CustomerService } from './customer.service';
+import { SupplierDisabledListComponent } from './components/disabled/disabled.component';
+import { SupplierDisabledComponent } from './supplier-disabled.component';
+import { SupplierService } from './supplier.service';
 import { FormService } from '@services/form.service';
 
 import { EmployeeModule } from '../employee/employee.module';
@@ -16,14 +16,14 @@ import { SharedModule} from '@app/shared.module';
 
 export const ROUTES: Routes = [
   {
-    path: '', component: CustomerDisabledComponent, outlet: 'basics-customer-disabled'
+    path: '', component: SupplierDisabledComponent, outlet: 'basics-supplier-disabled'
   }
 ];
 
 @NgModule({
   declarations: [
-    CustomerDisabledComponent,
-    CustomerDisabledListComponent
+    SupplierDisabledComponent,
+    SupplierDisabledListComponent
   ],
   imports: [
     UIModule,
@@ -37,8 +37,8 @@ export const ROUTES: Routes = [
     RouterModule.forChild(ROUTES)
   ],
   providers: [
-    CustomerService
+    SupplierService
   ]
 })
 
-export class CustomerDisabledModule {}
+export class SupplierDisabledModule {}
