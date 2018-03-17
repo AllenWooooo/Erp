@@ -67,8 +67,6 @@ export const ROUTES: Routes = [
     loadChildren: './modules/basics/path/otherexchangeunit/other-exchange-unit-disabled.module#OtherExchangeUnitDisabledModule'
   },
   {
-<<<<<<< HEAD
-=======
     path: 'finances/incometype/disabled',
     loadChildren: './modules/finances/path/incometype/incometype-disabled.module#IncomeTypeDisabledModule'
   },
@@ -81,7 +79,6 @@ export const ROUTES: Routes = [
     loadChildren: './modules/finances/path/funds/funds-disabled.module#FundsDisabledModule'
   },
   {
->>>>>>> 324e2e9ab3fff31cf51fd6fe591a6aae25c90252
     path: 'basics/employee',
     loadChildren: './modules/basics/path/employee/employee.module#EmployeeModule'
   },
