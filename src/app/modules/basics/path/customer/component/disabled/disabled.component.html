@@ -24,13 +24,8 @@
           <app-ui-checkbox [checked]="item.selected" (onChange)="select($event, item)"></app-ui-checkbox>
         </td>
         <td>
-<<<<<<< HEAD
-          <a (click)="update(item.Id)">还原</a>
-          <a class="text-danger" *ngIf="!systemConfig.IsOpenBill" (click)="onCancel(item.Id)">删除</a>
-=======
           <a (click)="restore(item.Id)">还原</a>
           <a class="text-danger" *ngIf="!systemConfig.IsOpenBill" (click)="delete(item.Id)">删除</a>
->>>>>>> 324e2e9ab3fff31cf51fd6fe591a6aae25c90252
         </td>
         <td>{{item.Code}}</td>
         <td>{{item.Name}}</td>
