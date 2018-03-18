@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { EmployeeService } from '../../employee.service';
 import { ConfirmService } from '@services/confirm.service';
 import { AlertService } from '@services/alert.service';
+import { TabsService } from '@components/tabs/tabs.service';
 
 @Component({
   selector: 'app-employee-actions',
@@ -18,12 +19,22 @@ export class EmployeeActionsComponent {
   constructor(
     private employeeService: EmployeeService,
     private confirmService: ConfirmService,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private tabsService: TabsService
   ) {}
 
   show() {
     this._show = true;
     this.selectedId = 0;
+  }
+
+  
+  showDisabled() {
+    this.tabsService.create({
+      name: '停用职员',
+      link: '/basics/employee/disabled',
+      outlet: 'basics-employee-disabled'
+    });
   }
 
   close() {

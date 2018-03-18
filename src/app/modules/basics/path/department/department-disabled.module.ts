@@ -5,26 +5,23 @@ import { FormsModule ,ReactiveFormsModule} from '@angular/forms';
 
 import { UIModule } from '@UI/ui.module';
 
-import { StorageService } from './storage.service';
-import { StorageComponent } from './storage.component';
-import { StorageListComponent } from './components/list/list.component';
-import { StorageActionsComponent } from './components/actions/actions.component';
-import { StorageControlComponent } from './components/control/control.component';
+import { DepartmentService } from './department.service';
+import { DepartmentDisabledComponent } from './department-disabled.component';
+import { DepartmentDisabledListComponent } from './components/disabled/disabled.component';
 import { AppCommonModule } from '@modules/common/common.module';
 import { SharedModule} from '@app/shared.module';
 
 export const ROUTES: Routes = [
+  
   {
-    path: '', component: StorageComponent, outlet: 'products-storage'
+    path: '', component: DepartmentDisabledComponent, outlet: 'basics-department-disabled'
   }
 ];
 
 @NgModule({
   declarations: [
-    StorageComponent,
-    StorageListComponent,
-    StorageActionsComponent,
-    StorageControlComponent,
+    DepartmentDisabledComponent,
+    DepartmentDisabledListComponent
   ],
   imports: [
     UIModule,
@@ -36,7 +33,7 @@ export const ROUTES: Routes = [
     RouterModule.forChild(ROUTES)
   ],
   exports: [],
-  providers: [StorageService]
+  providers: [DepartmentService]
 })
 
-export class StorageModule {}
+export class DepartmentDisabledModule {}

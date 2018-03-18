@@ -1,42 +1,40 @@
 import { Component, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
-import { SupplierService } from '../../supplier.service';
-import { LocalStorage } from 'ngx-webstorage';
+import { DepartmentService } from '../../department.service';
 import { ConfirmService } from '@services/confirm.service';
 import { AlertService } from '@services/alert.service';
 import { AppService } from '@services/app.service';
 
-@Component({
-  selector: 'app-supplier-disabled-list',
-  templateUrl: './disabled.component.html',
-  styleUrls: ['./disabled.component.less'],
-  providers: [
-    AppService
-  ]
-})
 
-export class SupplierDisabledListComponent implements OnInit, OnDestroy {
-  private suppliers = <any>[];
+@Component({
+    selector: 'app-department-disabled-list',
+    templateUrl: './disabled.component.html',
+    styleUrls: ['./disabled.component.less']
+  })
+
+export class DepartmentDisabledListComponent implements OnInit, OnDestroy {
+  private departments = <any>[];
   private pagination = {};
   private allSelected = false;
   private selectedId: number;
+  private selectCategory:any;
+  private _showUpdate = false;
   private subscription: Subscription;
-
-  @LocalStorage()
-  systemConfig: any;
+  private systemConfig:boolean;
 
   @Output() selectItems: EventEmitter<any> = new EventEmitter();
 
+
   constructor(
-    private supplierService: SupplierService,
+    private departmentService: DepartmentService,
     private confirmService: ConfirmService,
     private alertService: AlertService,
-    private appService: AppService
+    private appService:AppService
   ) {
-    this.subscription = this.supplierService
+    this.subscription = this.departmentService
       .get()
-      .subscribe(({ suppliers, currentPagination }) => {
-        this.suppliers = suppliers;
+      .subscribe(({ departments, currentPagination }) => {
+        this.departments = departments;
         this.pagination = currentPagination;
       });
   }
@@ -52,44 +50,54 @@ export class SupplierDisabledListComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.getSystemConfig();
-    this.supplierService.listDisabled();
+    this.departmentService.listDisabled();
   }
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
   }
 
+
   selectAll(evt) {
     this.allSelected = evt.target.checked;
-    this.suppliers = this.suppliers.map(item => ({
+    this.departments = this.departments.map(item => ({
       ...item,
       selected: this.allSelected
     }));
-    this.selectItems.emit(this.allSelected ? this.suppliers : []);
+    this.selectItems.emit(this.allSelected ? this.departments : []);
 
   }
 
   select(evt, selectedItem) {
-    this.suppliers = this.suppliers.map(item => ({
+    this.departments = this.departments.map(item => ({
       ...item,
       selected: item.Id === selectedItem.Id ? evt.target.checked : item.selected
     }));
-    this.allSelected = this.suppliers.every(item => item.selected);
-    this.selectItems.emit(this.suppliers.filter(item => item.selected));
+    this.allSelected = this.departments.every(item => item.selected);
+    this.selectItems.emit(this.departments.filter(item => item.selected));
   }
 
   onPageChange({ current, pageSize }) {
-    this.supplierService.onPageChangeDisabled({
+    this.departmentService.onPageChange({
       PageIndex: current,
       PageSize: pageSize
     });
+  }
+
+  update(id) {
+    this.selectedId = id;
+    this._showUpdate = true;
+  }
+
+  closeUpdate() {
+    this._showUpdate = false;
   }
 
   delete(id) {
     this.confirmService.open({
       content: '确认删除吗？',
       onConfirm: () => {
-        this.supplierService
+        this.departmentService
           .remove([id])
           .subscribe(data => {
             if (data.IsValid) {
@@ -97,7 +105,7 @@ export class SupplierDisabledListComponent implements OnInit, OnDestroy {
                 type: 'success',
                 content: '删除成功！'
               });
-              this.supplierService.listDisabled();
+              this.departmentService.listDisabled();
             } else {
               this.alertService.open({
                 type: 'danger',
@@ -113,15 +121,14 @@ export class SupplierDisabledListComponent implements OnInit, OnDestroy {
     this.confirmService.open({
       content: '确认还原吗？',
       onConfirm: () => {
-        this.supplierService
-          .restore([id])
+        this.departmentService.restore([id])
           .subscribe(data => {
             if (data.IsValid) {
               this.alertService.open({
                 type: 'success',
                 content: '还原成功！'
               });
-              this.supplierService.listDisabled();
+              this.departmentService.listDisabled();
             } else {
               this.alertService.open({
                 type: 'danger',

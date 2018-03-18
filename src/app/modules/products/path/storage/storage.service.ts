@@ -52,6 +52,32 @@ export class StorageService {
     });
   }
 
+  listDisabled() {
+    const {
+      currentQueryKey,
+      currentPagination: {
+        PageIndex,
+        PageSize
+      }
+    } = this.state;
+
+    return this.http.post('/Storage/GetListPaged', {
+      QueryKey: currentQueryKey,
+      Status:-99,
+      PageIndex,
+      PageSize
+    }).subscribe(data => {
+      const nextState = {
+        ...this.state,
+        storages: data.StorageList,
+        currentPagination: data.Pagination
+      };
+
+      this.state = nextState;
+      this.storage$.next(nextState);
+    });
+  }
+
   newOne() {
     const {  } = this.state;
 
@@ -81,6 +107,18 @@ export class StorageService {
     });
   }
 
+  remove(entityIdList) {
+    return this.http.post('/Storage/Remove', {
+      entityIdList
+    });
+  }
+
+  restore(entityIdList) {
+    return this.http.post('/Storage/Restore', {
+      entityIdList
+    });
+  }
+
   onPageChange(pagination) {
     const nextState = {
       ...this.state,
@@ -103,4 +141,15 @@ export class StorageService {
     this.state = nextState;
     this.list();
   }
+
+  onSearchDisabled(queryKey){
+    const nextState = {
+      ...this.state,
+      currentQueryKey: queryKey
+    };
+
+    this.state = nextState;
+    this.listDisabled();
+  }
+
 }

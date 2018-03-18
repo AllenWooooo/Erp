@@ -2,6 +2,8 @@ import { Component, Input } from '@angular/core';
 import { StorageService } from '../../storage.service';
 import { ConfirmService } from '@services/confirm.service';
 import { AlertService } from '@services/alert.service';
+import { TabsService } from '@components/tabs/tabs.service';
+
 
 @Component({
   selector: 'app-storage-actions',
@@ -18,7 +20,8 @@ export class StorageActionsComponent {
   constructor(
     private storageService: StorageService,
     private confirmService: ConfirmService,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private tabsService:TabsService
   ) {}
 
   show() {
@@ -29,6 +32,15 @@ export class StorageActionsComponent {
   close() {
     this._show = false;
   }
+
+  showDisabled() {
+    this.tabsService.create({
+      name: '停用仓库',
+      link: '/products/storage/disabled',
+      outlet: 'products-storage-disabled'
+    });
+  }
+
 
   onSearch(queryKey) {
     this.storageService.onSearch(queryKey);
