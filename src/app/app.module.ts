@@ -90,6 +90,11 @@ export const ROUTES: Routes = [
     path: 'basics/area',
     loadChildren: './modules/basics/path/area/area.module#AreaModule'
   },
+  
+  {
+    path: 'products/storage',
+    loadChildren: './modules/products/path/storage/storage.module#StorageModule'
+  },
   {
     path: 'purchase/order/new',
     loadChildren: './modules/purchase/path/order/path/new/new.module#PurchaseOrderNewModule'

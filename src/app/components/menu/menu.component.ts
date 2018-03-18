@@ -106,7 +106,7 @@ export class MenuComponent {
           name: '公司内部组织',
           subMenu: [
             { name: '部门信息', link: '/basics/department', outlet: 'basics-department' },
-            { name: '仓库信息', link: '/product' },
+            { name: '仓库信息', link: '/products/storage',outlet:'products-storage' },
             { name: '内部职员', link: '/basics/employee', outlet: 'basics-employee' }
           ]
         }

@@ -25,8 +25,12 @@ import { AppService } from '@services/app.service';
   <div class="content">
     <app-category
         (onChange)="onCategoryChange($event)"
+<<<<<<< HEAD
+        [resourceType]="'Customer'"
+=======
         [categoryType]="'Customer'"
         [resourceType]="'Other'"
+>>>>>>> 324e2e9ab3fff31cf51fd6fe591a6aae25c90252
     ></app-category>
     <app-otherexchangeunit-disabled-list (selectItems)="selectItems($event)"></app-otherexchangeunit-disabled-list>
   </div>
