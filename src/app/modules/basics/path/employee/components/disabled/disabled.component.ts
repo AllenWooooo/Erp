@@ -49,7 +49,7 @@ export class EmployeeDisabledListComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.getSystemConfig()
-    this.employeeService.list();
+    this.employeeService.listDisabled();
   }
 
   ngOnDestroy() {
