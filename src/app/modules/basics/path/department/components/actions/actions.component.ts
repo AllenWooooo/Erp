@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { DepartmentService } from '../../department.service';
 import { ConfirmService } from '@services/confirm.service';
 import { AlertService } from '@services/alert.service';
+import { TabsService } from '@components/tabs/tabs.service';
 
 @Component({
   selector: 'app-department-actions',
@@ -28,13 +29,23 @@ export class DepartmentActionsComponent {
   constructor(
     private departmentService: DepartmentService,
     private confirmService: ConfirmService,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private tabsService:TabsService
   ) {}
 
   show() {
     this._show = true;
     this.selectCategory = this.category;
     this.selectedId = 0;
+  }
+
+  
+  showDisabled() {
+    this.tabsService.create({
+      name: '停用部门',
+      link: '/basics/department/disabled',
+      outlet: 'basics-department-disabled'
+    });
   }
 
   close() {

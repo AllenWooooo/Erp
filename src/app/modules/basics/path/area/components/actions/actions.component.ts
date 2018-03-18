@@ -2,6 +2,8 @@ import { Component, Input } from '@angular/core';
 import { AreaService } from '../../area.service';
 import { ConfirmService } from '@services/confirm.service';
 import { AlertService } from '@services/alert.service';
+import { TabsService } from '@components/tabs/tabs.service';
+
 
 @Component({
   selector: 'app-area-actions',
@@ -18,12 +20,21 @@ export class AreaActionsComponent {
   constructor(
     private areaService: AreaService,
     private confirmService: ConfirmService,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private tabsService:TabsService
   ) {}
 
   show() {
     this._show = true;
     this.selectedId = 0;
+  }
+  
+  showDisabled() {
+    this.tabsService.create({
+      name: '停用地区',
+      link: '/basics/area/disabled',
+      outlet: 'basics-area-disabled'
+    });
   }
 
   close() {

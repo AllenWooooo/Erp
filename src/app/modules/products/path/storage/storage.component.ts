@@ -4,7 +4,7 @@ import { StorageService } from './storage.service';
 
 
 @Component({
-  selector: 'app-basics-storage',
+  selector: 'app-products-storage',
   template: `
   <app-storage-actions [selectedItems]="selectedItems" ></app-storage-actions>
   <div class="content">    

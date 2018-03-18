@@ -54,6 +54,33 @@ export class AreaService {
     });
   }
 
+  listDisabled() {
+    const {
+      currentQueryKey,
+      areaParentId,
+      currentPagination: {
+        PageIndex,
+        PageSize
+      }
+    } = this.state;
+
+    return this.http.post('/Area/GetListPaged', {
+      QueryKey: currentQueryKey,
+      Status:-99,
+      PageIndex,
+      PageSize
+    }).subscribe(data => {
+      const nextState = {
+        ...this.state,
+        areas: data.AreaList,
+        currentPagination: data.Pagination
+      };
+
+      this.state = nextState;
+      this.area$.next(nextState);
+    });
+  }
+
   newOne() {
     const { areaParentId  } = this.state;
 
@@ -83,15 +110,18 @@ export class AreaService {
       entityIdList
     });
   }
+ 
 
-  onDepartmentChange(selected) {
-    const nextState = {
-      ...this.state,
-      currentDepartment: selected
-    };
+  remove(entityIdList) {
+    return this.http.post('/Area/Remove', {
+      entityIdList
+    });
+  }
 
-    this.state = nextState;
-    this.list();
+  restore(entityIdList) {
+    return this.http.post('/Area/Restore', {
+      entityIdList
+    });
   }
 
   onPageChange(pagination) {
@@ -115,5 +145,15 @@ export class AreaService {
 
     this.state = nextState;
     this.list();
+  }
+
+  onSearchDisabled(queryKey){
+    const nextState = {
+      ...this.state,
+      currentQueryKey: queryKey
+    };
+
+    this.state = nextState;
+    this.listDisabled();
   }
 }

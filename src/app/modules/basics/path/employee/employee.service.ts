@@ -11,7 +11,7 @@ export class EmployeeService {
   private state ={
     employee: [],
     currentQueryKey: '',
-    currentDepartment: { Id: null },
+    currentEmployee: { Id: null },
     currentPagination: {
       PageIndex: 1,
       PageSize: 25,
@@ -31,7 +31,7 @@ export class EmployeeService {
 
   list() {
     const {
-      currentDepartment,
+      currentEmployee,
       currentQueryKey,
       currentPagination: {
         PageIndex,
@@ -41,7 +41,7 @@ export class EmployeeService {
 
     return this.http.post('/Employee/GetListPaged', {
       QueryKey: currentQueryKey,
-      DepartmentId: currentDepartment.Id,
+      EmployeeId: currentEmployee.Id,
       Status:1,
       PageIndex,
       PageSize
@@ -57,8 +57,36 @@ export class EmployeeService {
     });
   }
 
+  listDisabled() {
+    const {
+      currentEmployee,
+      currentQueryKey,
+      currentPagination: {
+        PageIndex,
+        PageSize
+      }
+    } = this.state;
+
+    return this.http.post('/Employee/GetListPaged', {
+      QueryKey: currentQueryKey,
+      EmployeeId: currentEmployee.Id,
+      Status:-99,
+      PageIndex,
+      PageSize
+    }).subscribe(data => {
+      const nextState = {
+        ...this.state,
+        employees: data.EmployeeList,
+        currentPagination: data.Pagination
+      };
+
+      this.state = nextState;
+      this.employee$.next(nextState);
+    });
+  }
+
   newOne() {
-    const { currentDepartment } = this.state;
+    const { currentEmployee } = this.state;
 
     return this.http.get('/Employee/GetForNew', {
     });
@@ -84,12 +112,24 @@ export class EmployeeService {
     return this.http.post('/Employee/Cancel', {
       entityIdList
     });
+  }  
+
+  remove(entityIdList) {
+    return this.http.post('/Employee/Remove', {
+      entityIdList
+    });
+  }
+
+  restore(entityIdList) {
+    return this.http.post('/Employee/Restore', {
+      entityIdList
+    });
   }
 
   onDepartmentChange(selected) {
     const nextState = {
       ...this.state,
-      currentDepartment: selected
+      currentEmployee: selected
     };
 
     this.state = nextState;
@@ -117,5 +157,16 @@ export class EmployeeService {
 
     this.state = nextState;
     this.list();
+  }
+  
+
+  onSearchDisabled(queryKey){
+    const nextState = {
+      ...this.state,
+      currentQueryKey: queryKey
+    };
+
+    this.state = nextState;
+    this.listDisabled();
   }
 }

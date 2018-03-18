@@ -23,8 +23,8 @@
             <app-ui-checkbox [checked]="item.selected" (onChange)="select($event, item)"></app-ui-checkbox>
           </td>
           <td>
-            <a (click)="update(item.Id)">修改</a>
-            <a class="text-danger" (click)="onCancel(item.Id)">停用</a>
+            <a (click)="update(item.Id)">还原</a>
+            <a class="text-danger" *ngIf="!systemConfig.IsOpenBill" (click)="onCancel(item.Id)">删除</a>
           </td>
           <td>{{item.Code}}</td>
           <td>{{item.Name}}</td>
@@ -43,11 +43,5 @@
       [current]="pagination.PageIndex"
       (onChange)="onPageChange($event)"
     ></app-pagination-bar>
-    <app-employee-control
-    [type]="'update'"
-    [employeeId]="selectedId"
-    [show]="_showUpdate"
-    (onClose)="closeUpdate()"
-  ></app-employee-control>
   </div>
   

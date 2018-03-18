@@ -1,16 +1,17 @@
 import { Subscription } from 'rxjs/Subscription';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { OtherExchangeUnitService } from './other-exchange-unit.service';
-import { ConfirmService } from '@services/confirm.service';
+import { AreaService } from './area.service';
 import { AlertService } from '@services/alert.service';
 import { LocalStorage } from 'ngx-webstorage';
 import { AppService } from '@services/app.service';
+import { ConfirmService } from '@services/confirm.service';
 
 @Component({
-  selector: 'app-otherexchnageunit-disabled',
+  selector: 'app-basics-area-disabled',
   template: `
+  
   <div class="actions">
-    <app-quick-search [placeholder]="'输入编号、名称、手机号、联系人查询'" (onSearch)="onSearchDisabled($event)"></app-quick-search>
+    <app-quick-search [placeholder]="'输入编号、名称'" (onSearch)="onSearch($event)"></app-quick-search>
     <app-ui-button [style]="'danger'" [disabled]="!selectedItems.length" (click)="restore()">
         <i class="iconfont icon-delete"></i>
         还原
@@ -22,13 +23,8 @@ import { AppService } from '@services/app.service';
     <div class="more">
     </div>
   </div>
-  <div class="content">
-    <app-category
-        (onChange)="onCategoryChange($event)"
-        [categoryType]="'Customer'"
-        [resourceType]="'Other'"
-    ></app-category>
-    <app-otherexchangeunit-disabled-list (selectItems)="selectItems($event)"></app-otherexchangeunit-disabled-list>
+  <div class="content">    
+    <app-area-disabled-list (selectItems)="selectItems($event)"></app-area-disabled-list>
   </div>
   `,
   styles: [`
@@ -48,36 +44,28 @@ import { AppService } from '@services/app.service';
   ]
 })
 
-export class OtherExchangeUnitDisabledComponent implements OnInit, OnDestroy {
+export class AreaDisabledComponent implements OnInit, OnDestroy {
   private selectedItems = <any>[];
-  private category;
+  private area;
   private subscription: Subscription;
 
   @LocalStorage()
   systemConfig: any;
 
   constructor(
-    private otherExchangeUnitService: OtherExchangeUnitService,
-    private confirmService: ConfirmService,
+    private areaService: AreaService,
     private alertService: AlertService,
-    private appService: AppService
-  ) {}
+    private appService:AppService,
+    private confirmService : ConfirmService
+  ) {
+  }  
 
   ngOnInit() {
+    
     this.systemConfig = this.getSystemConfig();
-    this.subscription = this.otherExchangeUnitService
+    this.subscription = this.areaService
       .get()
-      .subscribe(({ currentCategory }) => {
-        this.category = currentCategory;
-      });
-  }
-
-  onSearch(queryKey) {
-    this.otherExchangeUnitService.onSearchDisabled(queryKey);
-  }
-
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
+      .subscribe();
   }
 
   getSystemConfig(): any {
@@ -89,19 +77,48 @@ export class OtherExchangeUnitDisabledComponent implements OnInit, OnDestroy {
     return this.systemConfig;
   }
 
+  onSearch(queryKey) {
+    this.areaService.onSearchDisabled(queryKey);
+  }
+
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
+
   selectItems(selected) {
     this.selectedItems = selected;
   }
 
-  onCategoryChange(selected) {
-    this.otherExchangeUnitService.onCategoryChangeDisabled(selected);
-  }
+  restore() {
+    this.confirmService.open({
+      content: '确认还原吗？',
+      onConfirm: () => {
+        this.areaService
+          .restore(this.selectedItems.map(item => item.Id))
+          .subscribe(data => {
+            if (data.IsValid) {
+              this.alertService.open({
+                type: 'success',
+                content: '还原成功！'
+              });
+              this.areaService.listDisabled();
+            } else {
+              this.alertService.open({
+                type: 'danger',
+                content: '还原失败, ' + data.ErrorMessages
+              });
+            }
+          });
+      }
+    });
+  } 
 
-  delete() {
+  delete(){
     this.confirmService.open({
       content: '确认删除吗？',
       onConfirm: () => {
-        this.otherExchangeUnitService
+        this.areaService
           .remove(this.selectedItems.map(item => item.Id))
           .subscribe(data => {
             if (data.IsValid) {
@@ -109,7 +126,7 @@ export class OtherExchangeUnitDisabledComponent implements OnInit, OnDestroy {
                 type: 'success',
                 content: '删除成功！'
               });
-              this.otherExchangeUnitService.listDisabled();
+              this.areaService.listDisabled();
             } else {
               this.alertService.open({
                 type: 'danger',
@@ -121,27 +138,4 @@ export class OtherExchangeUnitDisabledComponent implements OnInit, OnDestroy {
     });
   }
 
-  restore() {
-    this.confirmService.open({
-      content: '确认还原吗？',
-      onConfirm: () => {
-        this.otherExchangeUnitService
-          .restore(this.selectedItems.map(item => item.Id))
-          .subscribe(data => {
-            if (data.IsValid) {
-              this.alertService.open({
-                type: 'success',
-                content: '还原成功！'
-              });
-              this.otherExchangeUnitService.listDisabled();
-            } else {
-              this.alertService.open({
-                type: 'danger',
-                content: '还原失败, ' + data.ErrorMessages
-              });
-            }
-          });
-      }
-    });
-  }
 }

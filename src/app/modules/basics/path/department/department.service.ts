@@ -60,6 +60,34 @@ export class DepartmentService {
     });
   }
 
+  listDisabled() {
+    const {
+      currentCategory,
+      currentQueryKey,
+      currentPagination: {
+        PageIndex,
+        PageSize
+      }
+    } = this.state;
+
+    return this.http.post('/Department/GetListPaged', {
+      QueryKey: currentQueryKey,
+      DepartmentCategoryId: currentCategory.Id,
+      Status: -99,
+      PageIndex,
+      PageSize
+    }).subscribe(data => {
+      const nextState = {
+        ...this.state,
+        departments: data.DepartmentList,
+        currentPagination: data.Pagination
+      };
+
+      this.state = nextState;
+      this.department$.next(nextState);
+    });
+  }
+
   newOne() {
     const { currentDepartment } = this.state;
 
@@ -89,6 +117,18 @@ export class DepartmentService {
     });
   }
 
+  remove(entityIdList) {
+    return this.http.post('/Department/Remove', {
+      entityIdList
+    });
+  }
+
+  restore(entityIdList) {
+    return this.http.post('/Department/Restore', {
+      entityIdList
+    });
+  }
+
   onCategoryChange(selected) {
     const nextState = {
       ...this.state,
@@ -97,6 +137,16 @@ export class DepartmentService {
 
     this.state = nextState;
     this.list();
+  }
+
+  onDisabledCategoryChange(selected) {
+    const nextState = {
+      ...this.state,
+      currentCategory: selected
+    };
+
+    this.state = nextState;
+    this.listDisabled();
   }
 
   onPageChange(pagination) {
@@ -120,5 +170,15 @@ export class DepartmentService {
 
     this.state = nextState;
     this.list();
+  }
+
+  onSearchDisabled(queryKey){
+    const nextState = {
+      ...this.state,
+      currentQueryKey: queryKey
+    };
+
+    this.state = nextState;
+    this.listDisabled();
   }
 }
