@@ -81,7 +81,7 @@ export class DepartmentListComponent implements OnInit, OnDestroy {
 
   onCancel(id) {
     this.confirmService.open({
-      content: '确认删除吗？',
+      content: '确认停用吗？',
       onConfirm: () => {
         this.departmentService
           .cancel([id])
@@ -89,7 +89,7 @@ export class DepartmentListComponent implements OnInit, OnDestroy {
             if (data.IsValid) {
               this.alertService.open({
                 type: 'success',
-                content: '删除成功！'
+                content: '停用成功！'
               });
               this.departmentService.list();
             }
