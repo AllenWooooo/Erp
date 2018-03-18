@@ -113,13 +113,13 @@ export class AreaService {
  
 
   remove(entityIdList) {
-    return this.http.post('/Employee/Remove', {
+    return this.http.post('/Area/Remove', {
       entityIdList
     });
   }
 
   restore(entityIdList) {
-    return this.http.post('/Employee/Restore', {
+    return this.http.post('/Area/Restore', {
       entityIdList
     });
   }
