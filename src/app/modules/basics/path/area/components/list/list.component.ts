@@ -95,4 +95,23 @@ export class AreaListComponent implements OnInit, OnDestroy {
       }
     });
   }
+
+  onRemove(id) {
+    this.confirmService.open({
+      content: '确认删除吗？',
+      onConfirm: () => {
+        this.areaService
+          .remove([id])
+          .subscribe(data => {
+            if (data.IsValid) {
+              this.alertService.open({
+                type: 'success',
+                content: '删除成功！'
+              });
+              this.areaService.list();
+            }
+          });
+      }
+    });
+  }
 }

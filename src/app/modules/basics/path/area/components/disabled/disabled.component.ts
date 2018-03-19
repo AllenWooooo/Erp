@@ -3,7 +3,6 @@ import { Subscription } from 'rxjs/Subscription';
 import { AreaService } from '../../area.service';
 import { ConfirmService } from '@services/confirm.service';
 import { AlertService } from '@services/alert.service';
-import { AppService } from '@services/app.service';
 
 @Component({
     selector: 'app-area-disabled-list',
@@ -25,8 +24,7 @@ export class AreaDisabledListComponent implements OnInit, OnDestroy {
   constructor(
     private areaService: AreaService,
     private confirmService: ConfirmService,
-    private alertService: AlertService,
-    private appService:AppService
+    private alertService: AlertService
   ) {
     this.subscription = this.areaService
       .get()
@@ -36,17 +34,7 @@ export class AreaDisabledListComponent implements OnInit, OnDestroy {
       });
   } 
   
-  getSystemConfig(): any {
-    if (!this.systemConfig) {
-      this.appService.getSystemConfig().subscribe((data) => {
-        this.systemConfig = data;
-      });
-    }
-    return this.systemConfig;
-  }
-
   ngOnInit() {
-    this.getSystemConfig();
     this.areaService.listDisabled();
   }
 
