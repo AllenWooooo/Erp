@@ -56,6 +56,10 @@ export class EmployeeControlComponent {
     return this._employeeId;
   }
 
+  get title(){
+    return this.type=='create'?'新增职员':'修改职员';
+  }
+
   @Output() onClose: EventEmitter<any> = new EventEmitter();
 
   constructor(

@@ -67,6 +67,10 @@ export class DepartmentControlComponent {
     return this._departmentId;
   }
 
+  get title(){
+    return this.type=='create'?'新增部门':'修改部门';
+  }
+
   @Output() onClose: EventEmitter<any> = new EventEmitter();
 
   constructor(
