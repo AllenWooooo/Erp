@@ -6,25 +6,22 @@ import { FormsModule ,ReactiveFormsModule} from '@angular/forms';
 import { UIModule } from '@UI/ui.module';
 
 import { StorageService } from './storage.service';
-import { StorageComponent } from './storage.component';
-import { StorageListComponent } from './components/list/list.component';
-import { StorageActionsComponent } from './components/actions/actions.component';
-import { StorageControlComponent } from './components/control/control.component';
+import { StorageDisabledComponent } from './storage-disabled.component';
+import { StorageDisabledListComponent } from './components/disabled/disabled.component';
 import { AppCommonModule } from '@modules/common/common.module';
 import { SharedModule} from '@app/shared.module';
 
 export const ROUTES: Routes = [
+  
   {
-    path: '', component: StorageComponent, outlet: 'products-storage'
+    path: '', component: StorageDisabledComponent, outlet: 'products-storage-disabled'
   }
 ];
 
 @NgModule({
   declarations: [
-    StorageComponent,
-    StorageListComponent,
-    StorageActionsComponent,
-    StorageControlComponent,
+    StorageDisabledComponent,
+    StorageDisabledListComponent
   ],
   imports: [
     UIModule,
@@ -39,4 +36,4 @@ export const ROUTES: Routes = [
   providers: [StorageService]
 })
 
-export class StorageModule {}
+export class StorageDisabledModule {}

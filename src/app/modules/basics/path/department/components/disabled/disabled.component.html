@@ -6,33 +6,25 @@
             <app-ui-checkbox [checked]="allSelected" (onChange)="selectAll($event)"></app-ui-checkbox>
           </th>
           <th>操作</th>
-          <th>职员编号</th>
-          <th>职员名称</th>
-          <th>所属部门</th>
+          <th>部门编号</th>
+          <th>部门名称</th>
           <th>电话</th>
-          <th>QQ</th>
-          <th>邮箱</th>
-          <th>身份证号</th>
-          <th>个人住址</th>
+          <th>地址</th>
           <th>备注</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let item of employees">
+        <tr *ngFor="let item of departments">
           <td>
             <app-ui-checkbox [checked]="item.selected" (onChange)="select($event, item)"></app-ui-checkbox>
           </td>
           <td>
-            <a (click)="update(item.Id)">修改</a>
-            <a class="text-danger" (click)="onCancel(item.Id)">停用</a>
+            <a (click)="restore(item.Id)">还原</a>
+            <a class="text-danger" *ngIf="!systemConfig.IsOpenBill" (click)="delete(item.Id)">删除</a>
           </td>
           <td>{{item.Code}}</td>
           <td>{{item.Name}}</td>
-          <td>{{item.DepartmentName}}</td>
           <td>{{item.Mobile}}</td>
-          <td>{{item.QQ}}</td>
-          <td>{{item.Email}}</td>          
-          <td>{{item.IdentityCardNo}}</td>
           <td>{{item.Address}}</td>
           <td>{{item.Remark}}</td>
         </tr>
@@ -43,11 +35,5 @@
       [current]="pagination.PageIndex"
       (onChange)="onPageChange($event)"
     ></app-pagination-bar>
-    <app-employee-control
-    [type]="'update'"
-    [employeeId]="selectedId"
-    [show]="_showUpdate"
-    (onClose)="closeUpdate()"
-  ></app-employee-control>
   </div>
   

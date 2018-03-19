@@ -4,26 +4,30 @@ import { StorageService } from '../../storage.service';
 import { ConfirmService } from '@services/confirm.service';
 import { AlertService } from '@services/alert.service';
 
+import { AppService } from '@services/app.service';
+
 @Component({
-    selector: 'app-storage-list',
-    templateUrl: './list.component.html',
-    styleUrls: ['./list.component.less']
+    selector: 'app-storage-disabled-list',
+    templateUrl: './disabled.component.html',
+    styleUrls: ['./disabled.component.less']
   })
 
-export class StorageListComponent implements OnInit, OnDestroy {
+export class StorageDisabledListComponent implements OnInit, OnDestroy {
   private storages = <any>[];
   private pagination = {};
   private allSelected = false;
   private selectedId: number;
   private _showUpdate = false;
   private subscription: Subscription;
+  private systemConfig:boolean;
 
   @Output() selectItems: EventEmitter<any> = new EventEmitter();
 
   constructor(
     private storageService: StorageService,
     private confirmService: ConfirmService,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private appService:AppService
   ) {
     this.subscription = this.storageService
       .get()
@@ -33,8 +37,18 @@ export class StorageListComponent implements OnInit, OnDestroy {
       });
   }
 
+  getSystemConfig(): any {
+    if (!this.systemConfig) {
+      this.appService.getSystemConfig().subscribe((data) => {
+        this.systemConfig = data;
+      });
+    }
+    return this.systemConfig;
+  }
+
   ngOnInit() {
-    this.storageService.list();
+    this.getSystemConfig();
+    this.storageService.listDisabled();
   }
 
   ngOnDestroy() {
@@ -68,28 +82,51 @@ export class StorageListComponent implements OnInit, OnDestroy {
     });
   }
 
-  update(id) {
-    this.selectedId = id;
-    this._showUpdate = true;
-  }
-
   closeUpdate() {
     this._showUpdate = false;
   }
 
-  onCancel(id) {
+  delete(id) {
     this.confirmService.open({
-      content: '确认停用吗？',
+      content: '确认删除吗？',
       onConfirm: () => {
         this.storageService
-          .cancel([id])
+          .remove([id])
           .subscribe(data => {
             if (data.IsValid) {
               this.alertService.open({
                 type: 'success',
-                content: '停用成功！'
+                content: '删除成功！'
               });
-              this.storageService.list();
+              this.storageService.listDisabled();
+            } else {
+              this.alertService.open({
+                type: 'danger',
+                content: '删除失败, ' + data.ErrorMessages
+              });
+            }
+          });
+      }
+    });
+  }
+
+  restore(id) {
+    this.confirmService.open({
+      content: '确认还原吗？',
+      onConfirm: () => {
+        this.storageService.restore([id])
+          .subscribe(data => {
+            if (data.IsValid) {
+              this.alertService.open({
+                type: 'success',
+                content: '还原成功！'
+              });
+              this.storageService.listDisabled();
+            } else {
+              this.alertService.open({
+                type: 'danger',
+                content: '还原失败, ' + data.ErrorMessages
+              });
             }
           });
       }

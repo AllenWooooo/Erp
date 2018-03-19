@@ -81,19 +81,34 @@ export const ROUTES: Routes = [
   {
     path: 'basics/employee',
     loadChildren: './modules/basics/path/employee/employee.module#EmployeeModule'
+  },  
+  {
+    path: 'basics/employee/disabled',
+    loadChildren: './modules/basics/path/employee/employee-disabled.module#EmployeeDisabledModule'
   },
   {
     path: 'basics/department',
     loadChildren: './modules/basics/path/department/department.module#DepartmentModule'
   },
   {
+    path: 'basics/department/disabled',
+    loadChildren: './modules/basics/path/department/department-disabled.module#DepartmentDisabledModule'
+  },
+  {
     path: 'basics/area',
     loadChildren: './modules/basics/path/area/area.module#AreaModule'
   },
-  
+  {
+    path: 'basics/area/disabled',
+    loadChildren: './modules/basics/path/area/area-disabled.module#AreaDisabledModule'
+  },  
   {
     path: 'products/storage',
     loadChildren: './modules/products/path/storage/storage.module#StorageModule'
+  },
+  {
+    path: 'products/storage/disabled',
+    loadChildren: './modules/products/path/storage/storage-disabled.module#StorageDisabledModule'
   },
   {
     path: 'purchase/order/new',

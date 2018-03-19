@@ -6,7 +6,7 @@
     </app-ui-button>
     <app-ui-button [style]="'danger'" [disabled]="!selectedItems.length" (click)="onCancel()">
       <i class="iconfont icon-delete"></i>
-      删除
+      停用
     </app-ui-button>
     <div class="more">
       <app-ui-button>
@@ -18,7 +18,7 @@
       <app-ui-button>
         打印
       </app-ui-button>
-      <app-ui-button [style]="'danger'">
+      <app-ui-button [style]="'danger'" (click)="showDisabled()">
         已停用列表
       </app-ui-button>
     </div>
