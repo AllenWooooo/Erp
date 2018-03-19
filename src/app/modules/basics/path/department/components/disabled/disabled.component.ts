@@ -4,12 +4,16 @@ import { DepartmentService } from '../../department.service';
 import { ConfirmService } from '@services/confirm.service';
 import { AlertService } from '@services/alert.service';
 import { AppService } from '@services/app.service';
+import { LocalStorage } from 'ngx-webstorage';
 
 
 @Component({
     selector: 'app-department-disabled-list',
     templateUrl: './disabled.component.html',
-    styleUrls: ['./disabled.component.less']
+    styleUrls: ['./disabled.component.less'],
+    providers:[
+      AppService
+    ]
   })
 
 export class DepartmentDisabledListComponent implements OnInit, OnDestroy {
@@ -20,10 +24,11 @@ export class DepartmentDisabledListComponent implements OnInit, OnDestroy {
   private selectCategory:any;
   private _showUpdate = false;
   private subscription: Subscription;
-  private systemConfig:boolean;
 
   @Output() selectItems: EventEmitter<any> = new EventEmitter();
 
+  @LocalStorage()
+  systemConfig:any;
 
   constructor(
     private departmentService: DepartmentService,
