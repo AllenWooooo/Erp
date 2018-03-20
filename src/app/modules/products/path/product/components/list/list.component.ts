@@ -99,6 +99,15 @@ export class ProductListComponent implements OnInit, OnDestroy {
     this._showUpdate = false;
   }
 
+  extension(id) {
+    this.selectedId = id;
+    this._showUpdate = true;
+  }
+
+  closeExtension() {
+    this._showUpdate = false;
+  }
+
   onCancel(id) {
     this.confirmService.open({
       content: '确认停用吗？',

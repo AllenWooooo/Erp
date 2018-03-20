@@ -53,7 +53,7 @@ export class ProductService {
       this.state = nextState;
       this.product$.next(nextState);
     });
-  }
+  } 
 
   listDisabled() {
     const {
@@ -80,6 +80,12 @@ export class ProductService {
 
       this.state = nextState;
       this.product$.next(nextState);
+    });
+  }
+
+  productExtensions(entityId){
+    return this.http.post('/Product/GetProducExtendList', {
+      entityId
     });
   }
 

@@ -8,6 +8,7 @@ import { UIModule } from '@UI/ui.module';
 import { ProductService } from './product.service';
 import { ProductDisabledComponent } from './product-disabled.component';
 import { ProductDisabledListComponent } from './components/disabled/disabled.component';
+import { ProductExtensionComponent } from './components/extension/extension.component';
 import { AppCommonModule } from '@modules/common/common.module';
 import { SharedModule} from '@app/shared.module';
 
@@ -21,7 +22,8 @@ export const ROUTES: Routes = [
 @NgModule({
   declarations: [
     ProductDisabledComponent,
-    ProductDisabledListComponent
+    ProductDisabledListComponent,
+    ProductExtensionComponent
   ],
   imports: [
     UIModule,
