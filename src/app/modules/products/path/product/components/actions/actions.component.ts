@@ -1,24 +1,24 @@
 import { Component, Input } from '@angular/core';
-import { StorageService } from '../../storage.service';
+import { ProductService } from '../../product.service';
 import { ConfirmService } from '@services/confirm.service';
 import { AlertService } from '@services/alert.service';
 
 import { TabsService } from '@components/tabs/tabs.service';
 
 @Component({
-  selector: 'app-storage-actions',
+  selector: 'app-product-actions',
   templateUrl: './actions.component.html',
   styleUrls: ['./actions.component.less']
 })
 
-export class StorageActionsComponent {
+export class ProductActionsComponent {
   private _show = false;
   private selectedId: number;
 
   @Input() selectedItems = <any>[];
 
   constructor(
-    private storageService: StorageService,
+    private productService: ProductService,
     private confirmService: ConfirmService,
     private alertService: AlertService,
     private tabsService:TabsService
@@ -29,28 +29,28 @@ export class StorageActionsComponent {
     this.selectedId = 0;
   }
 
-   
   showDisabled() {
     this.tabsService.create({
-      name: '停用仓库',
-      link: '/products/storage/disabled',
-      outlet: 'products-storage-disabled'
+      name: '停用商品',
+      link: '/products/product/disabled',
+      outlet: 'products-product-disabled'
     });
   }
+
 
   close() {
     this._show = false;
   }
 
   onSearch(queryKey) {
-    this.storageService.onSearch(queryKey);
+    this.productService.onSearch(queryKey);
   }
 
   onCancel() {
     this.confirmService.open({
       content: '确认删除吗？',
       onConfirm: () => {
-        this.storageService
+        this.productService
           .cancel(this.selectedItems.map(item => item.Id))
           .subscribe(data => {
             if (data.IsValid) {
@@ -58,7 +58,7 @@ export class StorageActionsComponent {
                 type: 'success',
                 content: '删除成功！'
               });
-              this.storageService.list();
+              this.productService.list();
             }
           });
       }
