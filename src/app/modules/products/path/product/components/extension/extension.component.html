@@ -1,21 +1,20 @@
-<app-card [header]="title" [show]="_show" (onCancel)="handleClose()">
+<form [formGroup]="form" (ngSubmit)="onSubmit(form)" novalidate *ngIf="formReady">
+<app-card [header]="'扩展信息'" [show]="_show" (onCancel)="handleClose()">
     <div class="card-content">
-        <div class="heading">
-            扩展信息
-        </div>
         <app-ui-table>
           <thead>
-              <!-- <th>{{PropertyName1}}</th>
-              <th>{{PropertyName2}}</th> -->
+              <th>{{propertyName1}}</th>
+              <th>{{propertyName2}}</th>
           </thead>
           <tbody>
               <tr *ngFor="let item of productExtendItemList">
                 <td>{{item.ColorName}}</td>
                 <td>
-                    <!-- <span *ngFor="let sizeName of SizeNameList">{{sizeName}}</span> -->
+                    <span class="margin-5" *ngFor="let sizeName of item.SizeNameList">{{sizeName}}</span>
                 </td>
               </tr>
           </tbody>
         </app-ui-table>
     </div>
 </app-card>
+</form>

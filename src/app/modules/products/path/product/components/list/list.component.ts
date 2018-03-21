@@ -22,7 +22,11 @@ export class ProductListComponent implements OnInit, OnDestroy {
   private pagination = {};
   private allSelected = false;
   private selectedId: number;
-  private _showUpdate = false;
+  private extendProductId: number;
+  private unitProductId: number;
+  private _showUpdate = false;  
+  private _showUnitUpdate = false;
+  private _showStorageUpdate = false;
   private subscription: Subscription;
 
   @LocalStorage()
@@ -100,12 +104,21 @@ export class ProductListComponent implements OnInit, OnDestroy {
   }
 
   extension(id) {
-    this.selectedId = id;
+    this.extendProductId = id;
     this._showUpdate = true;
+  }
+
+  unit(id) {
+    this.unitProductId = id;
+    this._showUnitUpdate = true;
   }
 
   closeExtension() {
     this._showUpdate = false;
+  }
+
+  closeUnit() {
+    this._showUnitUpdate = false;
   }
 
   onCancel(id) {

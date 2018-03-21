@@ -34,8 +34,8 @@
           <td>{{item.BrandName}}</td>
           <td>{{item.ProductionPlace}}</td>
           <td>{{item.Weight}}</td>
-          <td><a (click)="extension(item.Id)">详情</a></td>
-          <td><a (click)="update(item.Id)">详情</a></td>
+          <td><a *ngIf="item.IsOpenSku" (click)="extension(item.Id)">详情</a></td>
+          <td><a (click)="unit(item.Id)">详情</a></td>
           <td><a (click)="update(item.Id)">详情</a></td>
           <td>{{item.Remark}}</td>
         </tr>
@@ -43,8 +43,13 @@
     </app-ui-table>
     <app-pagination-bar [total]="pagination.TotalCount" [current]="pagination.PageIndex" (onChange)="onPageChange($event)"></app-pagination-bar>
     <app-product-extension
-    [productId]="selectedId"
+    [productId]="extendProductId"
     [show]="_showUpdate"
     (onClose)="closeExtension()"
   ></app-product-extension>
+  <app-product-unit
+    [productId]="unitProductId"
+    [show]="_showUnitUpdate"
+    (onClose)="closeUnit()"
+  ></app-product-unit>
   </div>

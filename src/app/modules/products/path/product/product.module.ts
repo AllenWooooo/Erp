@@ -8,6 +8,7 @@ import { UIModule } from '@UI/ui.module';
 import { ProductService } from './product.service';
 import { ProductComponent } from './product.component';
 import { ProductExtensionComponent } from './components/extension/extension.component';
+import { ProductUnitComponent } from './components/unit/unit.component';
 import { ProductListComponent } from './components/list/list.component';
 import { ProductActionsComponent } from './components/actions/actions.component';
 import { AppCommonModule } from '@modules/common/common.module';
@@ -24,7 +25,8 @@ export const ROUTES: Routes = [
     ProductComponent,
     ProductListComponent,
     ProductActionsComponent,
-    ProductExtensionComponent
+    ProductExtensionComponent,
+    ProductUnitComponent
  ],
   imports: [
     UIModule,

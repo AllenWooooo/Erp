@@ -6,13 +6,13 @@ import { ProductService } from '../../product.service';
 import { AlertService } from '@services/alert.service';
 
 @Component({
-    selector: 'app-product-extension',
-    templateUrl: './extension.component.html',
-    styleUrls: ['./extension.component.less'],
+    selector: 'app-product-unit',
+    templateUrl: './unit.component.html',
+    styleUrls: ['./unit.component.less'],
     providers: [FormService]
   })
 
-export class ProductExtensionComponent {
+export class ProductUnitComponent {
   private products = <any>[];
   private selectedId: number;
   private _showUpdate = false;
@@ -20,8 +20,7 @@ export class ProductExtensionComponent {
   private form=new FormGroup({});
   private _show:boolean;
   private _productId:number;
-  private _productExtendItemList:Array<any>;
-
+  private _productUnitList:Array<any>;
 
   @Output() onClose: EventEmitter<any> = new EventEmitter();
 
@@ -44,12 +43,7 @@ export class ProductExtensionComponent {
 
   get formReady(): boolean { return !!Object.keys(this.form.controls).length; }
 
-  get productExtendItemList():Array<any>{return this._productExtendItemList;}
-
-  get propertyName1():string { return this.form.get('PropertyName1').value; }
-
-  get propertyName2():string { return this.form.get('PropertyName2').value; }
-
+  get productUnitList():Array<any>{ return this._productUnitList;}
 
   handleClose() {
     this.onClose.emit();
@@ -59,16 +53,9 @@ export class ProductExtensionComponent {
   set productId(productId){
     this._productId = productId;
     if(this.show){
-        this.productService.productExtensions(productId).subscribe(data=>{   
-            console.log(data);
-            const extensions = {
-              PropertyName1:data.PropertyName1,
-              PropertyName2:data.PropertyName2
-            };
-
-            this._productExtendItemList = data.ProductExtendItemList;
-
-            this.form = this.formService.createForm(extensions);
+        this.productService.detail(productId).subscribe(data=>{             
+            this._productUnitList=data.ProductUnitList;
+            this.form = this.formService.createForm(data.ProductUnitList);
         });
     }    
   }
