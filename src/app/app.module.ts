@@ -122,6 +122,10 @@ export const ROUTES: Routes = [
     path: 'products/product/disabled',
     loadChildren: './modules/products/path/product/product-disabled.module#ProductDisabledModule'
   },
+  {
+    path: 'products/product/barcode',
+    loadChildren: './modules/products/path/product/product-barcode.module#ProductBarcodeModule'
+  }
 ];
 
 @NgModule({

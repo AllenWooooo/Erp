@@ -37,6 +37,13 @@ export class ProductActionsComponent {
     });
   }
 
+  onShowBarcode(){
+    this.tabsService.create({
+      name: '商品条形码',
+      link: '/products/product/barcode',
+      outlet: 'products-product-barcode'
+    });
+  }
 
   close() {
     this._show = false;
@@ -45,6 +52,7 @@ export class ProductActionsComponent {
   onSearch(queryKey) {
     this.productService.onSearch(queryKey);
   }
+
 
   onCancel() {
     this.confirmService.open({

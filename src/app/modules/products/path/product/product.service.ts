@@ -83,6 +83,33 @@ export class ProductService {
     });
   }
 
+  listBarcode() {
+    const {
+      currentQueryKey,
+      currentCategory,
+      currentPagination: {
+        PageIndex,
+        PageSize
+      }
+    } = this.state;
+
+    return this.http.post('/ProductBarCode/GetListPaged', {
+      QueryKey: currentQueryKey,
+      Status:1,
+      PageIndex,
+      PageSize
+    }).subscribe(data => {
+      const nextState = {
+        ...this.state,
+        barcodes: data.ProductBarCodeList,
+        currentPagination: data.Pagination
+      };
+
+      this.state = nextState;
+      this.product$.next(nextState);
+    });
+  }
+
   productExtensions(entityId){
     return this.http.post('/Product/GetProducExtendList', {
       entityId
@@ -121,6 +148,14 @@ export class ProductService {
   modify(product){
     return this.http.post('/Product/Modify', {
       product
+    });
+  }
+
+  modifyBarCode(product){
+    console.log(product.BarCode);
+    return this.http.post('/ProductBarCode/ModifyBarCode', {
+      Id :product.Id,
+      BarCode:product.BarCode
     });
   }
 
@@ -173,6 +208,16 @@ export class ProductService {
 
     this.state = nextState;
     this.listDisabled();
+  }
+
+  onSearchBarcode(queryKey){
+    const nextState = {
+      ...this.state,
+      currentQueryKey: queryKey
+    };
+
+    this.state = nextState;
+    this.listBarcode();
   }
 
   onCategoryChange(selected) {
