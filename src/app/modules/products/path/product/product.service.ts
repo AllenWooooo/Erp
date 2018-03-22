@@ -89,6 +89,18 @@ export class ProductService {
     });
   }
 
+  getStorageDetailList(productId){
+    return this.http.get('/ProductStorageInit/GetStorageDetailList?productId='+productId);
+  }
+
+  getStorageDetailSkuList(productId){
+    return this.http.get('/ProductStorageInit/GetStorageDetailSkuList?productId='+productId);
+  }
+
+  getStorageDetailProductUnitList(productId){
+    return this.http.get('/ProductStorageInit/GetStorageDetailProductUnitList='+productId);
+  }
+
   newOne() {
     const {  } = this.state;
 

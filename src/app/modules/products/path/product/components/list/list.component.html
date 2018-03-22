@@ -36,7 +36,7 @@
           <td>{{item.Weight}}</td>
           <td><a *ngIf="item.IsOpenSku" (click)="extension(item.Id)">详情</a></td>
           <td><a (click)="unit(item.Id)">详情</a></td>
-          <td><a (click)="update(item.Id)">详情</a></td>
+          <td><a (click)="storageInit(item.Id)">详情</a></td>
           <td>{{item.Remark}}</td>
         </tr>
       </tbody>
@@ -52,4 +52,9 @@
     [show]="_showUnitUpdate"
     (onClose)="closeUnit()"
   ></app-product-unit>
+  <app-product-storageInit
+    [productId]="storageInitProductId"
+    [show]="_showStorageInitUpdate"
+    (onClose)="closeStorageInit()"
+  ></app-product-storageInit>
   </div>

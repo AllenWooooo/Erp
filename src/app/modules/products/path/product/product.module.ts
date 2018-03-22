@@ -9,6 +9,7 @@ import { ProductService } from './product.service';
 import { ProductComponent } from './product.component';
 import { ProductExtensionComponent } from './components/extension/extension.component';
 import { ProductUnitComponent } from './components/unit/unit.component';
+import { ProductStorageInitComponent } from './components/storageInit/storageInit.component';
 import { ProductListComponent } from './components/list/list.component';
 import { ProductActionsComponent } from './components/actions/actions.component';
 import { AppCommonModule } from '@modules/common/common.module';
@@ -26,6 +27,7 @@ export const ROUTES: Routes = [
     ProductListComponent,
     ProductActionsComponent,
     ProductExtensionComponent,
+    ProductStorageInitComponent,
     ProductUnitComponent
  ],
   imports: [

@@ -24,9 +24,10 @@ export class ProductListComponent implements OnInit, OnDestroy {
   private selectedId: number;
   private extendProductId: number;
   private unitProductId: number;
+  private storageInitProductId:number;
   private _showUpdate = false;  
   private _showUnitUpdate = false;
-  private _showStorageUpdate = false;
+  private _showStorageInitUpdate = false;
   private subscription: Subscription;
 
   @LocalStorage()
@@ -113,12 +114,21 @@ export class ProductListComponent implements OnInit, OnDestroy {
     this._showUnitUpdate = true;
   }
 
+  storageInit(id) {
+    this.storageInitProductId = id;
+    this._showStorageInitUpdate = true;
+  }
+
   closeExtension() {
     this._showUpdate = false;
   }
 
   closeUnit() {
     this._showUnitUpdate = false;
+  }
+
+  closeStorageInit() {
+    this._showStorageInitUpdate = false;
   }
 
   onCancel(id) {
