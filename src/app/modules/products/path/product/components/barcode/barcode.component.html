@@ -20,7 +20,7 @@
           <td>{{item.ProductUnit}}</td>
           <td>{{item.ProductColor}}</td>
           <td>{{item.ProductSize}}</td>
-          <td><input #formField type="text" value="{{item.BarCode}}" class="form-control" [(ngModel)]="BarCode" (keyup.enter)="changeBarcode(item,formField.value)"/></td>
+          <td><input #formField type="text" value="{{item.BarCode}}" class="form-control" (keyup.enter)="changeBarcode(item,formField.value)"/></td>
           <td>{{item.Remark}}</td>
         </tr>
       </tbody>
