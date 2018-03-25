@@ -3,3 +3,4 @@ publish.sh
 Dockerfile
 /dist/
 nginx.conf
+src/assets/appsettings.json
