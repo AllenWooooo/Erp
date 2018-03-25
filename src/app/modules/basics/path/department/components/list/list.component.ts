@@ -3,11 +3,17 @@ import { Subscription } from 'rxjs/Subscription';
 import { DepartmentService } from '../../department.service';
 import { ConfirmService } from '@services/confirm.service';
 import { AlertService } from '@services/alert.service';
+import { AppService } from '@services/app.service';
+import { LocalStorage } from 'ngx-webstorage';
+
 
 @Component({
     selector: 'app-department-list',
     templateUrl: './list.component.html',
-    styleUrls: ['./list.component.less']
+    styleUrls: ['./list.component.less'],
+    providers:[
+      AppService
+    ]
   })
 
 export class DepartmentListComponent implements OnInit, OnDestroy {
@@ -21,11 +27,14 @@ export class DepartmentListComponent implements OnInit, OnDestroy {
 
   @Output() selectItems: EventEmitter<any> = new EventEmitter();
 
+  @LocalStorage()
+  systemConfig:any;
 
   constructor(
     private departmentService: DepartmentService,
     private confirmService: ConfirmService,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private appService:AppService
   ) {
     this.subscription = this.departmentService
       .get()
@@ -33,6 +42,16 @@ export class DepartmentListComponent implements OnInit, OnDestroy {
         this.departments = departments;
         this.pagination = currentPagination;
       });
+  }
+
+  
+  getSystemConfig(): any {
+    if (!this.systemConfig) {
+      this.appService.getSystemConfig().subscribe((data) => {
+        this.systemConfig = data;
+      });
+    }
+    return this.systemConfig;
   }
 
   ngOnInit() {
@@ -85,6 +104,25 @@ export class DepartmentListComponent implements OnInit, OnDestroy {
       onConfirm: () => {
         this.departmentService
           .cancel([id])
+          .subscribe(data => {
+            if (data.IsValid) {
+              this.alertService.open({
+                type: 'success',
+                content: '停用成功！'
+              });
+              this.departmentService.list();
+            }
+          });
+      }
+    });
+  }
+
+  onRemove(id) {
+    this.confirmService.open({
+      content: '确认停用吗？',
+      onConfirm: () => {
+        this.departmentService
+          .remove([id])
           .subscribe(data => {
             if (data.IsValid) {
               this.alertService.open({

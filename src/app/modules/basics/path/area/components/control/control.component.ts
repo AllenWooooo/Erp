@@ -34,6 +34,10 @@ export class AreaControlComponent {
    this.showPop();
   }
 
+  get title(){
+    return this.type=='create'?'新增地区':'修改地区';
+  }
+
   private showPop(): void {
     if (this._show) {
       if (this.type === 'create') {

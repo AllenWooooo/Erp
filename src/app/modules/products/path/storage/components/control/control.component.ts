@@ -56,6 +56,10 @@ export class StorageControlComponent {
     return this._storageId;
   }
 
+  get title(){
+    return this.type=='create'?'新增仓库':'修改仓库';
+  }
+
   @Output() onClose: EventEmitter<any> = new EventEmitter();
 
   constructor(

@@ -1,5 +1,5 @@
 <form [formGroup]="form" (ngSubmit)="onSubmit(form)" novalidate *ngIf="formReady">
-    <app-card [header]="'编辑职员'" [show]="_show" (onCancel)="handleClose()">
+    <app-card [header]="title" [show]="_show" (onCancel)="handleClose()">
       <div class="card-content">
         <div class="heading">
           基本信息

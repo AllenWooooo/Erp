@@ -4,6 +4,7 @@ import { EmployeeService } from '../../employee.service';
 import { ConfirmService } from '@services/confirm.service';
 import { AlertService } from '@services/alert.service';
 import { AppService } from '@services/app.service';
+import { LocalStorage } from 'ngx-webstorage';
 
 
 @Component({
@@ -19,7 +20,9 @@ export class EmployeeDisabledListComponent implements OnInit, OnDestroy {
   private selectedId: number;
   private _showUpdate = false;
   private subscription: Subscription;
-  private systemConfig:boolean;
+
+  @LocalStorage()
+  systemConfig:any;
 
   @Output() selectItems: EventEmitter<any> = new EventEmitter();
 
@@ -49,7 +52,7 @@ export class EmployeeDisabledListComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.getSystemConfig()
-    this.employeeService.list();
+    this.employeeService.listDisabled();
   }
 
   ngOnDestroy() {

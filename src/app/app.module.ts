@@ -113,6 +113,18 @@ export const ROUTES: Routes = [
   {
     path: 'purchase/order/new',
     loadChildren: './modules/purchase/path/order/path/new/new.module#PurchaseOrderNewModule'
+  },
+  {
+    path: 'products/product',
+    loadChildren: './modules/products/path/product/product.module#ProductModule'
+  },
+  {
+    path: 'products/product/disabled',
+    loadChildren: './modules/products/path/product/product-disabled.module#ProductDisabledModule'
+  },
+  {
+    path: 'products/product/barcode',
+    loadChildren: './modules/products/path/product/product-barcode.module#ProductBarcodeModule'
   }
 ];
 

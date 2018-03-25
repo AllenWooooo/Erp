@@ -12,7 +12,6 @@ export class DepartmentService {
     department: [],
     currentCategory: { Id: null },
     currentQueryKey: '',
-    currentDepartment: { Id: null },
     currentPagination: {
       PageIndex: 1,
       PageSize: 25,
@@ -89,7 +88,7 @@ export class DepartmentService {
   }
 
   newOne() {
-    const { currentDepartment } = this.state;
+    const {} = this.state;
 
     return this.http.get('/Department/GetForNew', {
     });

@@ -1,13 +1,12 @@
 <form [formGroup]="form" (ngSubmit)="onSubmit(form)" novalidate *ngIf="formReady">
-    <app-card [header]="'编辑地区'" [show]="_show" (onCancel)="handleClose()">
+    <app-card [header]="title" [show]="_show" (onCancel)="handleClose()">
         <div class="card-content">
             <div class="heading">
                 基本信息
             </div>
             <table class="form">
                 <tr>
-                    <th class="form-label">
-                        <span class="required">*</span>
+                    <th class="form-label">                        
                         编号：
                     </th>
                     <td class="form-control-group">

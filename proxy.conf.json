@@ -38,5 +38,13 @@
   "/FeeType/**": {
     "target": "http://139.196.96.129:8899",
     "secure": false
+  },
+  "/Product/**": {
+    "target": "http://139.196.96.129:8899",
+    "secure": false
+  },
+  "/ProductBarCode/**": {
+    "target": "http://139.196.96.129:8899",
+    "secure": false
   }
 }
